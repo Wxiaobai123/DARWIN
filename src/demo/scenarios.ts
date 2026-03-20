@@ -1,7 +1,7 @@
 /**
  * DARWIN Demo Scenario Tools
  *
- * Three pre-built scenarios for the competition demo video:
+ * Three pre-built scenarios for product walkthroughs and local demos:
  *
  *   pnpm run demo:a   — Scenario A: Normal operation (oscillation + grid running)
  *   pnpm run demo:b   — Scenario B: State transition (oscillation → trend → oscillation)

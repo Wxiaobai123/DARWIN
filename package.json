@@ -1,7 +1,7 @@
 {
   "name": "DARWIN",
   "version": "1.0.0",
-  "description": "Dynamic Adaptive Risk-Weighted Intelligence Network",
+  "description": "Local-first, risk-first AI trading governance system powered by Claw, OKX Agent Trade Kit, and Paperclip AI",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {

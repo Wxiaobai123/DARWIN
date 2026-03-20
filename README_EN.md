@@ -10,9 +10,8 @@
 <h3 align="center">Dynamic Adaptive Risk-Weighted Intelligence Network</h3>
 
 <p align="center">
-  <strong>A risk-first autonomous trading conductor powered by Claw and OKX Agent Trade Kit.</strong><br/>
-  It reads the market, selects strategies, executes through OKX, and governs risk end-to-end.<br/>
-  <em>Designed as an independent local-first trading governance system</em>
+  <strong>DARWIN is a local-first, risk-first AI trading governance system powered by Claw, OKX Agent Trade Kit, and Paperclip AI.</strong><br/>
+  It keeps market interpretation, strategy selection, live execution, risk halts, and reporting on one decision rail.
 </p>
 
 <p align="center">
@@ -25,7 +24,7 @@
 
 DARWIN is **not** a trading bot.
 
-It is a **risk-first trading governance layer** -- a self-governing, multi-agent system that reads the market, classifies its regime, dispatches the right strategy at the right time, executes through OKX, and keeps execution, halts, and reporting on the same decision rail.
+It is a **local-first, risk-first AI trading governance system** -- a self-governing, multi-agent system that reads the market, classifies its regime, dispatches the right strategy at the right time, executes through OKX, and keeps execution, halts, and reporting on the same decision rail.
 
 Most trading bots do one thing: execute a fixed strategy. DARWIN does something fundamentally different:
 
@@ -45,6 +44,7 @@ Two foundations make this possible:
 **You set the risk profile and coin whitelist. DARWIN handles everything else.**
 
 Project docs:
+- [Product Positioning](docs/PRODUCT_POSITIONING.md)
 - [Project Architecture](docs/PROJECT_ARCHITECTURE.md)
 - [Full System Architecture](docs/ARCHITECTURE.md)
 - [Strategy Specification](docs/STRATEGY_SPEC.md)
@@ -226,7 +226,7 @@ YAML spec submitted
   --> ELIMINATED after 3 failed shadow attempts (permanently archived)
 ```
 
-This creates a Darwinian selection pressure: only strategies that consistently perform survive.
+This creates a disciplined lifecycle: only strategies that consistently perform under the current regime continue receiving capital.
 
 ### 5. Weighted Scoring Capital Allocation
 
@@ -534,14 +534,14 @@ DARWIN/
 
 ---
 
-## Why DARWIN Wins
+## What Makes DARWIN Distinct
 
 This is not another trading bot with a ChatGPT wrapper. Here is what sets DARWIN apart:
 
 | Dimension | Typical Trading Bot | DARWIN |
 |---|---|---|
 | **Decision making** | Single fixed strategy | Multi-agent governance with 5 specialized agents |
-| **Strategy lifecycle** | Deploy and pray | Shadow-test, promote, demote, eliminate -- Darwinian selection |
+| **Strategy lifecycle** | Deploy and pray | Shadow-first lifecycle governance |
 | **Market adaptation** | Manual parameter tuning | Automatic regime detection with 3-confirmation buffer |
 | **Risk management** | Stop-loss and hope | 4-tier circuit breaker with human approval gates |
 | **Capital allocation** | Equal split or manual | Weighted scoring with volatility adjustments |
@@ -551,13 +551,13 @@ This is not another trading bot with a ChatGPT wrapper. Here is what sets DARWIN
 | **Transparency** | Black box | Immutable audit trail, daily reports, single-file dashboard |
 | **Human control** | None or all-or-nothing | Graduated: auto-recovery at T1, human approval at T3/T4 |
 
-### Competition Highlights
+### Product Characteristics
 
-**Full OKX ATK Depth** -- DARWIN does not just call one or two OKX tools. It orchestrates 9 distinct execution engines (grid, contract grid, DCA, swap, spot, recurring buy, funding arb, TWAP, iceberg) through a unified strategy abstraction layer. Each tool is mapped to specific market regimes with tool-aware promotion thresholds.
+**Full OKX ATK Depth** -- DARWIN does not just call one or two OKX tools. It uses OKX Agent Trade Kit across market data, account state, spot and swap execution, bots, and algorithmic orders through one unified strategy layer.
 
 **Genuine Multi-Agent Architecture** -- Not a single script pretending to be agents. DARWIN runs as a registered Paperclip company with 5 independently scheduled agents, each with distinct responsibilities, heartbeat intervals, and escalation paths. The organizational hierarchy is real and enforced.
 
-**Self-Evolution Is the Core Feature** -- Strategies are not static configurations. They are living entities that compete for capital through a Darwinian lifecycle: born in shadow mode, promoted on merit, demoted on failure, eliminated after repeated underperformance. The system gets better over time without human intervention.
+**Shadow-First Lifecycle Governance Is the Core Feature** -- Strategies are not static configurations. They pass through validation, shadow observation, promotion, demotion, and elimination. Capital goes to strategies that prove themselves under the current market regime.
 
 **Human-in-the-Loop Where It Matters** -- Full automation for routine operations. Mandatory human approval for high-severity events (portfolio-level circuit breakers, emergency stops). This is the right balance: autonomous enough to be useful, controlled enough to be safe.
 
@@ -570,6 +570,6 @@ This is not another trading bot with a ChatGPT wrapper. Here is what sets DARWIN
 <p align="center">
   <br/>
   <strong>DARWIN</strong><br/>
-  <em>Because the strategies that survive are the ones that adapt.</em>
+  <em>Local-first, risk-first AI trading governance system.</em>
   <br/><br/>
 </p>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DARWIN 控制面板</title>
+<title>DARWIN Dashboard / 控制面板</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230a0e17'/><text x='32' y='44' text-anchor='middle' font-size='36' fill='%2306b6d4'>D</text></svg>">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -527,7 +527,7 @@ tr:hover td { background: rgba(6,182,212,0.03); }
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="logo">DARWIN</div>
-    <div class="logo-sub">自进化 AI 交易策略平台</div>
+    <div class="logo-sub">本地优先 · 风险优先 / Local-first · Risk-first</div>
     <div class="sidebar-status">
       <span class="status-dot ok" id="statusDot"></span>
       <span id="statusText">连接中...</span>
@@ -580,7 +580,7 @@ tr:hover td { background: rgba(6,182,212,0.03); }
         <span>GitHub</span>
       </a>
     </div>
-    <div>DARWIN v2.0 &copy; 2026 &mdash; OKX AI</div>
+    <div>DARWIN v2.0 &copy; 2026 &mdash; Local-first · Risk-first</div>
   </div>
 </div>
 
@@ -736,7 +736,7 @@ tr:hover td { background: rgba(6,182,212,0.03); }
           <div style="font-size:27px;font-weight:800;background:linear-gradient(90deg,var(--purple),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent">
             &#129516; 策略中心
           </div>
-          <div style="color:var(--dim);font-size:19px;margin-top:4px">自进化策略管道 · 影子验证 · 加权评分分配</div>
+          <div style="color:var(--dim);font-size:19px;margin-top:4px">策略生命周期治理 · 影子验证 · 加权评分分配</div>
         </div>
         <div id="stratHeroStats" style="display:flex;gap:15px"></div>
       </div>
@@ -973,9 +973,10 @@ tr:hover td { background: rgba(6,182,212,0.03); }
         &#128214; 快速参考 — 关于 DARWIN <span>&#9660;</span>
       </div>
       <div class="collapse-body">
-        <p><strong>DARWIN</strong> (Dynamic Adaptive Risk-Weighted Intelligence Network) — 自进化 AI 加密货币交易策略平台。</p>
-        <p>通过 Paperclip 多智能体协作系统，自动感知市场状态、调度策略组合、管理风险并持续优化。</p>
-        <p><strong>技术栈:</strong> Node.js 22 / TypeScript / SQLite / OKX ATK / Paperclip / Claude AI</p>
+        <p><strong>DARWIN</strong> (Dynamic Adaptive Risk-Weighted Intelligence Network) — 一个由 Claw 驱动、基于 OKX Agent Trade Kit 和 Paperclip AI 构建的本地优先、风险优先的 AI 交易治理系统。</p>
+        <p><em>Local-first, risk-first AI trading governance system powered by Claw, OKX Agent Trade Kit, and Paperclip AI.</em></p>
+        <p>它把市场识别、策略治理、真实执行、风控熔断和审计报告保持在同一条决策轨道上。</p>
+        <p><strong>技术栈:</strong> Claw / OKX Agent Trade Kit / Paperclip AI / Node.js 22 / TypeScript / SQLite / Optional LLM providers</p>
       </div>
     </div>
   </div>
@@ -3571,7 +3572,9 @@ function renderAboutPage() {
   <div style="text-align:center;padding:32px 0 24px;position:relative">
     <div style="font-size:68px;font-weight:900;letter-spacing:-2px;background:linear-gradient(135deg,var(--accent),var(--purple),#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1">DARWIN</div>
     <div style="font-size:21px;color:var(--dim);letter-spacing:3px;margin-top:10px;font-weight:600">动态自适应风险加权智能网络</div>
-    <div style="font-size:24px;color:var(--text);margin-top:15px;opacity:0.8">风险优先的 AI 交易治理系统 · 基于 OKX Agent Trade Kit + Paperclip AI 构建</div>
+    <div style="font-size:24px;color:var(--text);margin-top:15px;opacity:0.8">本地优先、风险优先的 AI 交易治理系统</div>
+    <div style="font-size:18px;color:var(--dim);margin-top:8px;opacity:0.9">Local-first, risk-first AI trading governance system</div>
+    <div style="font-size:17px;color:var(--dim);margin-top:10px;opacity:0.9">Powered by Claw · OKX Agent Trade Kit · Paperclip AI</div>
   </div>
 
   <!-- Key Metrics -->
@@ -3599,8 +3602,8 @@ function renderAboutPage() {
   <!-- 4 Core Innovations -->
   <div class="grid g2" style="margin-bottom:24px">
     <div class="glow-card">
-      <div style="font-size:24px;font-weight:700;margin-bottom:12px">&#128163; 影子交易管道</div>
-      <div style="font-size:19px;color:var(--dim);line-height:1.7">所有策略必须先通过影子模式验证（7天+20笔+55%胜率），才能获得实盘资金。表现不佳自动降级淘汰。</div>
+      <div style="font-size:24px;font-weight:700;margin-bottom:12px">&#128163; 影子优先生命周期</div>
+      <div style="font-size:19px;color:var(--dim);line-height:1.7">所有策略都先在影子模式中验证，再按策略类型感知阈值晋升为 live。表现不佳会被降级或淘汰。</div>
       <div style="margin-top:12px;display:flex;gap:10px">
         <span class="badge b-shadow">影子</span><span style="color:var(--dim)">→</span>
         <span class="badge b-live">实盘</span><span style="color:var(--dim)">→</span>
@@ -3629,8 +3632,8 @@ function renderAboutPage() {
       </div>
     </div>
     <div class="glow-card">
-      <div style="font-size:24px;font-weight:700;margin-bottom:12px">&#129302; 多智能体 + AI 增强</div>
-      <div style="font-size:19px;color:var(--dim);line-height:1.7">5 大 Paperclip 智能体分工协作，支持 16 家 LLM 提供商（Claude/GPT/DeepSeek/Groq...），规则优先+AI增强。</div>
+      <div style="font-size:24px;font-weight:700;margin-bottom:12px">&#129302; 多智能体治理 + 可选 AI 增强</div>
+      <div style="font-size:19px;color:var(--dim);line-height:1.7">5 大 Paperclip 治理智能体分工协作，支持可选 LLM 增强；规则优先，LLM 不可用时系统仍可运行。</div>
       <div style="margin-top:12px;font-size:17px;color:var(--dim)">
         规则引擎 100% 确定性决策<br>
         LLM 仅增强分析，故障零降级
@@ -3670,7 +3673,7 @@ function renderAboutPage() {
         { name:'SQLite', detail:'零依赖持久化' },
         { name:'OKX ATK', detail:'完整交易生命周期' },
         { name:'Paperclip AI', detail:'多智能体治理' },
-        { name:'Claude + 15 LLM', detail:'AI增强决策' },
+        { name:'Optional LLM Providers', detail:'规则优先 · 可选增强' },
       ].map(t => `<div style="padding:15px 25px;border-radius:12px;background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.12)">
         <div style="font-size:19px;font-weight:700;color:var(--accent)">${t.name}</div>
         <div style="font-size:16px;color:var(--dim);margin-top:3px">${t.detail}</div>
@@ -3681,7 +3684,7 @@ function renderAboutPage() {
   <!-- OKX Agent Trade Kit Deep Integration -->
   <div class="card" style="margin-top:25px;margin-bottom:24px;padding:25px;background:linear-gradient(135deg,rgba(6,182,212,0.06),rgba(168,85,247,0.04));border:1px solid rgba(6,182,212,0.12)">
     <div style="font-size:24px;font-weight:800;color:var(--accent);margin-bottom:15px">&#9889; OKX Agent Trade Kit 深度集成</div>
-    <div style="font-size:17px;color:var(--dim);margin-bottom:22px;line-height:1.6">DARWIN 深度调用 OKX ATK 工具链，覆盖市场数据、现货/合约交易、网格/马丁策略机器人、算法订单、大单拆分等全品类能力：</div>
+    <div style="font-size:17px;color:var(--dim);margin-bottom:22px;line-height:1.6">DARWIN 通过 OKX ATK 连接市场数据、账户状态、现货/合约执行、Bot 和算法订单，把完整交易链路接入同一套治理系统：</div>
     <div class="grid g4" style="gap:12px">
       ${[
         { cat:'市场数据', tools:['K线','深度','费率','持仓量','多空比'], color:'#22c55e', icon:'&#128225;' },
@@ -3695,7 +3698,7 @@ function renderAboutPage() {
       </div>`).join('')}
     </div>
     <div style="margin-top:15px;padding-top:10px;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:10px 20px;font-size:17px;color:var(--dim)">
-      <span>总计 <strong style="color:var(--accent)">30+</strong> OKX ATK 工具调用</span>
+      <span>覆盖市场、账户、执行、Bot 与算法单能力</span>
       <span>6大策略模板 × ${assetCount} 币种 = <strong style="color:var(--purple)">${instanceCount}</strong> 策略实例</span>
       <span>全链路: 感知 → 决策 → 执行 → 风控 → 审计</span>
     </div>
@@ -3713,10 +3716,10 @@ function renderAboutPage() {
     <div class="grid g2" style="gap:15px">
       ${[
         { title:'完整的 OKX ATK 集成', desc:'覆盖市场读取、现货/合约执行、网格/DCA/算法单和费率套利等核心能力', icon:'&#9889;' },
-        { title:'自进化策略系统', desc:'影子→实盘→降级→淘汰的全生命周期管理，策略自动优胜劣汰', icon:'&#128163;' },
+        { title:'影子优先策略治理', desc:'影子→实盘→降级→淘汰的全生命周期管理，策略按表现与市场状态分配资本', icon:'&#128163;' },
         { title:'工业级风控体系', desc:'四层渐进熔断+人机协作审批+波动率调整资金管理，机构级安全标准', icon:'&#128737;' },
         { title:'多智能体 AI 架构', desc:'5大Paperclip智能体+16家LLM提供商+规则优先零降级AI增强', icon:'&#129302;' },
-        { title:'9币种全覆盖', desc:'BTC/ETH/SOL/XRP/DOGE/TRX/HYPE/OKB/XAUT，通配符自动扩展', icon:'&#128176;' },
+        { title:'按白名单自动扩展', desc:'策略模板会自动扩展到全部配置币种，不需要为每个资产重复定义策略', icon:'&#128176;' },
         { title:'零依赖单机部署', desc:'Node.js 22内置SQLite，npm start即可运行，适合个人和小团队', icon:'&#128296;' },
       ].map(h => `<div style="display:flex;gap:15px;padding:12px;border-radius:12px;background:rgba(0,0,0,0.15)">
         <div style="font-size:25px;flex-shrink:0">${h.icon}</div>
@@ -3764,13 +3767,13 @@ function renderAboutPage() {
         </thead>
         <tbody>
           ${[
-            ['策略管理','自进化影子管道，自动优胜劣汰','固定策略，手动调参','人工判断'],
+            ['策略管理','影子优先生命周期治理','固定策略，手动调参','人工判断'],
             ['风控体系','4层渐进熔断 + 人机审批','简单止损/止盈','依赖纪律'],
             ['资金分配','加权评分 + 波动率/相关性折扣','等额分配','主观判断'],
             ['市场适应','3状态识别，参数自动调整','固定参数','经验判断'],
-            ['AI 增强','16家LLM + 规则优先零降级','无 / 简单API','无'],
+            ['AI 增强','可选 LLM 增强 + 规则优先','无 / 简单API','无'],
             ['多资产','通配符自动扩展至N币种','手动配置每个','受限于精力'],
-            ['OKX 工具','30+ ATK 工具深度集成','基础API调用','手动操作'],
+            ['OKX 工具','市场/账户/执行/Bot/算法单一体化','基础API调用','手动操作'],
             ['回测验证','真实网格模拟引擎','公式估算','无'],
             ['部署难度','npm start 一键运行','需配置环境','N/A'],
           ].map(([dim, darwin, bot, manual]) => `<tr>
@@ -3791,12 +3794,13 @@ function renderAboutPage() {
     <div style="position:absolute;inset:0;opacity:0.02;background-image:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,255,255,0.5) 20px,rgba(255,255,255,0.5) 21px)"></div>
     <div style="position:relative">
       <div style="font-size:25px;font-weight:800;color:var(--text);margin-bottom:12px;line-height:1.6">
-        DARWIN 将<span style="color:var(--accent)">生物进化理论</span>应用于交易策略管理 —<br>
-        策略像物种一样在影子环境中<span style="color:var(--yellow)">竞争</span>、<span style="color:var(--green)">适应</span>、<span style="color:var(--purple)">进化</span>，<br>
-        只有<span style="color:var(--green)">证明自己</span>的才能获得资金。
+        DARWIN 把<span style="color:var(--accent)">市场识别</span>、<span style="color:var(--yellow)">策略治理</span>、<span style="color:var(--green)">真实执行</span>、<span style="color:var(--purple)">风控熔断</span>和审计报告放在同一条决策轨道上。
       </div>
-      <div style="font-size:17px;color:var(--dim);margin-top:12px">
-        动态自适应风险加权智能网络 · 基于 OKX Agent Trade Kit + Paperclip AI 构建
+      <div style="font-size:17px;color:var(--dim);margin-top:8px">
+        Local-first, risk-first AI trading governance system
+      </div>
+      <div style="font-size:17px;color:var(--dim);margin-top:6px">
+        Powered by Claw · OKX Agent Trade Kit · Paperclip AI
       </div>
     </div>
   </div>`

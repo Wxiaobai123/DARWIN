@@ -2,7 +2,7 @@
 
 **Dynamic Adaptive Risk-Weighted Intelligence Network**
 
-> *一个由 Claw 驱动、基于 OKX Agent Trade Kit 的风险优先型自主交易总指挥*
+> *一个由 Claw 驱动、基于 OKX Agent Trade Kit 和 Paperclip AI 构建的本地优先、风险优先的 AI 交易治理系统*
 
 **中文** | [English](README_EN.md)
 
@@ -13,24 +13,25 @@
 
 ---
 
-## What is DARWIN?
+## DARWIN 是什么？
 
-DARWIN is not a trading bot. It is a **risk-first trading governance layer** — a multi-agent system that reads the market, dispatches the right strategy, executes trades through OKX, and keeps risk controls, halts, and reporting on the same decision rail.
+DARWIN 不是一个只会下单的交易 Bot。它是一个**本地优先、风险优先的 AI 交易治理系统**：负责读取市场、识别状态、选择策略，通过 OKX 执行交易，并把风控、熔断和报告保持在同一条决策轨道上。
 
-Built on two foundations:
+两大基础能力：
 - **[OKX Agent Trade Kit](https://www.okx.com/zh-hans/agent-tradekit)** — MCP + CLI tooling covering the full trading lifecycle across market, account, spot, swap, bot, and related execution modules
 - **[Paperclip AI](https://github.com/paperclipai/paperclip)** — open-source multi-agent orchestration platform with org hierarchy, heartbeat scheduling, budget control, and human approval gates
 
-**用户设置风险偏好和币种白名单。DARWIN 处理其他一切。**
+**用户设置风险偏好和币种白名单；DARWIN 负责市场识别、策略治理、执行协同和风险控制。**
 
 项目文档：
+- [Product Positioning](docs/PRODUCT_POSITIONING.md)
 - [Project Architecture](docs/PROJECT_ARCHITECTURE.md)
 - [Full System Architecture](docs/ARCHITECTURE.md)
 - [Strategy Specification](docs/STRATEGY_SPEC.md)
 
 ---
 
-## Why DARWIN Matters
+## 为什么选择 DARWIN
 
 - **把交易从“会下单”提升到“会治理”**：DARWIN 不只执行命令，还会根据市场状态切换策略、限制风险暴露，并留下完整审计链路。
 - **把分散的交易动作串成一条责任链**：市场识别、策略分配、真实执行、熔断保护、日报回顾都在同一条决策轨道上。
@@ -38,7 +39,7 @@ Built on two foundations:
 
 ---
 
-## Architecture At A Glance
+## 架构总览
 
 ```mermaid
 flowchart LR
@@ -86,7 +87,7 @@ flowchart LR
 
 ---
 
-## System Architecture
+## 系统架构
 
 ```
 ╔══════════════════════════════════════════════════════════════╗
@@ -136,7 +137,7 @@ flowchart LR
 
 ---
 
-## Key Innovations
+## 核心能力
 
 ### 1. Market Regime Detection with Confirmation Buffer
 Before any strategy executes, DARWIN classifies the market using 4 indicators:
@@ -229,7 +230,7 @@ Hard caps by risk tier:
 
 ---
 
-## 6 Official Strategies × N Coins
+## 六大内置策略 × N 币种
 
 | # | Strategy | Tool | Market State | Description |
 |---|----------|------|-------------|-------------|
@@ -250,7 +251,7 @@ Hard caps by risk tier:
 
 ---
 
-## Quick Start
+## 快速开始
 
 ### Prerequisites
 - Node.js 22+ with `pnpm`
@@ -372,7 +373,7 @@ pnpm run bridge
 
 ---
 
-## Execution Engine Coverage
+## 执行引擎覆盖
 
 DARWIN covers **8 distinct execution tools** through OKX ATK:
 
@@ -389,7 +390,7 @@ DARWIN covers **8 distinct execution tools** through OKX ATK:
 
 ---
 
-## Validation
+## 验证
 
 For the fastest local validation path, run:
 
@@ -405,7 +406,7 @@ Current verified result as of 2026-03-20:
 
 ---
 
-## Repository Structure
+## 仓库结构
 
 ```
 DARWIN/
@@ -464,7 +465,7 @@ DARWIN/
 
 ---
 
-## Tech Stack
+## 技术栈
 
 | Component | Technology | Notes |
 |-----------|-----------|-------|
@@ -479,7 +480,7 @@ DARWIN/
 
 ---
 
-## Security
+## 安全设计
 
 - OKX API keys stay **local only** — never transmitted outside the machine
 - ATK CLI wrapper uses **`execFileSync` with argument arrays** — zero shell injection risk
@@ -491,24 +492,18 @@ DARWIN/
 
 ---
 
-## Competition Context
+## 产品特征总结
 
-Built on **OKX Agent Trade Kit** and **Paperclip AI**.
+基于 **OKX Agent Trade Kit** 和 **Paperclip AI**。
 
-DARWIN demonstrates the full depth of OKX Agent Trade Kit within a proper multi-agent governance structure:
+DARWIN 的对外定位可以收敛成三点：
 
-- **Market intelligence** → 9-coin real-time regime detection with 4 indicators
-- **Execution diversity** → 9 tool types: grid, contract grid, DCA, swap, spot, recurring buy, funding arb, TWAP, iceberg
-- **Strategy evolution** → shadow → live promotion pipeline with tool-aware thresholds
-- **Risk management** → 4-tier circuit breaker with execution gate enforcement
-- **Capital allocation** → Weighted scoring with volatility adjustments
-- **Coin-agnostic design** → wildcard templates auto-expand to user's whitelist
-- **LLM-enhanced decisions** → optional enrichment from 15 providers (zero degradation without)
-- **Self-healing** → dead bot recovery, day-boundary PnL reset, DB WAL mode, graceful error handling
-- **Execution gate** → circuit breaker blocks new trade entry and closes blocked strategies
+- **本地优先**：密钥、数据库和控制面板都留在本机，默认不把核心控制面暴露到公网。
+- **风险优先**：市场识别、策略分配、真实执行、熔断保护和审计报告始终走同一条责任链。
+- **治理优先**：Claw 负责理解意图，Paperclip 负责多智能体协同，OKX ATK 负责真实市场与执行能力。
 
-The system runs live against OKX demo accounts with all 5 agents in Paperclip, heartbeats firing on schedule, and 54 strategy instances operating concurrently.
+系统当前已具备完整的产品闭环：从 OKX Demo 环境中的真实执行，到多智能体调度、策略生命周期管理、四层熔断和日报审计，全部可以在本地直接验证。
 
 ---
 
-*DARWIN — because the strategies that survive are the ones that adapt.*
+*DARWIN 把市场识别、策略治理、真实执行、风控熔断和审计报告放在同一条决策轨道上。*
