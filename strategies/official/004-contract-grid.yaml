@@ -1,0 +1,50 @@
+metadata:
+  id: ""
+  name: "合约网格"
+  author: "darwin_official"
+  version: "1.0"
+  created_at: "2026-03-11"
+  description: "永续合约网格策略，中性方向5倍杠杆，双向捕获价格波动。利用合约杠杆放大网格收益，适合高波动震荡区间。"
+
+conditions:
+  market_states:
+    - "oscillation"
+  assets:
+    - "*"
+  max_atr_ratio: 1.4
+  paused_during_events:
+    - "fomc"
+
+execution:
+  tool: "okx_contract_grid"
+  params:
+    grid_count: 15
+    price_range_pct: 6.0
+    order_amount_usdt: 500
+    direction: "neutral"
+    lever: 5
+    base_pos: true
+  entry_signal: "immediate"
+  exit_signal: "grid_completion"
+  max_hold_hours: null
+
+risk:
+  max_drawdown_pct: 10.0
+  stop_loss_pct: 15.0
+  take_profit_pct: null
+  max_position_usdt: 3000
+  pause_after_loss_days: 3
+
+promotion:
+  min_shadow_days: 3
+  min_trades: 10
+  min_win_rate: 0.55
+  max_realized_drawdown: 0.12
+  min_days_per_state: 2
+
+demotion:
+  live_drawdown_trigger_pct: 12.0
+  consecutive_loss_days: 3
+
+elimination:
+  failed_shadow_attempts: 3

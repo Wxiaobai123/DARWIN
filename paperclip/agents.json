@@ -1,0 +1,112 @@
+[
+  {
+    "id": "b63082a3-c353-43c7-82ed-38aab1287561",
+    "name": "CTO Agent",
+    "role": "cto",
+    "title": "Chief Trading Officer",
+    "icon": "brain",
+    "reportsTo": null,
+    "capabilities": "Market regime detection, strategy portfolio management, capital allocation, autonomous trading decisions",
+    "adapterType": "http",
+    "adapterConfig": {
+      "url": "http://localhost:3200/heartbeat/cto",
+      "method": "POST"
+    },
+    "runtimeConfig": {
+      "heartbeatIntervalMinutes": 60
+    },
+    "budgetMonthlyCents": 500,
+    "metadata": {
+      "tick": "60min",
+      "darwin_role": "cto"
+    }
+  },
+  {
+    "id": "81c70dbd-bfec-4b96-86c8-0de8eef7b198",
+    "name": "Market Analyst",
+    "role": "researcher",
+    "title": "Market Intelligence Analyst",
+    "icon": "eye",
+    "reportsTo": "b63082a3-c353-43c7-82ed-38aab1287561",
+    "capabilities": "Real-time ATR, funding rate, volume, long/short ratio analysis. Classifies BTC and ETH into oscillation/trend/extreme regimes with 3-confirmation buffer.",
+    "adapterType": "http",
+    "adapterConfig": {
+      "url": "http://localhost:3200/heartbeat/market",
+      "method": "POST"
+    },
+    "runtimeConfig": {
+      "heartbeatIntervalMinutes": 15
+    },
+    "budgetMonthlyCents": 200,
+    "metadata": {
+      "tick": "15min",
+      "darwin_role": "market_analyst"
+    }
+  },
+  {
+    "id": "a5d406a8-ad1c-4ea3-895d-20001d779747",
+    "name": "Risk Agent",
+    "role": "devops",
+    "title": "Chief Risk Officer",
+    "icon": "shield",
+    "reportsTo": "b63082a3-c353-43c7-82ed-38aab1287561",
+    "capabilities": "Four-tier circuit breaker: strategy/asset/portfolio/emergency halt. Monitors drawdown and enforces risk limits per user tier (conservative/balanced/aggressive).",
+    "adapterType": "http",
+    "adapterConfig": {
+      "url": "http://localhost:3200/heartbeat/risk",
+      "method": "POST"
+    },
+    "runtimeConfig": {
+      "heartbeatIntervalMinutes": 5
+    },
+    "budgetMonthlyCents": 200,
+    "metadata": {
+      "tick": "5min",
+      "darwin_role": "risk_agent"
+    }
+  },
+  {
+    "id": "ceba81e3-50c8-42e3-ad25-6d53f160303b",
+    "name": "Strategy Manager",
+    "role": "pm",
+    "title": "Strategy Lifecycle Manager",
+    "icon": "git-branch",
+    "reportsTo": "b63082a3-c353-43c7-82ed-38aab1287561",
+    "capabilities": "Strategy promotion/demotion/elimination lifecycle. Kelly-based leaderboard scoring. Manages shadow-to-live pipeline with criteria: min days, trades, win rate, drawdown.",
+    "adapterType": "http",
+    "adapterConfig": {
+      "url": "http://localhost:3200/heartbeat/strategy-manager",
+      "method": "POST"
+    },
+    "runtimeConfig": {
+      "heartbeatIntervalMinutes": 1440
+    },
+    "budgetMonthlyCents": 100,
+    "metadata": {
+      "tick": "daily",
+      "darwin_role": "strategy_manager"
+    }
+  },
+  {
+    "id": "ee3a75a5-7b6b-4760-ad40-f17f63edbc03",
+    "name": "Auditor",
+    "role": "general",
+    "title": "Daily Report & Audit",
+    "icon": "file-code",
+    "reportsTo": "b63082a3-c353-43c7-82ed-38aab1287561",
+    "capabilities": "Generates daily natural language trading reports in Chinese. Compiles market state, P&L, circuit breaker events. Creates immutable audit trail for all DARWIN decisions.",
+    "adapterType": "http",
+    "adapterConfig": {
+      "url": "http://localhost:3200/heartbeat/auditor",
+      "method": "POST"
+    },
+    "runtimeConfig": {
+      "heartbeatIntervalMinutes": 1440
+    },
+    "budgetMonthlyCents": 100,
+    "metadata": {
+      "tick": "daily",
+      "darwin_role": "auditor"
+    }
+  }
+]

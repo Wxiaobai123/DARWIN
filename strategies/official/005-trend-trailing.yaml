@@ -1,0 +1,50 @@
+metadata:
+  id: ""
+  name: "趋势追踪"
+  author: "darwin_official"
+  version: "1.0"
+  created_at: "2026-03-11"
+  description: "趋势跟踪策略，MACD金叉信号开多仓，3%移动止盈锁定利润。趋势行情中跟随主力方向，回调时自动止盈退出。"
+
+conditions:
+  market_states:
+    - "trend"
+  assets:
+    - "*"
+  min_atr_ratio: 1.0
+  paused_during_events:
+    - "fomc"
+    - "cpi"
+
+execution:
+  tool: "okx_swap_trailing_stop"
+  params:
+    lever: 5
+    direction: "long"
+    order_amount_usdt: 300
+    callback_ratio: 0.03
+    td_mode: "cross"
+  entry_signal: "macd_cross_up"
+  exit_signal: "trailing_stop"
+  max_hold_hours: 168
+
+risk:
+  max_drawdown_pct: 8.0
+  stop_loss_pct: 10.0
+  take_profit_pct: 15.0
+  max_position_usdt: 1500
+  pause_after_loss_days: 2
+
+promotion:
+  min_shadow_days: 3
+  min_trades: 3
+  min_win_rate: 0.55
+  max_realized_drawdown: 0.10
+  min_days_per_state: 3
+
+demotion:
+  live_drawdown_trigger_pct: 10.0
+  consecutive_loss_days: 3
+
+elimination:
+  failed_shadow_attempts: 3

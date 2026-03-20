@@ -1,0 +1,55 @@
+metadata:
+  id: ""
+  name: "合约马丁格尔"
+  author: "darwin_official"
+  version: "2.0"
+  created_at: "2026-03-11"
+  description: "合约DCA马丁格尔策略，利用杠杆在下跌时逐步加仓摊平成本，触发止盈后自动结束循环。适合震荡市的抄底。"
+
+conditions:
+  market_states:
+    - "oscillation"
+  assets:
+    - "*"
+  max_atr_ratio: 1.5
+  paused_during_events:
+    - "fomc"
+    - "cpi"
+
+execution:
+  tool: "okx_dca_bot"
+  params:
+    lever: 5
+    direction: "long"
+    init_order_amt: 200
+    max_safety_orders: 3
+    tp_pct: 3.0
+    safety_order_amt: 200
+    price_steps: 2.0
+    price_steps_mult: 1.5
+    vol_mult: 2.0
+    sl_pct: 15.0
+  entry_signal: "rsi_oversold"
+  exit_signal: "dca_tp"
+  max_hold_hours: null
+
+risk:
+  max_drawdown_pct: 10.0
+  stop_loss_pct: 15.0
+  take_profit_pct: null
+  max_position_usdt: 2000
+  pause_after_loss_days: 3
+
+promotion:
+  min_shadow_days: 3
+  min_trades: 5
+  min_win_rate: 0.55
+  max_realized_drawdown: 0.12
+  min_days_per_state: 2
+
+demotion:
+  live_drawdown_trigger_pct: 12.0
+  consecutive_loss_days: 3
+
+elimination:
+  failed_shadow_attempts: 3

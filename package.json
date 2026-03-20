@@ -1,0 +1,43 @@
+{
+  "name": "DARWIN",
+  "version": "1.0.0",
+  "description": "Dynamic Adaptive Risk-Weighted Intelligence Network",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "NODE_OPTIONS='--experimental-sqlite' tsx src/index.ts",
+    "market:state": "NODE_OPTIONS='--experimental-sqlite' tsx src/market/state-recognizer.ts",
+    "cto": "NODE_OPTIONS='--experimental-sqlite' tsx src/cto/agent.ts",
+    "report": "NODE_OPTIONS='--experimental-sqlite' tsx src/report/generator.ts",
+    "demo": "NODE_OPTIONS='--experimental-sqlite' tsx src/demo/scenarios.ts",
+    "demo:a": "NODE_OPTIONS='--experimental-sqlite' tsx src/demo/scenarios.ts a",
+    "demo:b": "NODE_OPTIONS='--experimental-sqlite' tsx src/demo/scenarios.ts b",
+    "demo:c": "NODE_OPTIONS='--experimental-sqlite' tsx src/demo/scenarios.ts c",
+    "verify": "tsx src/demo/verify.ts",
+    "demo:guided": "NODE_OPTIONS='--experimental-sqlite' tsx src/demo/guided-demo.ts",
+    "bridge": "NODE_OPTIONS='--experimental-sqlite' tsx src/paperclip/server.ts",
+    "backtest": "NODE_OPTIONS='--experimental-sqlite' tsx src/backtest/engine.ts",
+    "backtest:90d": "NODE_OPTIONS='--experimental-sqlite' tsx src/backtest/engine.ts --days=90",
+    "backtest:180d": "NODE_OPTIONS='--experimental-sqlite' tsx src/backtest/engine.ts --days=180",
+    "paperclip": "npx paperclipai run",
+    "test:strategies": "DARWIN_DB_PATH=/tmp/darwin-test-$$.db NODE_OPTIONS='--experimental-sqlite' tsx src/test-strategies.ts",
+    "dev": "NODE_OPTIONS='--experimental-sqlite' tsx watch src/index.ts",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.30.0",
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^25.4.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "axios": "^1.13.6",
+    "dotenv": "^17.3.1",
+    "js-yaml": "^4.1.1",
+    "node-cron": "^4.2.1"
+  }
+}

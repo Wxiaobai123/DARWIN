@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+output/
+
+# Environment & secrets — NEVER commit these
+.env
+.env.local
+config.toml
+
+# Database
+*.db
+*.db-journal
+
+# OS
+.DS_Store
+.claude/
+dashboard.html.backup
+
+# Logs
+*.log
+*.db-shm
+*.db-wal
+
+# Internal / local-only materials
+showcase.html
+plan.md
+docs/DEVELOPMENT_PLAN.md
+docs/FINAL_SUBMISSION_INDEX_CN.md
+docs/JUDGE_QUICKSTART_CN.md
+docs/GEMINI_SCORECARD_CN.md
+docs/JUDGE_FAQ_CN.md
+docs/LAST_24H_CHECKLIST_CN.md
+docs/DARWIN_ATK_INTEGRATION_MAP.md
+docs/DARWIN_GEMINI_CHAMPION_BLUEPRINT_2026-03-20.md
+docs/CLAW_PROMPT_PACK_CN.md
+docs/DEMO_SCRIPT_CN.md
+docs/SUBMISSION_FORM_CN.md
+docs/OKX_X_POST_DRAFT_CN_2026-03-20.md
+docs/OKX_CHAMPION_PLAYBOOK_2026-03-20.md
+docs/TOP3_FINAL_SPRINT_CN.md
+docs/HANDOFF_FIX_BRIEF_2026-03-15.md

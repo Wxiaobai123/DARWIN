@@ -1,0 +1,48 @@
+metadata:
+  id: ""
+  name: "资金费率套利"
+  author: "darwin_official"
+  version: "1.0"
+  created_at: "2026-03-11"
+  description: "资金费率套利策略，现货做多+永续合约做空实现Delta中性，持续收取资金费率。年化超15%时自动开仓，费率下降时自动平仓。"
+
+conditions:
+  market_states:
+    - "oscillation"
+    - "trend"
+  assets:
+    - "*"
+  min_funding_rate: 0.0005
+  paused_during_events: []
+
+execution:
+  tool: "okx_funding_arb"
+  params:
+    order_amount_usdt: 500
+    lever: 2
+    min_annual_pct: 15
+    exit_annual_pct: 5
+  entry_signal: "funding_rate_spike"
+  exit_signal: "state_change"
+  max_hold_hours: 720
+
+risk:
+  max_drawdown_pct: 5.0
+  stop_loss_pct: 8.0
+  take_profit_pct: null
+  max_position_usdt: 2000
+  pause_after_loss_days: 3
+
+promotion:
+  min_shadow_days: 3
+  min_trades: 3
+  min_win_rate: 0.60
+  max_realized_drawdown: 0.07
+  min_days_per_state: 3
+
+demotion:
+  live_drawdown_trigger_pct: 7.0
+  consecutive_loss_days: 5
+
+elimination:
+  failed_shadow_attempts: 3

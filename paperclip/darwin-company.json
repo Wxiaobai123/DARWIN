@@ -1,0 +1,9 @@
+{
+  "id": "dd2ca47a-b060-4b7e-9b14-60a0acc0a12c",
+  "name": "DARWIN",
+  "description": "Dynamic Adaptive Risk-Weighted Intelligence Network — A local-first risk-aware trading governance system",
+  "status": "active",
+  "issuePrefix": "DAR",
+  "budgetMonthlyCents": 10000,
+  "requireBoardApprovalForNewAgents": true
+}

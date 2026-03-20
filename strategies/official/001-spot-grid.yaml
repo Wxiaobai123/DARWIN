@@ -1,0 +1,47 @@
+metadata:
+  id: ""
+  name: "现货网格"
+  author: "darwin_official"
+  version: "1.0"
+  created_at: "2026-03-11"
+  description: "震荡行情下的现货网格策略，在价格区间内自动低买高卖，捕获小幅波动收益。适合横盘整理阶段，支持多币种同时运行。"
+
+conditions:
+  market_states:
+    - "oscillation"
+  assets:
+    - "*"
+  max_atr_ratio: 1.4
+  paused_during_events:
+    - "fomc"
+
+execution:
+  tool: "okx_grid_bot"
+  params:
+    grid_count: 10
+    price_range_pct: 5.0
+    order_amount_usdt: 150
+  entry_signal: "immediate"
+  exit_signal: "grid_completion"
+  max_hold_hours: null
+
+risk:
+  max_drawdown_pct: 8.0
+  stop_loss_pct: 12.0
+  take_profit_pct: null
+  max_position_usdt: null
+  pause_after_loss_days: 3
+
+promotion:
+  min_shadow_days: 3
+  min_trades: 5
+  min_win_rate: 0.55
+  max_realized_drawdown: 0.10
+  min_days_per_state: 2
+
+demotion:
+  live_drawdown_trigger_pct: 10.0
+  consecutive_loss_days: 3
+
+elimination:
+  failed_shadow_attempts: 3

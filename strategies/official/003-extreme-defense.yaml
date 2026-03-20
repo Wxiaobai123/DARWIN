@@ -1,0 +1,43 @@
+metadata:
+  id: ""
+  name: "极端行情防守哨兵"
+  author: "darwin_official"
+  version: "1.0"
+  created_at: "2026-03-11"
+  description: "极端行情下的纯防守策略，不开新仓位，仅监控市场状态并等待恢复信号。保护账户资金安全的最后防线。"
+
+conditions:
+  market_states:
+    - "extreme"
+  assets:
+    - "*"
+  paused_during_events: []
+
+execution:
+  tool: "okx_spot_order"
+  params:
+    order_type: "market"
+    size_pct_of_allocation: 0
+  entry_signal: "immediate"
+  exit_signal: "state_change"
+  max_hold_hours: null
+
+risk:
+  max_drawdown_pct: 25.0
+  stop_loss_pct: 40.0
+  take_profit_pct: null
+  pause_after_loss_days: null
+
+promotion:
+  min_shadow_days: 3
+  min_trades: 1
+  min_win_rate: 0.55
+  max_realized_drawdown: 0.27
+  min_days_per_state: 1
+
+demotion:
+  live_drawdown_trigger_pct: 30.0
+  consecutive_loss_days: 7
+
+elimination:
+  failed_shadow_attempts: 3
