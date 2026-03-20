@@ -1,0 +1,101 @@
+<svg width="1600" height="920" viewBox="0 0 1600 920" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="80" x2="1480" y2="840" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1220"/>
+      <stop offset="1" stop-color="#101B34"/>
+    </linearGradient>
+    <linearGradient id="title" x1="240" y1="0" x2="1240" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06B6D4"/>
+      <stop offset="0.5" stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#A855F7"/>
+    </linearGradient>
+    <linearGradient id="rail" x1="240" y1="0" x2="1360" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06B6D4"/>
+      <stop offset="0.25" stop-color="#22C55E"/>
+      <stop offset="0.5" stop-color="#EAB308"/>
+      <stop offset="0.75" stop-color="#F97316"/>
+      <stop offset="1" stop-color="#EF4444"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#020617" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="920" rx="32" fill="url(#bg)"/>
+  <circle cx="1330" cy="150" r="180" fill="#06B6D4" fill-opacity="0.08"/>
+  <circle cx="240" cy="770" r="220" fill="#A855F7" fill-opacity="0.08"/>
+  <circle cx="1440" cy="760" r="140" fill="#22C55E" fill-opacity="0.06"/>
+
+  <text x="120" y="92" fill="url(#title)" font-size="48" font-weight="800" font-family="Arial, sans-serif">DARWIN 产品价值地图</text>
+  <text x="120" y="132" fill="#9FB0C9" font-size="22" font-family="Arial, sans-serif">不是“给出一个买卖点”的 bot，而是一套从识别、治理、执行到审计的交易责任链。</text>
+
+  <rect x="120" y="170" width="1360" height="88" rx="24" fill="#0F1A31" stroke="#1E3258"/>
+  <text x="150" y="218" fill="#E2E8F0" font-size="26" font-weight="700" font-family="Arial, sans-serif">用户输入</text>
+  <text x="150" y="246" fill="#93A4BF" font-size="18" font-family="Arial, sans-serif">风险等级 · 币种白名单 · 目标约束</text>
+  <text x="1030" y="218" fill="#E2E8F0" font-size="26" font-weight="700" font-family="Arial, sans-serif">系统输出</text>
+  <text x="1030" y="246" fill="#93A4BF" font-size="18" font-family="Arial, sans-serif">更稳的执行、更清晰的风险边界、更完整的审计结果</text>
+
+  <path d="M240 356H1360" stroke="url(#rail)" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="240" cy="356" r="12" fill="#06B6D4"/>
+  <circle cx="520" cy="356" r="12" fill="#22C55E"/>
+  <circle cx="800" cy="356" r="12" fill="#EAB308"/>
+  <circle cx="1080" cy="356" r="12" fill="#F97316"/>
+  <circle cx="1360" cy="356" r="12" fill="#EF4444"/>
+
+  <g filter="url(#shadow)">
+    <rect x="120" y="396" width="240" height="220" rx="24" fill="#0F1A31" stroke="#15455A"/>
+    <text x="150" y="446" fill="#06B6D4" font-size="26" font-weight="800" font-family="Arial, sans-serif">1. 输入与边界</text>
+    <text x="150" y="482" fill="#E2E8F0" font-size="20" font-weight="700" font-family="Arial, sans-serif">本地优先的操作平面</text>
+    <text x="150" y="520" fill="#9FB0C9" font-size="17" font-family="Arial, sans-serif">• 用户只定义风险偏好与观察范围</text>
+    <text x="150" y="550" fill="#9FB0C9" font-size="17" font-family="Arial, sans-serif">• 密钥仅留在本机</text>
+    <text x="150" y="580" fill="#9FB0C9" font-size="17" font-family="Arial, sans-serif">• 不把判断外包给云端黑盒</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="400" y="396" width="240" height="220" rx="24" fill="#0F1A31" stroke="#1A5C42"/>
+    <text x="430" y="446" fill="#22C55E" font-size="26" font-weight="800" font-family="Arial, sans-serif">2. 市场识别</text>
+    <text x="430" y="482" fill="#E2E8F0" font-size="20" font-weight="700" font-family="Arial, sans-serif">先判断，再行动</text>
+    <text x="430" y="520" fill="#9FB0C9" font-size="17" font-family="Arial, sans-serif">• ATR / 费率 / 成交量 / 多空比</text>
+    <text x="430" y="550" fill="#9FB0C9" font-size="17" font-family="Arial, sans-serif">• 震荡 / 趋势 / 极端 三状态</text>
+    <text x="430" y="580" fill="#9FB0C9" font-size="17" font-family="Arial, sans-serif">• 3 次确认，避免来回抖动</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="680" y="396" width="240" height="220" rx="24" fill="#0F1A31" stroke="#6C5A12"/>
+    <text x="710" y="446" fill="#EAB308" font-size="26" font-weight="800" font-family="Arial, sans-serif">3. 策略治理</text>
+    <text x="710" y="482" fill="#E2E8F0" font-size="20" font-weight="700" font-family="Arial, sans-serif">不是固定策略死跑</text>
+    <text x="710" y="520" fill="#9FB0C9" font-size="17" font-family="Arial, sans-serif">• Shadow → Live 的晋升闭环</text>
+    <text x="710" y="550" fill="#9FB0C9" font-size="17" font-family="Arial, sans-serif">• 加权评分分配资本</text>
+    <text x="710" y="580" fill="#9FB0C9" font-size="17" font-family="Arial, sans-serif">• 亏损降级，胜者增配</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="960" y="396" width="240" height="220" rx="24" fill="#0F1A31" stroke="#7C3A0C"/>
+    <text x="990" y="446" fill="#F97316" font-size="26" font-weight="800" font-family="Arial, sans-serif">4. OKX 执行层</text>
+    <text x="990" y="482" fill="#E2E8F0" font-size="20" font-weight="700" font-family="Arial, sans-serif">ATK 负责真实能力</text>
+    <text x="990" y="520" fill="#9FB0C9" font-size="17" font-family="Arial, sans-serif">• 行情 / 账户 / 持仓</text>
+    <text x="990" y="550" fill="#9FB0C9" font-size="17" font-family="Arial, sans-serif">• 现货 / 合约 / Bot / Algo</text>
+    <text x="990" y="580" fill="#9FB0C9" font-size="17" font-family="Arial, sans-serif">• 把决策落到真实交易链路</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1240" y="396" width="240" height="220" rx="24" fill="#0F1A31" stroke="#6E1F2A"/>
+    <text x="1270" y="446" fill="#EF4444" font-size="26" font-weight="800" font-family="Arial, sans-serif">5. 风控与审计</text>
+    <text x="1270" y="482" fill="#E2E8F0" font-size="20" font-weight="700" font-family="Arial, sans-serif">保护资金，而不是赌方向</text>
+    <text x="1270" y="520" fill="#9FB0C9" font-size="17" font-family="Arial, sans-serif">• T1 - T4 四层熔断</text>
+    <text x="1270" y="550" fill="#9FB0C9" font-size="17" font-family="Arial, sans-serif">• Paperclip 审批链</text>
+    <text x="1270" y="580" fill="#9FB0C9" font-size="17" font-family="Arial, sans-serif">• 每日报告与可追溯决策日志</text>
+  </g>
+
+  <rect x="120" y="674" width="1360" height="170" rx="28" fill="#0F1A31" stroke="#1E3258"/>
+  <text x="150" y="722" fill="#E2E8F0" font-size="28" font-weight="800" font-family="Arial, sans-serif">DARWIN 和普通交易 bot 的根本区别</text>
+
+  <rect x="150" y="748" width="400" height="64" rx="18" fill="#111F3A" stroke="#1B3A5B"/>
+  <text x="178" y="786" fill="#06B6D4" font-size="20" font-weight="700" font-family="Arial, sans-serif">普通 bot：拿到信号就执行</text>
+
+  <rect x="598" y="748" width="430" height="64" rx="18" fill="#111F3A" stroke="#214A3E"/>
+  <text x="626" y="786" fill="#22C55E" font-size="20" font-weight="700" font-family="Arial, sans-serif">DARWIN：先识别市场，再选择策略，再执行</text>
+
+  <rect x="1076" y="748" width="374" height="64" rx="18" fill="#111F3A" stroke="#5B2A41"/>
+  <text x="1104" y="786" fill="#EAB308" font-size="20" font-weight="700" font-family="Arial, sans-serif">最后还能熔断、解释、复盘</text>
+</svg>

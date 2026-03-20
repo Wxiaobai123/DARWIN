@@ -1062,6 +1062,18 @@ const TOOL_SHORT = {
 }
 const RISK_CN = { conservative:'保守', balanced:'平衡', aggressive:'激进' }
 const RISK_EN = { conservative:'Conservative', balanced:'Balanced', aggressive:'Aggressive' }
+const STRATEGY_LABELS = [
+  ['现货网格', 'Spot Grid'],
+  ['合约马丁格尔', 'Contract Martingale'],
+  ['DCA马丁', 'DCA Martingale'],
+  ['信号策略', 'Signal Strategy'],
+  ['合约网格', 'Contract Grid'],
+  ['现货止盈止损', 'Spot Exit Rules'],
+  ['组合策略', 'Portfolio Strategy'],
+  ['趋势追踪', 'Trend Trailing'],
+  ['极端防守哨兵', 'Extreme Defense Sentinel'],
+  ['资金费率套利', 'Funding Arb'],
+]
 
 function resolveLang() {
   const params = new URLSearchParams(location.search)
@@ -1076,6 +1088,13 @@ let currentLang = resolveLang()
 const L = (cn, en) => currentLang === 'en' ? en : cn
 const riskName = tier => currentLang === 'en' ? (RISK_EN[tier] || tier) : (RISK_CN[tier] || tier)
 const stateName = state => currentLang === 'en' ? (S_EN[state] || state) : (S_CN[state] || state)
+function strategyNameLabel(name) {
+  if (!name) return '--'
+  if (currentLang !== 'en') return name
+  let out = String(name)
+  STRATEGY_LABELS.forEach(([cn, en]) => { out = out.replaceAll(cn, en) })
+  return out
+}
 
 function syncLangUrl() {
   const url = new URL(location.href)
@@ -1493,6 +1512,186 @@ function localizeReportsPage() {
     ['趋势追踪', 'Trend'],
     ['资金费率', 'Funding'],
     ['其他', 'Other'],
+  ])
+}
+
+function localizeStrategyPage() {
+  replaceHtmlIn('page-strategy', [
+    ['策略中心', 'Strategy Center'],
+    ['策略生命周期治理 · 影子验证 · 加权评分分配', 'Lifecycle governance · shadow validation · weighted capital scoring'],
+    ['策略扩展引擎', 'Strategy Expansion Engine'],
+    ['策略×市场状态胜率', 'Strategy × Regime Win Rate'],
+    ['策略排行榜', 'Strategy Leaderboard'],
+    ['加权评分分解', 'Weighted score breakdown'],
+    ['排名', 'Rank'],
+    ['策略名称', 'Strategy'],
+    ['状态', 'Status'],
+    ['综合评分', 'Score'],
+    ['评分分解', 'Score Mix'],
+    ['交易数', 'Trades'],
+    ['胜率', 'Win Rate'],
+    ['全部策略', 'All Strategies'],
+    ['工具', 'Tool'],
+    ['资产', 'Assets'],
+    ['适用市场', 'Regimes'],
+    ['收益率', 'Return'],
+    ['最大回撤', 'Max DD'],
+    ['机器人', 'Bot'],
+    ['操作', 'Action'],
+    ['活跃机器人', 'Active Bots'],
+    ['策略生命周期说明', 'Strategy Lifecycle'],
+    ['影子验证', 'Shadow Validation'],
+    ['模拟盘运行，积累数据', 'Collect proof in demo mode'],
+    ['实盘晋升', 'Promotion to Live'],
+    ['满足条件后分配资金', 'Capital assigned after thresholds are met'],
+    ['动态监控', 'Continuous Monitoring'],
+    ['持续评估表现', 'Continuously evaluate performance'],
+    ['降级淘汰', 'Demote / Retire'],
+    ['止损触发自动降级', 'Automatically demote on stop triggers'],
+    ['加权评分公式', 'Weighted Score Formula'],
+    ['综合 ', 'Composite '],
+    ['胜率(35%)', 'win rate (35%)'],
+    ['风险调整收益(25%)', 'risk-adjusted return (25%)'],
+    ['回撤控制(20%)', 'drawdown control (20%)'],
+    ['交易频率(10%)', 'trade frequency (10%)'],
+    ['状态适应性(10%)', 'regime fit (10%)'],
+    [' 计算 0-1 分数', ' into a 0-1 score'],
+    ['模板', 'Templates'],
+    ['实例', 'Instances'],
+    ['影子', 'Shadow'],
+    ['实盘', 'Live'],
+    ['活跃', 'Active'],
+    ['均胜率', 'Avg Win Rate'],
+    ['暂无排行数据', 'No ranking data yet'],
+    ['暂无策略', 'No strategies yet'],
+    ['系统启动后将自动加载策略配置', 'Strategy definitions will load automatically after startup.'],
+    ['运行中', 'Running'],
+    ['未运行', 'Idle'],
+    ['停止', 'Stop'],
+    ['启动', 'Start'],
+    ['网格策略', 'Grid'],
+    ['DCA马丁', 'DCA Martingale'],
+    ['信号策略', 'Signal Strategy'],
+    ['合约网格', 'Contract Grid'],
+    ['现货止盈止损', 'Spot Exit Rules'],
+    ['组合策略', 'Portfolio Strategy'],
+    ['币种', 'Assets'],
+    ['策略实例', 'Strategy Instances'],
+    ['通配符展开', 'Wildcard Expansion'],
+    ['暂无策略数据', 'No strategy data yet'],
+    ['震荡', 'Oscillation'],
+    ['趋势', 'Trend'],
+    ['极端', 'Extreme'],
+    ['笔', ' trades'],
+    ['暂无活跃机器人', 'No active bots'],
+    ['均Win Rate', 'Avg Win Rate'],
+    ['策略Instances', 'Strategy Instances'],
+    ['现货网格', 'Spot Grid'],
+    ['合约马丁格尔', 'Contract Martingale'],
+    ['趋势追踪', 'Trend Trailing'],
+    ['资金费率套利', 'Funding Arb'],
+    ['极端防守哨兵', 'Extreme Defense Sentinel'],
+    ['状态匹配', 'Regime Fit'],
+    ['稳定性', 'Stability'],
+    ['夏普', 'Sharpe'],
+    ['Status适应性', 'Regime Fit'],
+  ])
+}
+
+function localizeTradesPage() {
+  replaceHtmlIn('page-trades', [
+    ['累计盈亏', 'Total PnL'],
+    ['今日盈亏', 'Today PnL'],
+    ['总交易数', 'Total Trades'],
+    ['当前持仓', 'Open Positions'],
+    ['累计盈亏曲线', 'Cumulative PnL'],
+    ['每日盈亏走势', 'Daily PnL'],
+    ['策略盈亏分布', 'Strategy PnL Mix'],
+    ['执行日志', 'Execution Log'],
+    ['时间', 'Time'],
+    ['策略', 'Strategy'],
+    ['操作', 'Action'],
+    ['详情', 'Detail'],
+    ['当前无持仓', 'No open positions'],
+    ['做多', 'Long'],
+    ['做空', 'Short'],
+    ['持仓数 ', 'Positions '],
+    ['总保证金 ', 'Margin '],
+    ['总名义价值 ', 'Notional '],
+    ['总浮盈 ', 'Unrealized '],
+    ['暂无执行记录', 'No execution logs yet'],
+    ['系统运行后交易记录将在此显示', 'Execution history will appear here after the system runs.'],
+    ['夏普指数', 'Sharpe Ratio'],
+    ['最大回撤', 'Max Drawdown'],
+    ['日胜率', 'Daily Win Rate'],
+    ['盈亏比', 'Profit Factor'],
+    ['暂无盈亏数据', 'No PnL data yet'],
+    ['暂无策略盈亏数据', 'No strategy PnL data yet'],
+    ['笔 | 胜率', ' trades | Win Rate '],
+    ['等待交易数据加载…', 'Waiting for trade data...'],
+    ['Total PnL曲线', 'Cumulative PnL'],
+    ['趋势追踪', 'Trend Trailing'],
+    ['资金费率套利', 'Funding Arb'],
+  ])
+}
+
+function localizeBacktestPage() {
+  replaceHtmlIn('backtestContent', [
+    ['回测数据加载失败', 'Backtest data unavailable'],
+    ['保守型', 'Conservative'],
+    ['均衡型', 'Balanced'],
+    ['激进型', 'Aggressive'],
+    ['最大回撤 5% · 部署 30%', 'Max drawdown 5% · deploy 30%'],
+    ['最大回撤 15% · 部署 50%', 'Max drawdown 15% · deploy 50%'],
+    ['最大回撤 30% · 部署 70%', 'Max drawdown 30% · deploy 70%'],
+    ['收益', 'Return'],
+    ['回撤', 'Drawdown'],
+    ['夏普', 'Sharpe'],
+    ['总收益', 'Total Return'],
+    ['年化收益', 'Annualized Return'],
+    ['夏普比率', 'Sharpe Ratio'],
+    ['索提诺', 'Sortino'],
+    ['最大回撤', 'Max Drawdown'],
+    ['胜率', 'Win Rate'],
+    ['真实网格模拟', 'Realistic grid simulation'],
+    ['状态自适应参数', 'Regime-adaptive parameters'],
+    ['库存漂移风险', 'Inventory drift risk'],
+    ['资金费率拖累', 'Funding drag'],
+    ['止损/止盈', 'Stops / take profits'],
+    ['回测引擎 v2', 'Backtest Engine v2'],
+    ['真实网格模拟 · 状态自适应 · ', 'Realistic grid simulation · regime adaptive · '],
+    [' 资产组合 · ', ' asset basket · '],
+    ['参与金额 (USDT)', 'Capital (USDT)'],
+    ['资产白名单', 'Asset Whitelist'],
+    [' 个资产 · ', ' assets · '],
+    [' 天回测周期', ' backtest days'],
+    ['初始资金', 'Initial Capital'],
+    ['最终权益', 'Final Equity'],
+    ['总成交次数', 'Total Fills'],
+    ['回测天数', 'Backtest Days'],
+    [' 天', ' days'],
+    ['权益曲线', 'Equity Curve'],
+    ['每日盈亏', 'Daily PnL'],
+    ['市场状态时间线', 'Regime Timeline'],
+    ['回撤曲线', 'Drawdown Curve'],
+    ['市场状态分析', 'Regime Analysis'],
+    ['三级风控对比', 'Risk Tier Comparison'],
+    ['指标', 'Metric'],
+    ['暂无数据', 'No data yet'],
+    ['初始 $', 'Initial $'],
+    ['震荡', 'Oscillation'],
+    ['趋势', 'Trend'],
+    ['极端', 'Extreme'],
+    ['天数', 'Days'],
+    ['总成交', 'Total Fills'],
+    ['日均成交', 'Avg Daily Fills'],
+    ['日均盈亏', 'Avg Daily PnL'],
+    ['状态自适应', 'regime adaptive'],
+    ['总Return', 'Total Return'],
+    ['年化Return', 'Annualized Return'],
+    ['Sharpe比率', 'Sharpe Ratio'],
+    ['最大Drawdown', 'Max Drawdown'],
+    ['Drawdown曲线', 'Drawdown Curve'],
   ])
 }
 
@@ -2129,9 +2328,9 @@ function renderStrategyPage() {
   const avgWR = strats.length > 0 ? Math.round(strats.reduce((s,x) => s + (x.winRate||0), 0) / strats.length) : 0
   const heroEl = $('stratHeroStats')
   if (heroEl) heroEl.innerHTML = [
-    ['模板','6','var(--blue)'],['实例',String(strats.length),'var(--purple)'],
-    ['影子',String(shadowCount),'var(--yellow)'],['实盘',String(liveCount),'var(--green)'],
-    ['活跃',String(activeCount),'var(--accent)'],['均胜率',avgWR+'%','var(--green)'],
+    [L('模板','Templates'),'6','var(--blue)'],[L('实例','Instances'),String(strats.length),'var(--purple)'],
+    [L('影子','Shadow'),String(shadowCount),'var(--yellow)'],[L('实盘','Live'),String(liveCount),'var(--green)'],
+    [L('活跃','Active'),String(activeCount),'var(--accent)'],[L('均胜率','Avg Win Rate'),avgWR+'%','var(--green)'],
   ].map(([l,v,c]) => `<div style="text-align:center;padding:12px 22px;border-radius:12px;background:var(--card);border:1px solid var(--border);min-width:56px;backdrop-filter:blur(8px)">
     <div style="font-size:25px;font-weight:800;color:${c}">${v}</div>
     <div style="font-size:14px;color:var(--dim);margin-top:3px">${l}</div>
@@ -2141,6 +2340,7 @@ function renderStrategyPage() {
   renderLeaderboard()
   renderStrategyTable()
   renderStratBots()
+  if (currentLang === 'en') localizeStrategyPage()
 }
 
 function renderLeaderboard() {
@@ -2158,20 +2358,20 @@ function renderLeaderboard() {
     const total = wrComp + sharpeComp + stateComp + stabComp || e.score
     const barW = 120
     const scoreBar = `<div style="display:flex;height:10px;border-radius:5px;overflow:hidden;width:${barW}px;background:var(--border)">
-      <div style="width:${(wrComp/total*100).toFixed(1)}%;background:var(--green)" title="胜率 ${(wrComp*100).toFixed(0)}%"></div>
-      <div style="width:${(sharpeComp/total*100).toFixed(1)}%;background:var(--blue)" title="夏普 ${(sharpeComp*100).toFixed(0)}%"></div>
-      <div style="width:${(stateComp/total*100).toFixed(1)}%;background:var(--yellow)" title="状态匹配 ${(stateComp*100).toFixed(0)}%"></div>
-      <div style="width:${(stabComp/total*100).toFixed(1)}%;background:var(--purple)" title="稳定性 ${(stabComp*100).toFixed(0)}%"></div>
+      <div style="width:${(wrComp/total*100).toFixed(1)}%;background:var(--green)" title="${L('胜率','Win Rate')} ${(wrComp*100).toFixed(0)}%"></div>
+      <div style="width:${(sharpeComp/total*100).toFixed(1)}%;background:var(--blue)" title="${L('夏普','Sharpe')} ${(sharpeComp*100).toFixed(0)}%"></div>
+      <div style="width:${(stateComp/total*100).toFixed(1)}%;background:var(--yellow)" title="${L('状态匹配','Regime Fit')} ${(stateComp*100).toFixed(0)}%"></div>
+      <div style="width:${(stabComp/total*100).toFixed(1)}%;background:var(--purple)" title="${L('稳定性','Stability')} ${(stabComp*100).toFixed(0)}%"></div>
     </div>
     <div style="display:flex;gap:10px;margin-top:4px;font-size:14px;color:var(--dim)">
-      <span style="color:var(--green)">胜率</span>
-      <span style="color:var(--blue)">夏普</span>
-      <span style="color:var(--yellow)">状态</span>
-      <span style="color:var(--purple)">稳定</span>
+      <span style="color:var(--green)">${L('胜率','Win Rate')}</span>
+      <span style="color:var(--blue)">${L('夏普','Sharpe')}</span>
+      <span style="color:var(--yellow)">${L('状态','Regime')}</span>
+      <span style="color:var(--purple)">${L('稳定','Stability')}</span>
     </div>`
     return `<tr>
       <td style="font-weight:700;font-size:25px">${medal}</td>
-      <td style="font-weight:600">${e.name}</td>
+      <td style="font-weight:600">${strategyNameLabel(e.name)}</td>
       <td><span class="badge b-${e.status}">${e.status}</span></td>
       <td style="color:${scoreColor};font-weight:700">${(e.score * 1).toFixed(2)}<div class="score-bar"><div class="score-fill" style="width:${e.score*100}%;background:${scoreColor}"></div></div></td>
       <td style="min-width:130px">${scoreBar}</td>
@@ -2188,19 +2388,19 @@ function renderStrategyTable() {
   $('stratBody').innerHTML = data.map(s => {
     const wrColor = s.winRate >= 60 ? 'var(--green)' : s.winRate >= 40 ? 'var(--yellow)' : 'var(--red)'
     const assets = (s.assets || []).map(a => a.replace('-USDT', '')).join(', ')
-    const states = (s.marketStates || []).map(st => S_CN[st] || st).join(', ')
+    const states = (s.marketStates || []).map(st => stateName(st)).join(', ')
     const toolLabel = TOOL_SHORT[s.tool] || s.tool
 
     let actionBtn = ''
     if (s.active) {
-      actionBtn = `<button class="btn btn-danger" onclick="stopBot('${s.id}','${s.name}')">停止</button>`
+      actionBtn = `<button class="btn btn-danger" onclick="stopBot('${s.id}','${s.name}')">${L('停止', 'Stop')}</button>`
     } else if (s.status === 'shadow' || s.status === 'live') {
-      actionBtn = `<button class="btn btn-primary" onclick="startBot('${s.id}','${s.name}')">启动</button>`
+      actionBtn = `<button class="btn btn-primary" onclick="startBot('${s.id}','${s.name}')">${L('启动', 'Start')}</button>`
     }
 
     return `<tr>
       <td><span class="badge b-${s.status}">${s.status}</span></td>
-      <td style="font-weight:600;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;color:var(--accent)" title="${s.name}" onclick="showStratDetail('${s.id}')">${s.name}</td>
+      <td style="font-weight:600;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;color:var(--accent)" title="${strategyNameLabel(s.name)}" onclick="showStratDetail('${s.id}')">${strategyNameLabel(s.name)}</td>
       <td><span class="tool-tag">${toolLabel}</span></td>
       <td style="font-size:19px">${assets}</td>
       <td style="font-size:19px">${states}</td>
@@ -2208,7 +2408,7 @@ function renderStrategyTable() {
       <td style="color:${(s.totalReturn||0) >= 0 ? 'var(--green)' : 'var(--red)'};font-weight:600;font-family:monospace">${((s.totalReturn||0)*100).toFixed(1)}%</td>
       <td style="color:${wrColor};font-weight:600">${s.winRate}%</td>
       <td style="color:${s.maxDrawdown > 10 ? 'var(--red)' : 'var(--dim)'};font-family:monospace">${s.maxDrawdown}%</td>
-      <td><span class="dot ${s.active ? 'dot-on' : 'dot-off'}"></span>${s.active ? (s.botType || '运行中') : '未运行'}</td>
+      <td><span class="dot ${s.active ? 'dot-on' : 'dot-off'}"></span>${s.active ? (s.botType || L('运行中', 'Running')) : L('未运行', 'Idle')}</td>
       <td>${actionBtn}</td>
     </tr>`
   }).join('')
@@ -2217,7 +2417,7 @@ function renderStrategyTable() {
 function renderStratBots() {
   const d = cache.bots
   if (!d || !d.bots || d.bots.length === 0) {
-    $('stratBots').innerHTML = '<div style="color:var(--dim);font-size:19px">暂无活跃机器人</div>'; return
+    $('stratBots').innerHTML = `<div style="color:var(--dim);font-size:19px">${L('暂无活跃机器人', 'No active bots')}</div>`; return
   }
   const filtered = d.bots.filter(b => {
     const strat = cache.strategies?.find(s => s.id === b.strategyId)
@@ -2226,19 +2426,19 @@ function renderStratBots() {
   })
   $('stratBots').innerHTML = filtered.map(b => {
     const strat = cache.strategies?.find(s => s.id === b.strategyId)
-    const name = strat ? strat.name.slice(0, 12) : b.strategyId.slice(0, 8)
+    const name = strat ? strategyNameLabel(strat.name).slice(0, 18) : b.strategyId.slice(0, 8)
     return `<div class="bot-chip"><span class="bt">${b.botType}</span><span style="color:var(--dim)">${name}</span></div>`
   }).join('')
 }
 
 function startBot(id, name) {
-  showModal('启动确认', `确定要启动策略「${name}」的影子机器人吗？`, async () => {
+  showModal(L('启动确认', 'Start strategy'), L(`确定要启动策略「${name}」的影子机器人吗？`, `Start the shadow bot for strategy "${name}"?`), async () => {
     try {
       const r = await fetch(API + '/api/strategy/' + id + '/start', { method: 'POST' })
       const d = await r.json()
-      if (d.ok) { alert('启动成功: ' + (d.botId || '')); await fetchAll() }
-      else alert('启动失败: ' + (d.error || '未知错误'))
-    } catch (e) { alert('请求失败: ' + e) }
+      if (d.ok) { alert(L('启动成功: ', 'Started: ') + (d.botId || '')); await fetchAll() }
+      else alert(L('启动失败: ', 'Start failed: ') + (d.error || L('未知错误', 'Unknown error')))
+    } catch (e) { alert(L('请求失败: ', 'Request failed: ') + e) }
   })
 }
 
@@ -2246,18 +2446,25 @@ function renderWildcardExpansion() {
   const cfg = cache.sysConfig || {}
   const assets = filterAssets(cfg.assets).map(a => a.replace('-USDT', ''))
   const assetCount = assets.length || 8
-  const templates = ['网格策略', 'DCA马丁', '信号策略', '合约网格', '现货止盈止损', '组合策略']
+  const templates = [
+    L('网格策略', 'Grid Strategy'),
+    L('DCA马丁', 'DCA Martingale'),
+    L('信号策略', 'Signal Strategy'),
+    L('合约网格', 'Contract Grid'),
+    L('现货止盈止损', 'Spot Exit Rules'),
+    L('组合策略', 'Portfolio Strategy'),
+  ]
   const instanceCount = templates.length * assetCount
 
   const tplColors = ['var(--accent)', 'var(--blue)', 'var(--purple)', 'var(--orange)', 'var(--green)', 'var(--yellow)']
   const coinNames = assets.length ? assets : ['BTC','ETH','SOL','XRP','DOGE','TRX','HYPE','OKB','XAUT']
 
   let html = `<div style="text-align:center;margin-bottom:15px">
-    <span class="stat-hero-sm">${templates.length}</span><span style="color:var(--dim);font-size:20px;margin:0 8px">模板</span>
+    <span class="stat-hero-sm">${templates.length}</span><span style="color:var(--dim);font-size:20px;margin:0 8px">${L('模板', 'Templates')}</span>
     <span style="color:var(--dim);font-size:22px">×</span>
-    <span class="stat-hero-sm" style="margin:0 8px">${assetCount}</span><span style="color:var(--dim);font-size:20px">币种</span>
+    <span class="stat-hero-sm" style="margin:0 8px">${assetCount}</span><span style="color:var(--dim);font-size:20px">${L('币种', 'Assets')}</span>
     <span style="color:var(--dim);font-size:22px">=</span>
-    <span class="stat-hero-sm" style="margin:0 8px">${instanceCount}</span><span style="color:var(--dim);font-size:20px">策略实例</span>
+    <span class="stat-hero-sm" style="margin:0 8px">${instanceCount}</span><span style="color:var(--dim);font-size:20px">${L('策略实例', 'Strategy Instances')}</span>
   </div>`
 
   // Template pills
@@ -2268,7 +2475,7 @@ function renderWildcardExpansion() {
   html += `</div>`
 
   // Arrow
-  html += `<div style="text-align:center;font-size:25px;color:var(--dim);margin:8px 0">▼ 通配符展开</div>`
+  html += `<div style="text-align:center;font-size:25px;color:var(--dim);margin:8px 0">▼ ${L('通配符展开', 'Wildcard Expansion')}</div>`
 
   // Coin grid
   html += `<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">`
@@ -2282,10 +2489,10 @@ function renderWildcardExpansion() {
 
 function renderStatePerformanceHeatmap() {
   const strats = filterStrats(cache.strategies)
-  if (!strats.length) { $('stateHeatmap').innerHTML = '<div style="color:var(--dim);font-size:19px">暂无策略数据</div>'; return }
+  if (!strats.length) { $('stateHeatmap').innerHTML = `<div style="color:var(--dim);font-size:19px">${L('暂无策略数据', 'No strategy data yet')}</div>`; return }
 
   const states = ['oscillation', 'trend', 'extreme']
-  const stateLabels = { oscillation: '震荡', trend: '趋势', extreme: '极端' }
+  const stateLabels = { oscillation: stateName('oscillation'), trend: stateName('trend'), extreme: stateName('extreme') }
   const stateColors = { oscillation: 'var(--yellow)', trend: 'var(--green)', extreme: 'var(--red)' }
 
   // Group strategies by template name (remove asset suffix)
@@ -2301,21 +2508,21 @@ function renderStatePerformanceHeatmap() {
   })
   const rows = Object.values(grouped).slice(0, 8)
 
-  let html = `<div style="overflow-x:auto"><table style="width:100%;font-size:19px;border-collapse:separate;border-spacing:3px"><thead><tr><th style="text-align:left;padding:6px 12px;color:var(--dim);font-weight:400">策略</th>`
+  let html = `<div style="overflow-x:auto"><table style="width:100%;font-size:19px;border-collapse:separate;border-spacing:3px"><thead><tr><th style="text-align:left;padding:6px 12px;color:var(--dim);font-weight:400">${L('策略', 'Strategy')}</th>`
   states.forEach(st => {
     html += `<th style="text-align:center;padding:6px 12px;color:${stateColors[st]};font-weight:600">${stateLabels[st]}</th>`
   })
   html += `</tr></thead><tbody>`
 
   rows.forEach(row => {
-    html += `<tr><td style="padding:6px 12px;font-weight:600;white-space:nowrap;max-width:120px;overflow:hidden;text-overflow:ellipsis">${row.name}</td>`
+    html += `<tr><td style="padding:6px 12px;font-weight:600;white-space:nowrap;max-width:120px;overflow:hidden;text-overflow:ellipsis">${strategyNameLabel(row.name)}</td>`
     states.forEach(st => {
       const d = row.states[st]
       if (d && d.total > 0) {
         const wr = Math.round(d.wins / d.total * 100)
         const bg = wr >= 60 ? 'rgba(34,197,94,0.2)' : wr >= 40 ? 'rgba(234,179,8,0.15)' : 'rgba(239,68,68,0.15)'
         const color = wr >= 60 ? 'var(--green)' : wr >= 40 ? 'var(--yellow)' : 'var(--red)'
-        html += `<td style="text-align:center;padding:10px 12px;background:${bg};border-radius:10px"><span style="font-weight:700;color:${color}">${wr}%</span><div style="font-size:14px;color:var(--dim)">${d.total}笔</div></td>`
+        html += `<td style="text-align:center;padding:10px 12px;background:${bg};border-radius:10px"><span style="font-weight:700;color:${color}">${wr}%</span><div style="font-size:14px;color:var(--dim)">${d.total}${L('笔', ' trades')}</div></td>`
       } else {
         html += `<td style="text-align:center;padding:10px 12px;background:var(--subtle-bg);border-radius:10px;color:var(--dim);font-size:16px">—</td>`
       }
@@ -2328,13 +2535,13 @@ function renderStatePerformanceHeatmap() {
 }
 
 function stopBot(id, name) {
-  showModal('停止确认', `确定要停止策略「${name}」的机器人吗？这将关闭当前持仓。`, async () => {
+  showModal(L('停止确认', 'Stop strategy'), L(`确定要停止策略「${name}」的机器人吗？这将关闭当前持仓。`, `Stop strategy "${name}"? This will close the current position.`), async () => {
     try {
       const r = await fetch(API + '/api/strategy/' + id + '/stop', { method: 'POST' })
       const d = await r.json()
-      if (d.ok) { alert('已停止'); await fetchAll() }
-      else alert('停止失败: ' + (d.error || '未知错误'))
-    } catch (e) { alert('请求失败: ' + e) }
+      if (d.ok) { alert(L('已停止', 'Stopped')); await fetchAll() }
+      else alert(L('停止失败: ', 'Stop failed: ') + (d.error || L('未知错误', 'Unknown error')))
+    } catch (e) { alert(L('请求失败: ', 'Request failed: ') + e) }
   })
 }
 
@@ -2885,18 +3092,18 @@ function renderTradesPositions() {
   const posData = cache.positions || {}
   const positions = posData.positions || []
   if (!positions.length) {
-    el.innerHTML = '<div style="text-align:center;padding:25px;color:var(--dim);font-size:17px">当前无持仓</div>'
+    el.innerHTML = `<div style="text-align:center;padding:25px;color:var(--dim);font-size:17px">${L('当前无持仓', 'No open positions')}</div>`
     return
   }
   let html = '<div style="overflow-x:auto"><table style="width:100%"><thead><tr>'
-  html += '<th>交易对</th><th>方向</th><th>数量</th><th>开仓价</th><th>标记价</th><th>杠杆</th><th>保证金</th><th>浮动盈亏</th><th>收益率</th><th>开仓时间</th>'
+  html += `<th>${L('交易对', 'Pair')}</th><th>${L('方向', 'Side')}</th><th>${L('数量', 'Size')}</th><th>${L('开仓价', 'Entry')}</th><th>${L('标记价', 'Mark')}</th><th>${L('杠杆', 'Lev')}</th><th>${L('保证金', 'Margin')}</th><th>${L('浮动盈亏', 'Unrealized')}</th><th>${L('收益率', 'Return')}</th><th>${L('开仓时间', 'Opened')}</th>`
   html += '</tr></thead><tbody>'
   positions.forEach(p => {
     const uplColor = (p.upl||0) >= 0 ? 'var(--green)' : 'var(--red)'
     const posSide = p.posSide || p.side || ''
     const sideColor = posSide === 'long' ? 'var(--green)' : 'var(--red)'
     const sideBg = posSide === 'long' ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)'
-    const sideLabel = posSide === 'long' ? '做多' : posSide === 'short' ? '做空' : posSide
+    const sideLabel = posSide === 'long' ? L('做多', 'Long') : posSide === 'short' ? L('做空', 'Short') : posSide
     html += `<tr>`
     html += `<td style="font-weight:700">${(p.asset||p.instId||'').replace('-USDT','')}<span style="color:var(--dim);font-size:14px">/USDT</span></td>`
     html += `<td><span style="padding:3px 10px;border-radius:5px;font-size:15px;font-weight:600;background:${sideBg};color:${sideColor}">${sideLabel}</span></td>`
@@ -2912,10 +3119,10 @@ function renderTradesPositions() {
   })
   html += '</tbody></table></div>'
   html += `<div style="display:flex;gap:20px;margin-top:15px;padding-top:10px;border-top:1px solid var(--border);font-size:16px">`
-  html += `<span style="color:var(--dim)">持仓数 <strong style="color:var(--accent)">${positions.length}</strong></span>`
-  html += `<span style="color:var(--dim)">总保证金 <strong style="color:var(--yellow)">${fmtUSD(posData.totalMargin||0)}</strong></span>`
-  html += `<span style="color:var(--dim)">总名义价值 <strong style="color:var(--text)">${fmtUSD(posData.totalNotional||0)}</strong></span>`
-  html += `<span style="color:${(posData.totalUpl||0)>0?'var(--green)':(posData.totalUpl||0)<0?'var(--red)':'var(--dim)'}">总浮盈 <strong>${(posData.totalUpl||0)>=0?'+':''}${fmtUSD(posData.totalUpl||0)}</strong></span>`
+  html += `<span style="color:var(--dim)">${L('持仓数', 'Positions')} <strong style="color:var(--accent)">${positions.length}</strong></span>`
+  html += `<span style="color:var(--dim)">${L('总保证金', 'Total Margin')} <strong style="color:var(--yellow)">${fmtUSD(posData.totalMargin||0)}</strong></span>`
+  html += `<span style="color:var(--dim)">${L('总名义价值', 'Total Notional')} <strong style="color:var(--text)">${fmtUSD(posData.totalNotional||0)}</strong></span>`
+  html += `<span style="color:${(posData.totalUpl||0)>0?'var(--green)':(posData.totalUpl||0)<0?'var(--red)':'var(--dim)'}">${L('总浮盈', 'Total Unrealized')} <strong>${(posData.totalUpl||0)>=0?'+':''}${fmtUSD(posData.totalUpl||0)}</strong></span>`
   html += `</div>`
   el.innerHTML = html
 }
@@ -2927,7 +3134,7 @@ function renderTradesPage() {
     $('trTotalPnl').textContent = '--'
     $('trTotalTrades').textContent = '--'
     const tb = $('trBody')
-    if (tb) tb.innerHTML = '<tr><td colspan="4" style="color:var(--dim);text-align:center;padding:30px">&#128202; 等待交易数据加载…</td></tr>'
+    if (tb) tb.innerHTML = `<tr><td colspan="4" style="color:var(--dim);text-align:center;padding:30px">&#128202; ${L('等待交易数据加载…', 'Waiting for trade data...')}</td></tr>`
     return
   }
 
@@ -2953,12 +3160,15 @@ function renderTradesPage() {
   const stratMap = {}
   if (cache.strategies) filterStrats(cache.strategies).forEach(s => { stratMap[s.id] = s.name })
   if (!log.length) {
-    $('trBody').innerHTML = '<tr><td colspan="4"><div class="empty-state"><div class="empty-icon">&#128203;</div><div class="empty-title">暂无执行记录</div><div class="empty-desc">系统运行后交易记录将在此显示</div></div></td></tr>'
+    $('trBody').innerHTML = `<tr><td colspan="4"><div class="empty-state"><div class="empty-icon">&#128203;</div><div class="empty-title">${L('暂无执行记录', 'No execution logs yet')}</div><div class="empty-desc">${L('系统运行后交易记录将在此显示', 'Execution history will appear here after the system runs.')}</div></div></td></tr>`
   } else {
     $('trBody').innerHTML = log.slice(0, 50).map(e => {
-      const name = stratMap[e.strategy_id] || (e.strategy_id ? e.strategy_id.slice(0, 8) + '…' : '--')
+      const name = strategyNameLabel(stratMap[e.strategy_id] || (e.strategy_id ? e.strategy_id.slice(0, 8) + '…' : '--'))
       const ACTION_CN = { stop_loss:'止损平仓', take_profit:'止盈平仓', max_hold:'持仓超时', atr_out_of_range:'ATR超限', funding_out_of_range:'费率超限', loss_pause:'亏损暂停', ok:'正常', stop:'停止' }
-      const actionLabel = ACTION_CN[e.action] || (e.action || '--').replace(/_/g, ' ')
+      const ACTION_EN = { stop_loss:'Stop Loss Exit', take_profit:'Take Profit Exit', max_hold:'Max Hold', atr_out_of_range:'ATR Limit', funding_out_of_range:'Funding Limit', loss_pause:'Loss Pause', ok:'Normal', stop:'Stopped' }
+      const actionLabel = currentLang === 'en'
+        ? (ACTION_EN[e.action] || cnEvent(e.action || '--'))
+        : (ACTION_CN[e.action] || (e.action || '--').replace(/_/g, ' '))
       return `<tr>
       <td style="font-family:monospace;font-size:19px">${fmtTime(e.created_at)}</td>
       <td style="font-weight:600;font-size:19px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;color:var(--accent)" title="${escapeHtml(e.strategy_id || '')}" onclick="showStratDetail('${e.strategy_id || ''}')">${escapeHtml(name)}</td>
@@ -2967,6 +3177,7 @@ function renderTradesPage() {
     </tr>`
     }).join('')
   }
+  if (currentLang === 'en') localizeTradesPage()
 }
 
 function renderRiskMetrics(dailyPnl) {
@@ -3006,10 +3217,10 @@ function renderRiskMetrics(dailyPnl) {
   const sharpe = (mean / std * Math.sqrt(252)).toFixed(2)
 
   const metrics = [
-    { label: '夏普指数', val: sharpe, color: parseFloat(sharpe) > 1 ? 'var(--green)' : parseFloat(sharpe) > 0 ? 'var(--yellow)' : 'var(--red)' },
-    { label: '最大回撤', val: '$' + maxDD.toFixed(2), color: maxDD > 0 ? 'var(--red)' : 'var(--green)' },
-    { label: '日胜率', val: winRate + '%', color: parseFloat(winRate) >= 50 ? 'var(--green)' : 'var(--red)' },
-    { label: '盈亏比', val: profitFactor, color: parseFloat(profitFactor) >= 1 ? 'var(--green)' : 'var(--red)' },
+    { label: L('夏普指数', 'Sharpe Ratio'), val: sharpe, color: parseFloat(sharpe) > 1 ? 'var(--green)' : parseFloat(sharpe) > 0 ? 'var(--yellow)' : 'var(--red)' },
+    { label: L('最大回撤', 'Max Drawdown'), val: '$' + maxDD.toFixed(2), color: maxDD > 0 ? 'var(--red)' : 'var(--green)' },
+    { label: L('日胜率', 'Daily Win Rate'), val: winRate + '%', color: parseFloat(winRate) >= 50 ? 'var(--green)' : 'var(--red)' },
+    { label: L('盈亏比', 'Profit Factor'), val: profitFactor, color: parseFloat(profitFactor) >= 1 ? 'var(--green)' : 'var(--red)' },
   ]
 
   el.innerHTML = metrics.map(m => `<div class="card" style="text-align:center;padding:18px 12px">
@@ -3022,7 +3233,7 @@ function renderCumulativePnlChart(data) {
   const el = $('trCumulativeChart')
   if (!el) return
   if (!data || !data.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-icon">&#128200;</div><div class="empty-desc">暂无盈亏数据</div></div>'
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">&#128200;</div><div class="empty-desc">${L('暂无盈亏数据', 'No PnL data yet')}</div></div>`
     return
   }
 
@@ -3074,7 +3285,7 @@ function renderCumulativePnlChart(data) {
 function renderPnlBarChart(data) {
   const el = $('trPnlChart')
   if (!el) return
-  if (!data || !data.length) { el.innerHTML = '<div class="empty-state"><div class="empty-icon">&#128200;</div><div class="empty-desc">暂无盈亏数据</div></div>'; return }
+  if (!data || !data.length) { el.innerHTML = `<div class="empty-state"><div class="empty-icon">&#128200;</div><div class="empty-desc">${L('暂无盈亏数据', 'No PnL data yet')}</div></div>`; return }
 
   const sorted = [...data].reverse() // oldest first
   const maxAbs = Math.max(...sorted.map(d => Math.abs(d.pnl)), 0.01) // avoid 0 division
@@ -3091,7 +3302,7 @@ function renderPnlBarChart(data) {
     const color = d.pnl >= 0 ? '#22c55e' : '#ef4444'
     const dimColor = d.pnl === 0 ? '#475569' : color
     bars += `<rect x="${x}" y="${y}" width="${barW}" height="${minH}" fill="${dimColor}" rx="2" opacity="${d.pnl === 0 ? 0.4 : 0.9}">
-      <title>${d.date}: ${d.pnl >= 0 ? '+' : ''}$${d.pnl.toFixed(2)} (${d.trades}笔)</title></rect>`
+      <title>${d.date}: ${d.pnl >= 0 ? '+' : ''}$${d.pnl.toFixed(2)} (${d.trades}${L('笔', ' trades')})</title></rect>`
   })
 
   // Labels
@@ -3114,7 +3325,7 @@ function renderStrategyBreakdown(rawData) {
   const el = $('trStratBreakdown')
   if (!el) return
   const data = (rawData || []).filter(s => !isExcluded(s.name))
-  if (!data.length) { el.innerHTML = '<div style="color:var(--dim);font-size:19px">暂无策略盈亏数据</div>'; return }
+  if (!data.length) { el.innerHTML = `<div style="color:var(--dim);font-size:19px">${L('暂无策略盈亏数据', 'No strategy PnL data yet')}</div>`; return }
 
   const maxAbs = Math.max(...data.map(s => Math.abs(s.pnl)), 1)
   el.innerHTML = data.map(s => {
@@ -3123,14 +3334,14 @@ function renderStrategyBreakdown(rawData) {
     const wr = s.trades > 0 ? Math.round(s.wins / s.trades * 100) : 0
     return `<div style="padding:10px 0;border-bottom:1px solid var(--el-bg)">
       <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-        <span style="font-weight:600;font-size:20px;cursor:pointer;color:var(--accent)" onclick="showStratDetail('${s.strategy_id || s.id || ''}')">${escapeHtml(s.name)}</span>
+        <span style="font-weight:600;font-size:20px;cursor:pointer;color:var(--accent)" onclick="showStratDetail('${s.strategy_id || s.id || ''}')">${escapeHtml(strategyNameLabel(s.name))}</span>
         <span style="font-weight:700;color:${color}">${s.pnl >= 0 ? '+' : ''}${fmtUSD(s.pnl)}</span>
       </div>
       <div style="display:flex;align-items:center;gap:12px">
         <div style="flex:1;height:8px;background:var(--el-border-heavy);border-radius:5px;overflow:hidden">
           <div style="width:${pct}%;height:100%;background:${color};border-radius:5px"></div>
         </div>
-        <span style="font-size:17px;color:var(--dim);white-space:nowrap">${s.trades}笔 | 胜率${wr}%</span>
+        <span style="font-size:17px;color:var(--dim);white-space:nowrap">${s.trades}${L('笔', ' trades')} | ${L('胜率', 'Win Rate')} ${wr}%</span>
       </div>
     </div>`
   }).join('')
@@ -3505,7 +3716,7 @@ function renderBacktestPage() {
   const el = $('backtestContent')
   const tier = btState.activeTier
   const r = BACKTEST_DATA[tier]
-  if (!r) { el.innerHTML = '<div class="card" style="text-align:center;padding:40px;color:var(--dim)">回测数据加载失败</div>'; return }
+  if (!r) { el.innerHTML = `<div class="card" style="text-align:center;padding:40px;color:var(--dim)">${L('回测数据加载失败', 'Backtest data unavailable')}</div>`; return }
 
   const snaps = r.snapshots || []
   const scale = btState.capital / (r.config?.initialUSDT || 10000)
@@ -3689,6 +3900,7 @@ function renderBacktestPage() {
     + '<th style="padding:15px 10px;text-align:center;color:var(--accent);font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:0.5px">均衡型</th>'
     + '<th style="padding:15px 10px;text-align:center;color:var(--red);font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:0.5px">激进型</th>'
     + '</tr></thead><tbody>' + compRows + '</tbody></table></div></div>'
+  if (currentLang === 'en') localizeBacktestPage()
 }
 
 // ── Backtest Chart Helpers ────────────────────────────────────────────────────
@@ -3777,11 +3989,11 @@ function renderDailyPnlBars(snaps) {
 }
 
 function renderStateTimeline(snaps) {
-  if (snaps.length === 0) return '<div style="color:var(--dim);font-size:19px">暂无数据</div>'
+  if (snaps.length === 0) return `<div style="color:var(--dim);font-size:19px">${L('暂无数据', 'No data yet')}</div>`
   const assets = Object.keys(snaps[0].marketState || {})
-  if (assets.length === 0) return '<div style="color:var(--dim);font-size:19px">暂无数据</div>'
+  if (assets.length === 0) return `<div style="color:var(--dim);font-size:19px">${L('暂无数据', 'No data yet')}</div>`
   const stateColors = { oscillation: '#eab308', trend: '#3b82f6', extreme: '#ef4444' }
-  const stateNames = { oscillation: '震荡', trend: '趋势', extreme: '极端' }
+  const stateNames = { oscillation: stateName('oscillation'), trend: stateName('trend'), extreme: stateName('extreme') }
 
   const W = 420, rowH = 20, PX = 70, gap = 4
   const H = assets.length * (rowH + gap) + 50
@@ -3844,7 +4056,7 @@ function renderDrawdownChart(snaps) {
 }
 
 function renderStateAnalysis(snaps) {
-  const stateNames = { oscillation: '震荡', trend: '趋势', extreme: '极端' }
+  const stateNames = { oscillation: stateName('oscillation'), trend: stateName('trend'), extreme: stateName('extreme') }
   const stateColors = { oscillation: 'var(--yellow)', trend: 'var(--blue)', extreme: 'var(--red)' }
   const stats = {}
   for (const s of snaps) {
@@ -3873,10 +4085,10 @@ function renderStateAnalysis(snaps) {
           <div style="width:${pct}%;height:100%;border-radius:5px;background:${stateColors[k]};opacity:0.7"></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:17px">
-          <div><span style="color:var(--dim)">天数</span><div style="font-weight:700;font-size:21px;margin-top:3px">${st.days}</div></div>
-          <div><span style="color:var(--dim)">总成交</span><div style="font-weight:700;font-size:21px;margin-top:3px">${st.fills.toLocaleString()}</div></div>
-          <div><span style="color:var(--dim)">日均成交</span><div style="font-weight:700;font-size:21px;margin-top:3px">${avgFills}</div></div>
-          <div><span style="color:var(--dim)">日均盈亏</span><div style="font-weight:700;font-size:21px;margin-top:3px;color:${parseFloat(avgProfit)>=0?'var(--green)':'var(--red)'}">${parseFloat(avgProfit)>=0?'+':''}$${avgProfit}</div></div>
+          <div><span style="color:var(--dim)">${L('天数', 'Days')}</span><div style="font-weight:700;font-size:21px;margin-top:3px">${st.days}</div></div>
+          <div><span style="color:var(--dim)">${L('总成交', 'Total Fills')}</span><div style="font-weight:700;font-size:21px;margin-top:3px">${st.fills.toLocaleString()}</div></div>
+          <div><span style="color:var(--dim)">${L('日均成交', 'Avg Daily Fills')}</span><div style="font-weight:700;font-size:21px;margin-top:3px">${avgFills}</div></div>
+          <div><span style="color:var(--dim)">${L('日均盈亏', 'Avg Daily PnL')}</span><div style="font-weight:700;font-size:21px;margin-top:3px;color:${parseFloat(avgProfit)>=0?'var(--green)':'var(--red)'}">${parseFloat(avgProfit)>=0?'+':''}$${avgProfit}</div></div>
         </div>
       </div>`
     }).join('')}
@@ -3894,6 +4106,7 @@ function renderAboutPage() {
   const templateCount = 6
   const instanceCount = templateCount * assetCount
   const flowDiagramSrc = currentLang === 'en' ? 'docs/images/darwin-system-flow-en.svg' : 'docs/images/darwin-system-flow-cn.svg'
+  const valueMapSrc = currentLang === 'en' ? 'docs/images/darwin-value-map-en.svg' : 'docs/images/darwin-value-map-cn.svg'
 
   $('aboutContent').innerHTML = `
   <!-- Hero -->
@@ -3929,6 +4142,14 @@ function renderAboutPage() {
       <div style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:12px">${L('系统决策主链路', 'Decision Rail')}</div>
       <img src="${flowDiagramSrc}" alt="${L('DARWIN 系统主链路', 'DARWIN system flow')}" style="display:block;width:100%;height:auto;border-radius:12px;border:1px solid rgba(255,255,255,0.06)">
       <div style="font-size:16px;color:var(--dim);line-height:1.6;margin-top:12px">${L('从用户意图到 OKX 执行、再到熔断与审计，所有动作都保持在同一条责任链上。', 'From user intent to OKX execution, then through halts and audit, every action stays on one accountable rail.')}</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:24px;padding:24px">
+    <div class="card-title"><span class="icon">&#128200;</span> ${L('产品价值地图', 'Product Value Map')}</div>
+    <div style="padding:18px;border-radius:14px;background:var(--subtle-bg);border:1px solid var(--border)">
+      <img src="${valueMapSrc}" alt="${L('DARWIN 产品价值地图', 'DARWIN product value map')}" style="display:block;width:100%;height:auto;border-radius:12px;border:1px solid rgba(255,255,255,0.06)">
+      <div style="font-size:16px;color:var(--dim);line-height:1.6;margin-top:12px">${L('DARWIN 的核心价值不在于“给出一个买卖点”，而在于把市场识别、策略切换、真实执行、风险熔断和日报审计连接成一套可运营的治理闭环。', 'DARWIN does more than suggest a trade. It connects market interpretation, strategy switching, live execution, risk halts, and audit reporting into one operable governance loop.')}</div>
     </div>
   </div>
 
@@ -4264,6 +4485,31 @@ function localizeAboutPage() {
     ['部署难度', 'Deployment'],
     ['npm start 一键运行', 'One-command npm start'],
     ['需配置环境', 'Needs environment setup'],
+    ['现货网格', 'Spot Grid'],
+    ['合约马丁格尔', 'Contract Martingale'],
+    ['极端防守哨兵', 'Extreme Defense Sentinel'],
+    ['趋势追踪', 'Trend Trailing'],
+    ['资金费率套利', 'Funding Arb'],
+    ['资金Funding套利', 'Funding Arb'],
+    ['Funding套利', 'Funding Arb'],
+    ['合约Martingale', 'Contract Martingale'],
+    ['Delta中性·收割Funding', 'Delta-neutral funding capture'],
+    ['LLM 仅增强分析，故障零Demote', 'LLMs only enhance analysis; rule execution does not degrade on model failure'],
+    ['5大Paperclip智能体+16家LLM提供商+规则优先零DemoteAI增强', 'Five Paperclip agents, optional LLM providers, and rule-first AI enhancement'],
+    ['6大Strategy Templates × ', '6 strategy templates × '],
+    [' Assets = ', ' assets = '],
+    [' Strategy Instances', ' strategy instances'],
+    ['覆盖市场、账户、执行、Bot 与算法单能力', 'Coverage across market, account, execution, bots, and algo orders'],
+    ['覆盖市场读取、现货/合约执行、网格/DCA/算法单和Funding Arb等核心能力', 'Covers market reads, spot and swap execution, grids, DCA, algo orders, and funding arbitrage'],
+    ['Shadow→Live→Demote→Eliminate的全生命周期管理，策略按表现与市场状态分配资本', 'Shadow → live → demote → eliminate lifecycle with capital assigned by performance and regime fit'],
+    ['Four-Tier Circuit Breaker+人机协作审批+波动率调整资金管理，机构级安全标准', 'Four-tier circuit breakers, approval gates, and volatility-aware capital controls'],
+    ['ESM + 内置SQLite', 'ESM + built-in SQLite'],
+    ['TWAP拆单', 'TWAP Slicing'],
+    ['10档网格·自动高抛低吸', '10-level buy-low sell-high grid'],
+    ['5档安全订单·逢低加仓', '5 safety orders with dip accumulation'],
+    ['纯防守·监控减仓', 'Defense-only monitoring and de-risking'],
+    ['MACD信号·3%移动止损', 'MACD-driven entries with 3% trailing stop'],
+    ['震荡+趋势', 'Oscillation + Trend'],
   ]
   replacements.forEach(([from, to]) => { html = html.replaceAll(from, to) })
   el.innerHTML = html

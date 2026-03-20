@@ -69,6 +69,8 @@ English about page:
 - **It keeps the full loop on one rail**: market interpretation, capital allocation, real execution, risk enforcement, and reporting stay connected instead of living in separate tools.
 - **It turns OKX Agent Trade Kit into an operating system layer**: Claw interprets intent and orchestrates decisions, while OKX ATK provides real market data, account state, and execution capability.
 
+![DARWIN Product Value Map](docs/images/darwin-value-map-en.svg)
+
 ---
 
 ## Architecture At A Glance
