@@ -51,6 +51,18 @@ Project docs:
 
 ---
 
+## Product Preview
+
+Chinese overview:
+
+![DARWIN Dashboard Overview (CN)](docs/images/dashboard-overview-cn.png)
+
+English about page:
+
+![DARWIN Dashboard About (EN)](docs/images/dashboard-about-en.png)
+
+---
+
 ## Why DARWIN Matters
 
 - **It upgrades trading from execution to governance**: DARWIN does not just place orders; it selects strategy posture, limits exposure, enforces halts, and leaves an audit trail.
@@ -407,6 +419,7 @@ Open `http://localhost:3200` in your browser to access the real-time dashboard:
 | **Settings** | Risk tier adjustment, manual circuit breaker reset, config persistence |
 
 > Supports dark/light theme toggle with full mobile responsiveness (375px+)
+> Language support: use the top-right language toggle, or open `http://localhost:3200/dashboard?lang=cn` / `http://localhost:3200/dashboard?lang=en`
 
 ---
 

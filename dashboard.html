@@ -535,34 +535,34 @@ tr:hover td { background: rgba(6,182,212,0.03); }
   </div>
   <div class="sidebar-nav">
     <div class="nav-item active" data-page="overview" onclick="go('overview')">
-      <span class="nav-icon">&#128202;</span> 总览仪表盘
+      <span class="nav-icon">&#128202;</span> <span id="navOverview">总览仪表盘</span>
     </div>
     <div class="nav-item" data-page="market" onclick="go('market')">
-      <span class="nav-icon">&#128225;</span> 市场情报
+      <span class="nav-icon">&#128225;</span> <span id="navMarket">市场情报</span>
     </div>
     <div class="nav-item" data-page="strategy" onclick="go('strategy')">
-      <span class="nav-icon">&#129516;</span> 策略中心
+      <span class="nav-icon">&#129516;</span> <span id="navStrategy">策略中心</span>
     </div>
     <div class="nav-item" data-page="risk" onclick="go('risk')">
-      <span class="nav-icon">&#128737;</span> 风控中心
+      <span class="nav-icon">&#128737;</span> <span id="navRisk">风控中心</span>
     </div>
     <div class="nav-item" data-page="decision" onclick="go('decision')">
-      <span class="nav-icon">&#129504;</span> 智能决策
+      <span class="nav-icon">&#129504;</span> <span id="navDecision">智能决策</span>
     </div>
     <div class="nav-item" data-page="trades" onclick="go('trades')">
-      <span class="nav-icon">&#128181;</span> 交易记录
+      <span class="nav-icon">&#128181;</span> <span id="navTrades">交易记录</span>
     </div>
     <div class="nav-item" data-page="reports" onclick="go('reports')">
-      <span class="nav-icon">&#128220;</span> 审计报告
+      <span class="nav-icon">&#128220;</span> <span id="navReports">审计报告</span>
     </div>
     <div class="nav-item" data-page="backtest" onclick="go('backtest')">
-      <span class="nav-icon">&#128200;</span> 回测引擎
+      <span class="nav-icon">&#128200;</span> <span id="navBacktest">回测引擎</span>
     </div>
     <div class="nav-item" data-page="about" onclick="go('about')">
-      <span class="nav-icon">&#128214;</span> 关于系统
+      <span class="nav-icon">&#128214;</span> <span id="navAbout">关于系统</span>
     </div>
     <div class="nav-item" data-page="settings" onclick="go('settings')">
-      <span class="nav-icon">&#9881;</span> 系统设置
+      <span class="nav-icon">&#9881;</span> <span id="navSettings">系统设置</span>
     </div>
   </div>
   <div class="sidebar-footer">
@@ -594,11 +594,11 @@ tr:hover td { background: rgba(6,182,212,0.03); }
       <div style="display:flex;align-items:center;gap:25px">
         <span class="mode-badge" id="modeBadge">--</span>
         <div>
-          <div style="font-size:16px;color:var(--dim)">权益</div>
+          <div id="eqLabel" style="font-size:16px;color:var(--dim)">权益</div>
           <div id="eqVal" style="color:var(--accent);font-size:21px;font-weight:800">--</div>
         </div>
         <div>
-          <div style="font-size:16px;color:var(--dim)">今日</div>
+          <div id="todayLabel" style="font-size:16px;color:var(--dim)">今日</div>
           <div id="todayPnlVal" style="font-size:21px;font-weight:700">--</div>
         </div>
       </div>
@@ -608,22 +608,25 @@ tr:hover td { background: rgba(6,182,212,0.03); }
         <span id="statusText2" style="font-size:19px;font-weight:600;color:var(--green)">运行中</span>
       </div>
       <!-- Theme Toggle -->
-      <div class="theme-toggle" onclick="toggleTheme()" title="切换主题">
+      <div class="theme-toggle" onclick="toggleLanguage()" id="langToggle" title="切换语言">
+        <span id="langLabel">中 / EN</span>
+      </div>
+      <div class="theme-toggle" onclick="toggleTheme()" id="themeToggle" title="切换主题">
         <span id="themeIcon">🌙</span>
         <div class="toggle-track"><div class="toggle-thumb"></div></div>
       </div>
       <!-- Right group: Risk + Strategies + Heartbeats -->
       <div style="display:flex;align-items:center;gap:25px">
         <div style="text-align:center">
-          <div style="font-size:16px;color:var(--dim)">风控</div>
+          <div id="riskLabel" style="font-size:16px;color:var(--dim)">风控</div>
           <div id="riskVal" style="font-size:20px;font-weight:700">--</div>
         </div>
         <div style="text-align:center">
-          <div style="font-size:16px;color:var(--dim)">策略</div>
+          <div id="strategyLabel" style="font-size:16px;color:var(--dim)">策略</div>
           <div id="stratTotal" style="font-size:24px;font-weight:800;color:var(--accent)">--</div>
         </div>
         <div style="text-align:center">
-          <div style="font-size:16px;color:var(--dim)">心跳</div>
+          <div id="hbLabel" style="font-size:16px;color:var(--dim)">心跳</div>
           <div id="hbVal" style="font-size:24px;font-weight:800">--</div>
         </div>
       </div>
@@ -970,7 +973,7 @@ tr:hover td { background: rgba(6,182,212,0.03); }
 
     <div class="card">
       <div class="collapse-header" onclick="toggleCollapse(this)">
-        &#128214; 快速参考 — 关于 DARWIN <span>&#9660;</span>
+        &#128214; <span id="aboutQuickRef">快速参考 — 关于 DARWIN</span> <span>&#9660;</span>
       </div>
       <div class="collapse-body">
         <p><strong>DARWIN</strong> (Dynamic Adaptive Risk-Weighted Intelligence Network) — 一个由 Claw 驱动、基于 OKX Agent Trade Kit 和 Paperclip AI 构建的本地优先、风险优先的 AI 交易治理系统。</p>
@@ -1000,7 +1003,7 @@ tr:hover td { background: rgba(6,182,212,0.03); }
     <h3 id="smTitle">策略详情</h3>
     <div id="smContent"></div>
     <div class="modal-actions">
-      <button class="btn" onclick="closeStratModal()">关闭</button>
+      <button class="btn" id="stratCloseBtn" onclick="closeStratModal()">关闭</button>
     </div>
   </div>
 </div>
@@ -1011,7 +1014,7 @@ tr:hover td { background: rgba(6,182,212,0.03); }
     <h3 id="modalTitle">确认操作</h3>
     <p id="modalMsg"></p>
     <div class="modal-actions">
-      <button class="btn" onclick="closeModal()">取消</button>
+      <button class="btn" id="modalCancelBtn" onclick="closeModal()">取消</button>
       <button class="btn btn-primary" id="modalConfirm">确认</button>
     </div>
   </div>
@@ -1042,6 +1045,7 @@ const API = resolveApiBase()
 const REFRESH = 30000
 const COLORS = ['#06b6d4','#3b82f6','#a855f7','#ec4899','#f97316','#22c55e','#eab308','#14b8a6','#f43f5e','#8b5cf6']
 const S_CN = { oscillation:'震荡', trend:'趋势', extreme:'极端' }
+const S_EN = { oscillation:'Oscillation', trend:'Trend', extreme:'Extreme' }
 const S_ICON = { oscillation:'\u301C', trend:'\u2197', extreme:'\u26A1' }
 const TOOL_CN = {
   okx_grid_bot:'现货网格', okx_grid_bot_create:'现货网格',
@@ -1057,6 +1061,76 @@ const TOOL_SHORT = {
   okx_funding_arb:'FUND-ARB', okx_twap:'TWAP', okx_iceberg:'ICE',
 }
 const RISK_CN = { conservative:'保守', balanced:'平衡', aggressive:'激进' }
+const RISK_EN = { conservative:'Conservative', balanced:'Balanced', aggressive:'Aggressive' }
+
+function resolveLang() {
+  const params = new URLSearchParams(location.search)
+  const queryLang = params.get('lang')
+  if (queryLang === 'cn' || queryLang === 'en') return queryLang
+  const saved = localStorage.getItem('darwin-lang')
+  if (saved === 'cn' || saved === 'en') return saved
+  return navigator.language.toLowerCase().startsWith('zh') ? 'cn' : 'en'
+}
+
+let currentLang = resolveLang()
+const L = (cn, en) => currentLang === 'en' ? en : cn
+const riskName = tier => currentLang === 'en' ? (RISK_EN[tier] || tier) : (RISK_CN[tier] || tier)
+const stateName = state => currentLang === 'en' ? (S_EN[state] || state) : (S_CN[state] || state)
+
+function syncLangUrl() {
+  const url = new URL(location.href)
+  url.searchParams.set('lang', currentLang)
+  history.replaceState(null, '', url.toString())
+}
+
+function applyStaticI18n() {
+  document.title = L('DARWIN Dashboard / 控制面板', 'DARWIN Dashboard')
+  const map = {
+    navOverview: L('总览仪表盘', 'Overview'),
+    navMarket: L('市场情报', 'Market Intel'),
+    navStrategy: L('策略中心', 'Strategy Center'),
+    navRisk: L('风控中心', 'Risk Center'),
+    navDecision: L('智能决策', 'Decision Center'),
+    navTrades: L('交易记录', 'Trades'),
+    navReports: L('审计报告', 'Audit Reports'),
+    navBacktest: L('回测引擎', 'Backtest'),
+    navAbout: L('关于系统', 'About'),
+    navSettings: L('系统设置', 'Settings'),
+    eqLabel: L('权益', 'Equity'),
+    todayLabel: L('今日', 'Today'),
+    riskLabel: L('风控', 'Risk'),
+    strategyLabel: L('策略', 'Strategies'),
+    hbLabel: L('心跳', 'Heartbeats'),
+    aboutQuickRef: L('快速参考 — 关于 DARWIN', 'Quick Reference — About DARWIN'),
+  }
+  Object.entries(map).forEach(([id, text]) => {
+    const el = $(id)
+    if (el) el.textContent = text
+  })
+  const themeToggle = $('themeToggle')
+  if (themeToggle) themeToggle.title = L('切换主题', 'Toggle theme')
+  const langToggle = $('langToggle')
+  if (langToggle) langToggle.title = L('切换语言', 'Switch language')
+  const langLabel = $('langLabel')
+  if (langLabel) langLabel.textContent = currentLang === 'en' ? 'EN / 中' : '中 / EN'
+  const refreshText = $('refreshText')
+  if (refreshText && refreshTimer === 0) refreshText.textContent = L('30秒后刷新', 'Refresh in 30s')
+  const modalCancelBtn = $('modalCancelBtn')
+  if (modalCancelBtn) modalCancelBtn.textContent = L('取消', 'Cancel')
+  const modalConfirm = $('modalConfirm')
+  if (modalConfirm) modalConfirm.textContent = L('确认', 'Confirm')
+  const stratCloseBtn = $('stratCloseBtn')
+  if (stratCloseBtn) stratCloseBtn.textContent = L('关闭', 'Close')
+}
+
+function toggleLanguage() {
+  currentLang = currentLang === 'en' ? 'cn' : 'en'
+  localStorage.setItem('darwin-lang', currentLang)
+  syncLangUrl()
+  applyStaticI18n()
+  renderTopbar()
+  renderCurrentPage()
+}
 
 // ── State ──
 let cache = {}
@@ -1105,6 +1179,8 @@ function toggleTheme() {
     if (icon) icon.textContent = saved === 'dark' ? '🌙' : '☀️'
   }
 })()
+syncLangUrl()
+applyStaticI18n()
 
 /* ── Agent Heartbeat Time Simulation ── */
 const _agentHeartbeatMap = {}
@@ -1242,10 +1318,10 @@ function renderTopbar() {
   if (!s) return
 
   const badge = $('modeBadge')
-  badge.textContent = s.mode === 'demo' ? '模拟盘' : '实盘'
+  badge.textContent = s.mode === 'demo' ? L('模拟盘', 'Demo') : L('实盘', 'Live')
   badge.className = 'mode-badge ' + (s.mode === 'demo' ? 'mode-demo' : 'mode-live')
   $('eqVal').textContent = fmtUSD(s.equity)
-  $('riskVal').textContent = RISK_CN[s.riskTier] || s.riskTier
+  $('riskVal').textContent = riskName(s.riskTier)
   $('riskVal').style.color = s.riskTier === 'conservative' ? 'var(--green)' : s.riskTier === 'balanced' ? 'var(--yellow)' : 'var(--red)'
   $('hbVal').textContent = s.heartbeats
   // Filter strategy count
@@ -1259,7 +1335,7 @@ function renderTopbar() {
     dot1.className = 'status-dot ' + (halted ? 'err' : s.heartbeats > 0 ? 'ok' : 'warn')
   }
   const st1 = $('statusText')
-  if (st1) st1.textContent = halted ? '系统已停机' : s.heartbeats > 0 ? '运行中' : '等待首次心跳'
+  if (st1) st1.textContent = halted ? L('系统已停机', 'System halted') : s.heartbeats > 0 ? L('运行中', 'Running') : L('等待首次心跳', 'Waiting for first heartbeat')
 
   // Health capsule in topbar
   const capsule = $('sysHealthCapsule')
@@ -1275,7 +1351,7 @@ function renderTopbar() {
   if (dot2) dot2.className = 'status-dot ' + (halted ? 'err' : s.heartbeats > 0 ? 'ok' : 'warn')
   const st2 = $('statusText2')
   if (st2) {
-    st2.textContent = halted ? '系统停机' : s.heartbeats > 0 ? '运行中' : '等待心跳'
+    st2.textContent = halted ? L('系统停机', 'System halted') : s.heartbeats > 0 ? L('运行中', 'Running') : L('等待心跳', 'Waiting')
     st2.style.color = halted ? 'var(--red)' : s.heartbeats > 0 ? 'var(--green)' : 'var(--yellow)'
   }
 
@@ -1320,6 +1396,7 @@ function renderCurrentPage() {
     case 'settings': renderSettingsPage(); break
     default: go('overview'); return
   }
+  applyStaticI18n()
   fixMobileGrids()
 }
 
@@ -3805,8 +3882,135 @@ function renderAboutPage() {
     </div>
   </div>`
 
+  if (currentLang === 'en') localizeAboutPage()
   // Render CTO decisions
   renderAboutCtoDecisions()
+}
+
+function localizeAboutPage() {
+  const el = $('aboutContent')
+  if (!el) return
+  let html = el.innerHTML
+  const replacements = [
+    ['动态自适应风险加权智能网络', 'Dynamic Adaptive Risk-Weighted Intelligence Network'],
+    ['本地优先、风险优先的 AI 交易治理系统', 'Local-first, risk-first AI trading governance system'],
+    ['策略模板', 'Strategy Templates'],
+    ['交易币种', 'Tracked Assets'],
+    ['策略实例', 'Strategy Instances'],
+    ['AI 智能体', 'AI Agents'],
+    ['LLM 提供商', 'LLM Providers'],
+    ['执行工具', 'Execution Tools'],
+    ['八层系统架构', 'Eight-Layer Architecture'],
+    ['影子优先生命周期', 'Shadow-First Lifecycle'],
+    ['所有策略都先在影子模式中验证，再按策略类型感知阈值晋升为 live。表现不佳会被降级或淘汰。', 'Every strategy is validated in shadow mode first, then promoted to live with tool-aware thresholds. Underperformers are demoted or eliminated.'],
+    ['影子', 'Shadow'],
+    ['实盘', 'Live'],
+    ['降级', 'Demote'],
+    ['淘汰', 'Eliminate'],
+    ['智能资金分配', 'Adaptive Capital Allocation'],
+    ['多维加权评分系统，融合波动率 ATR 调整和同资产相关性折扣，按策略表现动态分配资金。', 'A weighted scoring system combines ATR-aware volatility adjustments and same-asset correlation discounts to allocate capital dynamically.'],
+    ['胜率 40%', 'Win Rate 40%'],
+    ['夏普 30%', 'Sharpe 30%'],
+    ['状态匹配 20%', 'State Fit 20%'],
+    ['稳定性 10%', 'Stability 10%'],
+    ['四层渐进熔断', 'Four-Tier Circuit Breaker'],
+    ['从策略级到紧急级的四层风控，高层级需要 Paperclip 人工审批，确保极端情况下的资金安全。', 'DARWIN escalates from strategy-level to emergency-level halts, with Paperclip approval required at higher tiers.'],
+    ['策略级', 'Strategy'],
+    ['资产级', 'Asset'],
+    ['组合级', 'Portfolio'],
+    ['紧急级', 'Emergency'],
+    ['多智能体治理 + 可选 AI 增强', 'Multi-Agent Governance + Optional AI Enhancement'],
+    ['5 大 Paperclip 治理智能体分工协作，支持可选 LLM 增强；规则优先，LLM 不可用时系统仍可运行。', 'Five Paperclip governance agents collaborate with optional LLM enhancement; rules remain primary even if LLMs are unavailable.'],
+    ['规则引擎 100% 确定性决策', 'Rules engine stays fully deterministic'],
+    ['LLM 仅增强分析，故障零降级', 'LLMs enrich analysis without becoming a hard dependency'],
+    ['六大内置策略 × ', 'Six Built-In Strategies × '],
+    [' 币种 = ', ' Assets = '],
+    [' 实例', ' Instances'],
+    ['技术栈', 'Tech Stack'],
+    ['严格模式', 'Strict Mode'],
+    ['零依赖持久化', 'Zero-dependency persistence'],
+    ['完整交易生命周期', 'Full trading lifecycle'],
+    ['多智能体治理', 'Multi-agent governance'],
+    ['规则优先 · 可选增强', 'Rule-first · Optional enhancement'],
+    ['OKX Agent Trade Kit 深度集成', 'Deep OKX Agent Trade Kit Integration'],
+    ['DARWIN 通过 OKX ATK 连接市场数据、账户状态、现货/合约执行、Bot 和算法订单，把完整交易链路接入同一套治理系统：', 'DARWIN uses OKX ATK for market data, account state, spot and swap execution, bots, and algorithmic orders on one governance rail:'],
+    ['市场数据', 'Market Data'],
+    ['交易执行', 'Execution'],
+    ['策略机器人', 'Strategy Bots'],
+    ['高级功能', 'Advanced Functions'],
+    ['K线', 'Candles'],
+    ['深度', 'Depth'],
+    ['费率', 'Funding'],
+    ['持仓量', 'Open Interest'],
+    ['多空比', 'L/S Ratio'],
+    ['现货下单', 'Spot Orders'],
+    ['合约下单', 'Swap Orders'],
+    ['永续开平', 'Perpetual Open/Close'],
+    ['移动止盈', 'Trailing Stop'],
+    ['现货网格', 'Spot Grid'],
+    ['合约网格', 'Contract Grid'],
+    ['马丁格尔', 'Martingale'],
+    ['冰山委托', 'Iceberg'],
+    ['费率套利', 'Funding Arb'],
+    ['总计 <strong style="color:var(--accent)">30+</strong> OKX ATK 工具调用', 'Coverage across market, account, execution, bot, and algo order capabilities'],
+    ['全链路: 感知 → 决策 → 执行 → 风控 → 审计', 'Full loop: sense → decide → execute → protect → audit'],
+    ['AI 决策日志 — CTO 智能体', 'AI Decision Log — CTO Agent'],
+    ['系统优势', 'System Advantages'],
+    ['完整的 OKX ATK 集成', 'Full OKX ATK Integration'],
+    ['覆盖市场读取、现货/合约执行、网格/DCA/算法单和费率套利等核心能力', 'Covers market reads, spot/swap execution, grids, DCA, algo orders, and funding strategies'],
+    ['影子优先策略治理', 'Shadow-First Strategy Governance'],
+    ['影子→实盘→降级→淘汰的全生命周期管理，策略按表现与市场状态分配资本', 'Shadow → live → demote → eliminate lifecycle with capital assigned by performance and regime fit'],
+    ['工业级风控体系', 'Institutional Risk System'],
+    ['四层渐进熔断+人机协作审批+波动率调整资金管理，机构级安全标准', 'Four-tier halts, human approval flows, and volatility-aware capital management'],
+    ['多智能体 AI 架构', 'Multi-Agent AI Architecture'],
+    ['5大Paperclip智能体+16家LLM提供商+规则优先零降级AI增强', 'Five Paperclip agents, optional LLM providers, and rule-first AI enhancement'],
+    ['按白名单自动扩展', 'Automatic Watchlist Expansion'],
+    ['策略模板会自动扩展到全部配置币种，不需要为每个资产重复定义策略', 'Strategy templates automatically expand across configured assets without repetitive setup'],
+    ['零依赖单机部署', 'Single-Node Deployment'],
+    ['Node.js 22内置SQLite，npm start即可运行，适合个人和小团队', 'Built on Node.js 22 with SQLite, runnable via npm start for individuals and small teams'],
+    ['安全架构', 'Security Architecture'],
+    ['API 密钥隔离', 'API Key Isolation'],
+    ['权限分层控制', 'Layered Permissions'],
+    ['数据安全', 'Data Security'],
+    ['安全设计理念:', 'Security principle:'],
+    ['为什么选 DARWIN？', 'Why DARWIN?'],
+    ['维度', 'Dimension'],
+    ['普通交易Bot', 'Typical Trading Bot'],
+    ['手动交易', 'Manual Trading'],
+    ['策略管理', 'Strategy Management'],
+    ['影子优先生命周期治理', 'Shadow-first lifecycle governance'],
+    ['固定策略，手动调参', 'Fixed strategy, manual tuning'],
+    ['人工判断', 'Manual judgement'],
+    ['风控体系', 'Risk Control'],
+    ['4层渐进熔断 + 人机审批', '4-tier halts + human approval'],
+    ['简单止损/止盈', 'Simple stop loss / take profit'],
+    ['依赖纪律', 'Depends on discipline'],
+    ['资金分配', 'Capital Allocation'],
+    ['加权评分 + 波动率/相关性折扣', 'Weighted scoring + volatility/correlation discounts'],
+    ['等额分配', 'Equal split'],
+    ['主观判断', 'Subjective judgement'],
+    ['市场适应', 'Market Adaptation'],
+    ['3状态识别，参数自动调整', '3-state regime detection, automatic posture changes'],
+    ['固定参数', 'Fixed parameters'],
+    ['经验判断', 'Experience-based'],
+    ['AI 增强', 'AI Enhancement'],
+    ['可选 LLM 增强 + 规则优先', 'Optional LLM enhancement + rule-first logic'],
+    ['无 / 简单API', 'None / simple API'],
+    ['多资产', 'Multi-Asset'],
+    ['通配符自动扩展至N币种', 'Wildcard expansion to all configured assets'],
+    ['受限于精力', 'Limited by attention'],
+    ['OKX 工具', 'OKX Tooling'],
+    ['市场/账户/执行/Bot/算法单一体化', 'Unified market / account / execution / bot / algo tooling'],
+    ['基础API调用', 'Basic API usage'],
+    ['回测验证', 'Backtesting'],
+    ['真实网格模拟引擎', 'Realistic grid simulation engine'],
+    ['公式估算', 'Formula estimates'],
+    ['部署难度', 'Deployment'],
+    ['npm start 一键运行', 'One-command npm start'],
+    ['需配置环境', 'Needs environment setup'],
+  ]
+  replacements.forEach(([from, to]) => { html = html.replaceAll(from, to) })
+  el.innerHTML = html
 }
 
 function renderAboutCtoDecisions() {
@@ -3814,43 +4018,43 @@ function renderAboutCtoDecisions() {
   const el = $('aboutCtoDecisions')
   if (!el) return
   if (!decisions.length) {
-    el.innerHTML = '<div style="color:var(--dim);font-size:17px">等待首次CTO心跳后显示决策记录...</div>'
+    el.innerHTML = `<div style="color:var(--dim);font-size:17px">${L('等待首次CTO心跳后显示决策记录...', 'Decision logs will appear after the first CTO heartbeat...')}</div>`
     return
   }
   el.innerHTML = decisions.slice(0, 5).map((d, i) => {
     const stateColor = d.currentState === 'extreme' ? 'var(--red)' : d.currentState === 'trend' ? 'var(--green)' : 'var(--yellow)'
-    const stateCn = S_CN[d.currentState] || d.currentState
+    const stateCn = stateName(d.currentState)
     const actions = (d.actions || []).slice(0, 3)
     const insight = d.llmInsight
     return `<div style="padding:15px 15px;border-radius:12px;background:var(--subtle-bg);border:1px solid var(--border);margin-bottom:8px${i===0?';border-color:rgba(6,182,212,0.2);background:rgba(6,182,212,0.03)':''}">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
         <div style="display:flex;align-items:center;gap:12px">
-          <span style="font-size:17px;font-weight:700;color:var(--accent)">${i===0?'&#129504; 最新决策':'&#128338; '+fmtTime(d.decidedAt)}</span>
-          ${d.stateChanged ? '<span style="font-size:14px;padding:4px 10px;border-radius:5px;background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2)">状态切换</span>' : ''}
+          <span style="font-size:17px;font-weight:700;color:var(--accent)">${i===0 ? '&#129504; ' + L('最新决策', 'Latest Decision') : '&#128338; '+fmtTime(d.decidedAt)}</span>
+          ${d.stateChanged ? `<span style="font-size:14px;padding:4px 10px;border-radius:5px;background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2)">${L('状态切换', 'State Change')}</span>` : ''}
         </div>
         <span style="font-size:16px;padding:4px 12px;border-radius:5px;background:${stateColor}15;color:${stateColor};border:1px solid ${stateColor}22;font-weight:600">${stateCn}</span>
       </div>
       <div style="font-size:17px;color:var(--text);line-height:1.6;margin-bottom:${actions.length||insight?'6':'0'}px">${cnEvent(d.rationale || '--')}</div>
       ${actions.length ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:${insight?'6':'0'}px">${actions.map(a => {
-        const actionType = a.type === 'activate' ? '激活' : a.type === 'watchlist' ? '观察' : a.type === 'deactivate' ? '停用' : a.type === 'adjust' ? '调整' : (a.type || '')
+        const actionType = a.type === 'activate' ? L('激活', 'Activate') : a.type === 'watchlist' ? L('观察', 'Watch') : a.type === 'deactivate' ? L('停用', 'Deactivate') : a.type === 'adjust' ? L('调整', 'Adjust') : (a.type || '')
         const label = a.strategy ? actionType + ' ' + a.strategy : a.action ? cnEvent(a.action) : actionType + (a.strategyId ? ' ' + a.strategyId : '')
         return `<span style="font-size:14px;padding:4px 10px;border-radius:5px;background:rgba(168,85,247,0.1);color:var(--purple)">${label || cnEvent(JSON.stringify(a).slice(0,30))}</span>`
       }).join('')}</div>` : ''}
-      ${insight ? `<div style="font-size:16px;color:var(--dim);padding:10px 12px;border-radius:5px;background:var(--subtle-bg);line-height:1.5;border-left:2px solid var(--accent)"><strong style="color:var(--accent)">AI:</strong> ${cnEvent((insight.rationale || insight.summary || '').slice(0, 120))}${(insight.rationale||'').length > 120 ? '...' : ''}</div>` : ''}
+      ${insight ? `<div style="font-size:16px;color:var(--dim);padding:10px 12px;border-radius:5px;background:var(--subtle-bg);line-height:1.5;border-left:2px solid var(--accent)"><strong style="color:var(--accent)">${L('AI', 'AI')}:</strong> ${cnEvent((insight.rationale || insight.summary || '').slice(0, 120))}${(insight.rationale||'').length > 120 ? '...' : ''}</div>` : ''}
     </div>`
   }).join('')
 }
 
 function renderArchitectureSVG() {
   const layers = [
-    { name:'用户层', detail:'风控等级 · 白名单 · 审批', color:'#3b82f6', icon:'\uD83D\uDC64' },
-    { name:'Paperclip 治理层', detail:'5智能体 · 心跳调度 · 审批门', color:'#a855f7', icon:'\uD83C\uDFDB' },
-    { name:'DARWIN Bridge', detail:'REST API · 实时面板', color:'#06b6d4', icon:'\uD83D\uDD17' },
-    { name:'市场情报层', detail:'ATR/RSI/MACD · 3确认状态识别', color:'#22c55e', icon:'\uD83D\uDCE1' },
-    { name:'风控引擎层', detail:'4层熔断 · 回撤监控', color:'#ef4444', icon:'\uD83D\uDEE1' },
-    { name:'策略调度层', detail:'加权分配 · 影子生命周期', color:'#eab308', icon:'\uD83E\uDDE0' },
-    { name:'执行层', detail:'OKX ATK 9工具', color:'#f97316', icon:'\u26A1' },
-    { name:'审计 + 存储层', detail:'报告 · SQLite · 日志', color:'#64748b', icon:'\uD83D\uDCCA' },
+    { name:L('用户层', 'User Layer'), detail:L('风控等级 · 白名单 · 审批', 'Risk tier · watchlist · approvals'), color:'#3b82f6', icon:'\uD83D\uDC64' },
+    { name:L('Paperclip 治理层', 'Paperclip Governance'), detail:L('5智能体 · 心跳调度 · 审批门', '5 agents · heartbeat scheduling · approval gates'), color:'#a855f7', icon:'\uD83C\uDFDB' },
+    { name:'DARWIN Bridge', detail:L('REST API · 实时面板', 'REST API · live dashboard'), color:'#06b6d4', icon:'\uD83D\uDD17' },
+    { name:L('市场情报层', 'Market Intelligence'), detail:L('ATR/RSI/MACD · 3确认状态识别', 'ATR/RSI/MACD · 3-confirmation regime detection'), color:'#22c55e', icon:'\uD83D\uDCE1' },
+    { name:L('风控引擎层', 'Risk Engine'), detail:L('4层熔断 · 回撤监控', '4-tier halts · drawdown monitoring'), color:'#ef4444', icon:'\uD83D\uDEE1' },
+    { name:L('策略调度层', 'Strategy Governance'), detail:L('加权分配 · 影子生命周期', 'weighted allocation · shadow-first lifecycle'), color:'#eab308', icon:'\uD83E\uDDE0' },
+    { name:L('执行层', 'Execution Layer'), detail:L('OKX ATK 工具链', 'OKX ATK tooling'), color:'#f97316', icon:'\u26A1' },
+    { name:L('审计 + 存储层', 'Audit + Storage'), detail:L('报告 · SQLite · 日志', 'reports · SQLite · logs'), color:'#64748b', icon:'\uD83D\uDCCA' },
   ]
   const W = 520, layerH = 26, gap = 4, padY = 6
   const H = layers.length * (layerH + gap) + padY * 2
@@ -3884,9 +4088,9 @@ function renderSettingsPage() {
     $('stApiStatus').innerHTML = `
       <div style="display:flex;align-items:center;gap:15px;padding:10px 0">
         <div class="status-dot ${connected ? 'ok' : 'err'}" style="position:static"></div>
-        <div>
-          <div style="font-weight:700;font-size:24px;color:${connected ? 'var(--green)' : 'var(--red)'}">${connected ? '已连接' : '未连接'}</div>
-          <div style="font-size:19px;color:var(--dim)">${cfg.mode === 'demo' ? '模拟盘模式' : '实盘模式'} | Bridge: ${cfg.bridgePort}</div>
+          <div>
+          <div style="font-weight:700;font-size:24px;color:${connected ? 'var(--green)' : 'var(--red)'}">${connected ? L('已连接', 'Connected') : L('未连接', 'Disconnected')}</div>
+          <div style="font-size:19px;color:var(--dim)">${cfg.mode === 'demo' ? L('模拟盘模式', 'Demo mode') : L('实盘模式', 'Live mode')} | Bridge: ${cfg.bridgePort}</div>
         </div>
       </div>`
   }
@@ -3897,17 +4101,17 @@ function renderSettingsPage() {
     const colors = { conservative: 'var(--green)', balanced: 'var(--yellow)', aggressive: 'var(--red)' }
     $('stRiskTier').innerHTML = `<div style="display:flex;gap:12px;padding:10px 0">` +
       tiers.map(t => `<div onclick="setRiskTier('${t}')" style="flex:1;text-align:center;padding:15px 10px;border-radius:12px;cursor:pointer;transition:all 0.2s;border:2px solid ${t === cfg.riskTier ? colors[t] : 'var(--el-bg)'};background:${t === cfg.riskTier ? colors[t] + '15' : 'transparent'}">
-        <div style="font-size:21px;font-weight:700;color:${t === cfg.riskTier ? colors[t] : 'var(--dim)'}">${RISK_CN[t]}</div>
-        <div style="font-size:17px;color:var(--dim);margin-top:5px">${t === 'conservative' ? '低风险' : t === 'balanced' ? '中风险' : '高风险'}</div>
+        <div style="font-size:21px;font-weight:700;color:${t === cfg.riskTier ? colors[t] : 'var(--dim)'}">${riskName(t)}</div>
+        <div style="font-size:17px;color:var(--dim);margin-top:5px">${t === 'conservative' ? L('低风险', 'Low risk') : t === 'balanced' ? L('中风险', 'Medium risk') : L('高风险', 'High risk')}</div>
       </div>`).join('') + '</div>'
   }
 
   // Config
   if (cfg) {
     $('stConfig').innerHTML = `<div style="padding:10px 0">
-      <div class="settings-row"><span>运行模式</span><span style="font-weight:600">${cfg.mode === 'demo' ? '模拟盘' : '实盘'}</span></div>
-      <div class="settings-row"><span>心跳间隔</span><span style="font-weight:600">${cfg.heartbeatMinutes} 分钟</span></div>
-      <div class="settings-row"><span>Bridge 端口</span><span style="font-weight:600">${cfg.bridgePort}</span></div>
+      <div class="settings-row"><span>${L('运行模式', 'Mode')}</span><span style="font-weight:600">${cfg.mode === 'demo' ? L('模拟盘', 'Demo') : L('实盘', 'Live')}</span></div>
+      <div class="settings-row"><span>${L('心跳间隔', 'Heartbeat Interval')}</span><span style="font-weight:600">${cfg.heartbeatMinutes} ${L('分钟', 'min')}</span></div>
+      <div class="settings-row"><span>${L('Bridge 端口', 'Bridge Port')}</span><span style="font-weight:600">${cfg.bridgePort}</span></div>
       <div class="settings-row"><span>Paperclip</span><span style="font-weight:600"><a href="${cfg.paperclipUrl}" target="_blank" style="color:var(--accent)">${cfg.paperclipUrl}</a></span></div>
     </div>`
   }
@@ -3923,8 +4127,8 @@ function renderSettingsPage() {
     $('stTelegram').innerHTML = `<div style="display:flex;align-items:center;gap:15px;padding:10px 0">
       <div class="status-dot ${cfg.telegramEnabled ? 'ok' : 'warn'}" style="position:static"></div>
       <div>
-        <div style="font-weight:700;color:${cfg.telegramEnabled ? 'var(--green)' : 'var(--yellow)'}">${cfg.telegramEnabled ? '已启用' : '未配置'}</div>
-        <div style="font-size:19px;color:var(--dim)">${cfg.telegramEnabled ? '熔断告警、每日报告、策略变更通知' : '在 .env 中配置 TELEGRAM_BOT_TOKEN 和 TELEGRAM_CHAT_ID 即可启用'}</div>
+        <div style="font-weight:700;color:${cfg.telegramEnabled ? 'var(--green)' : 'var(--yellow)'}">${cfg.telegramEnabled ? L('已启用', 'Enabled') : L('未配置', 'Not configured')}</div>
+        <div style="font-size:19px;color:var(--dim)">${cfg.telegramEnabled ? L('熔断告警、每日报告、策略变更通知', 'Circuit-breaker alerts, daily reports, and strategy change notifications') : L('在 .env 中配置 TELEGRAM_BOT_TOKEN 和 TELEGRAM_CHAT_ID 即可启用', 'Set TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID in .env to enable')}</div>
       </div>
     </div>`
   }
@@ -3951,6 +4155,8 @@ function checkCircuitBreakerAlerts() {
 
   const tier = cb.state.currentTier || 0
   const halted = cb.state.systemHalted
+  const bannerText = $('alertBannerText')
+  if (bannerText) bannerText.textContent = L('系统已紧急停机', 'System emergency halt')
 
   // Show persistent banner if system halted
   if (halted) {
@@ -3962,9 +4168,9 @@ function checkCircuitBreakerAlerts() {
   // Toast on tier increase
   if (tier > lastCBTier && lastCBTier >= 0) {
     if (tier >= 3) {
-      showToast(`熔断升级至 T${tier} — 需要人工审批恢复`, 'danger')
+      showToast(L(`熔断升级至 T${tier} — 需要人工审批恢复`, `Circuit breaker escalated to T${tier} — manual approval required`), 'danger')
     } else if (tier >= 1) {
-      showToast(`熔断触发 T${tier} — 系统已自动处理`, 'warning')
+      showToast(L(`熔断触发 T${tier} — 系统已自动处理`, `Circuit breaker triggered at T${tier} — handled automatically`), 'warning')
     }
   }
   lastCBTier = tier
@@ -3975,12 +4181,12 @@ function checkCircuitBreakerAlerts() {
 // ════════════════════════════════════════
 async function showStratDetail(id) {
   $('stratModal').classList.add('show')
-  $('smTitle').textContent = '加载中...'
+  $('smTitle').textContent = L('加载中...', 'Loading...')
   $('smContent').innerHTML = '<div class="loading"><div class="spinner"></div></div>'
 
   const d = await fetchJSON('/api/strategy/' + id)
   if (!d || d.error) {
-    $('smContent').innerHTML = '<div style="color:var(--red)">加载失败</div>'
+    $('smContent').innerHTML = `<div style="color:var(--red)">${L('加载失败', 'Failed to load')}</div>`
     return
   }
 
@@ -4033,8 +4239,8 @@ function closeStratModal() {
 
 function setRiskTier(tier) {
   const current = cache.sysConfig?.riskTier || 'balanced'
-  if (tier === current) { showToast('当前已是该风控等级', 'info'); return }
-  showModal('切换风控等级', `确定要将风控等级从「${RISK_CN[current]}」切换为「${RISK_CN[tier]}」吗？此操作会影响交易行为。`, async () => {
+  if (tier === current) { showToast(L('当前已是该风控等级', 'Already using this risk tier'), 'info'); return }
+  showModal(L('切换风控等级', 'Switch Risk Tier'), L(`确定要将风控等级从「${riskName(current)}」切换为「${riskName(tier)}」吗？此操作会影响交易行为。`, `Switch risk tier from "${riskName(current)}" to "${riskName(tier)}"? This changes trading behavior.`), async () => {
     try {
       const r = await fetch(API + '/api/config/risk-tier', {
         method: 'POST',
@@ -4043,13 +4249,13 @@ function setRiskTier(tier) {
       })
       const data = await r.json()
       if (data.riskTier) {
-        showToast(`风控等级已切换为: ${RISK_CN[tier]}`, 'info')
+        showToast(L(`风控等级已切换为: ${riskName(tier)}`, `Risk tier updated: ${riskName(tier)}`), 'info')
         await fetchAll()
       } else {
-        showToast('切换失败: ' + (data.error || '未知错误'), 'danger')
+        showToast(L('切换失败: ', 'Failed to switch: ') + (data.error || L('未知错误', 'Unknown error')), 'danger')
       }
     } catch (e) {
-      showToast('切换失败: ' + e, 'danger')
+      showToast(L('切换失败: ', 'Failed to switch: ') + e, 'danger')
     }
   })
 }
@@ -4068,7 +4274,7 @@ function escapeHtml(str) {
 function tickRefresh() {
   refreshTimer += 1000
   const remaining = Math.max(0, Math.ceil((REFRESH - refreshTimer) / 1000))
-  $('refreshText').textContent = remaining + '秒后刷新'
+  $('refreshText').textContent = currentLang === 'en' ? `Refresh in ${remaining}s` : `${remaining}秒后刷新`
 }
 
 async function refresh() {

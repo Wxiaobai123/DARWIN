@@ -920,7 +920,8 @@ async function handleApiBacktestRun(body: Record<string, unknown>, res: ServerRe
 
 async function router(req: IncomingMessage, res: ServerResponse) {
   const method = req.method?.toUpperCase() ?? 'GET'
-  const url    = req.url ?? '/'
+  const rawUrl = req.url ?? '/'
+  const url    = new URL(rawUrl, 'http://127.0.0.1').pathname
 
   // CORS headers (for Paperclip dashboard)
   res.setHeader('Access-Control-Allow-Origin', '*')
