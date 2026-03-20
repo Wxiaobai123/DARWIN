@@ -99,6 +99,7 @@ Two foundations make this possible:
 
 Project docs:
 - [Product Positioning](docs/PRODUCT_POSITIONING.md)
+- [Product Walkthrough](docs/PRODUCT_WALKTHROUGH_EN.md)
 - [Project Architecture](docs/PROJECT_ARCHITECTURE.md)
 - [Full System Architecture](docs/ARCHITECTURE.md)
 - [Strategy Specification](docs/STRATEGY_SPEC.md)
