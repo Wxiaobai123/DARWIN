@@ -1392,6 +1392,22 @@ function localizeOverviewPage() {
 
 function localizeMarketPage() {
   replaceHtmlIn('page-market', [
+    ['市场情报中心', 'Market Intelligence Center'],
+    ['三状态识别引擎 · 多维指标分析 · 实时市场监控', 'Three-regime engine · multi-factor analytics · live market watch'],
+    ['当前市场状态', 'Current Market Regime'],
+    ['技术指标面板', 'Technical Indicator Panel'],
+    ['状态变化历史', 'Regime Change History'],
+    ['价格在区间内反复波动，趋势性弱。', 'Price oscillates within a range with weak trend persistence.'],
+    ['网格策略最优', 'Grid strategies work best'],
+    ['，通过高抛低吸获取区间利润。ATR比率 &lt; 1.5。', ', harvesting range profits through buy-low sell-high execution. ATR ratio < 1.5.'],
+    ['，通过高抛低吸获取区间利润。ATR比率 < 1.5。', ', harvesting range profits through buy-low sell-high execution. ATR ratio < 1.5.'],
+    ['价格出现明确方向运动。', 'Price develops a clear directional move.'],
+    ['切换趋势追踪策略', 'Switch to trend-following strategies'],
+    ['，利用移动止损锁定利润。成交量比 &gt; 1.5。', ', using trailing stops to lock in gains. Volume ratio > 1.5.'],
+    ['，利用移动止损锁定利润。成交量比 > 1.5。', ', using trailing stops to lock in gains. Volume ratio > 1.5.'],
+    ['剧烈波动或黑天鹅事件。', 'Volatility spikes or a black-swan event is underway.'],
+    ['进入防守模式', 'Enter defense mode'],
+    ['，仅保留 5% 仓位，等待市场恢复。需3根K线确认。', ', keeping only 5% exposure until the market stabilizes. Requires 3-candle confirmation.'],
     ['等待市场数据加载…首次启动需要约 30 秒', 'Waiting for market data... first startup may take about 30s'],
     ['震荡', 'Oscillation'],
     ['趋势', 'Trend'],
@@ -1457,6 +1473,20 @@ function localizeRiskPage() {
     ['紧急重置 T4', 'Reset T4'],
     ['>多<', '>Long<'],
     ['>空<', '>Short<'],
+  ])
+}
+
+function localizeSettingsPage() {
+  replaceHtmlIn('page-settings', [
+    ['API 连接状态', 'API Connection Status'],
+    ['风控等级', 'Risk Tier'],
+    ['运行配置', 'Runtime Configuration'],
+    ['资产白名单', 'Asset Whitelist'],
+    ['Telegram 通知', 'Telegram Notifications'],
+    ['快速参考 — 关于 DARWIN', 'Quick Reference — About DARWIN'],
+    ['一个由 Claw 驱动、基于 OKX Agent Trade Kit 和 Paperclip AI 构建的本地优先、风险优先的 AI 交易治理系统。', 'A local-first, risk-first AI trading governance system powered by Claw, OKX Agent Trade Kit, and Paperclip AI.'],
+    ['它把市场识别、策略治理、真实执行、风控熔断和审计报告保持在同一条决策轨道上。', 'It keeps market recognition, strategy governance, live execution, circuit breakers, and audit reporting on one decision track.'],
+    ['技术栈:', 'Tech Stack:'],
   ])
 }
 
@@ -2555,16 +2585,16 @@ function renderRiskPage() {
   const tier = s.riskTier || 'balanced'
   const allClear = active.length === 0
   const statusColor = allClear ? '#22c55e' : '#ef4444'
-  const statusText = allClear ? '系统安全 · 全部正常' : `&#9888; ${active.length} 层熔断触发中`
-  const riskLabel = RISK_CN[tier] || tier
+  const statusText = allClear ? L('系统安全 · 全部正常', 'System Safe · All Clear') : `&#9888; ${active.length} ${L('层熔断触发中', 'breaker tiers active')}`
+  const riskLabel = riskName(tier)
   const riskColor = tier === 'conservative' ? '#22c55e' : tier === 'balanced' ? '#eab308' : '#ef4444'
   const acc = cache.account || {}
 
   const tiers = [
-    { n:1, label:'T1', name:'策略级熔断', trigger:'单策略回撤超限', action:'暂停该策略', recovery:'自动恢复', color:'#22c55e', icon:'&#128994;' },
-    { n:2, label:'T2', name:'资产级熔断', trigger:'币种敞口回撤高', action:'暂停币种策略', recovery:'自动恢复', color:'#eab308', icon:'&#128993;' },
-    { n:3, label:'T3', name:'组合级熔断', trigger:'账户回撤达上限', action:'暂停全部交易', recovery:'需Paperclip审批', color:'#f97316', icon:'&#128992;' },
-    { n:4, label:'T4', name:'紧急级熔断', trigger:'极端亏损/断连', action:'全系统停机', recovery:'紧急审批', color:'#ef4444', icon:'&#128308;' },
+    { n:1, label:'T1', name:L('策略级熔断', 'Strategy Breaker'), trigger:L('单策略回撤超限', 'Strategy drawdown exceeded'), action:L('暂停该策略', 'Pause strategy'), recovery:L('自动恢复', 'Auto recover'), color:'#22c55e', icon:'&#128994;' },
+    { n:2, label:'T2', name:L('资产级熔断', 'Asset Breaker'), trigger:L('币种敞口回撤高', 'Asset exposure drawdown high'), action:L('暂停币种策略', 'Pause asset strategies'), recovery:L('自动恢复', 'Auto recover'), color:'#eab308', icon:'&#128993;' },
+    { n:3, label:'T3', name:L('组合级熔断', 'Portfolio Breaker'), trigger:L('账户回撤达上限', 'Portfolio drawdown limit hit'), action:L('暂停全部交易', 'Halt all trading'), recovery:L('需Paperclip审批', 'Paperclip approval'), color:'#f97316', icon:'&#128992;' },
+    { n:4, label:'T4', name:L('紧急级熔断', 'Emergency Breaker'), trigger:L('极端亏损/断连', 'Extreme loss / connectivity failure'), action:L('全系统停机', 'Emergency shutdown'), recovery:L('紧急审批', 'Emergency approval'), color:'#ef4444', icon:'&#128308;' },
   ]
 
   const params = { conservative:{dd:'5%',pool:'30%',single:'20%'}, balanced:{dd:'15%',pool:'50%',single:'30%'}, aggressive:{dd:'30%',pool:'70%',single:'40%'} }
@@ -2576,7 +2606,7 @@ function renderRiskPage() {
     posHtml = posArr.map(pos => {
       const p = pos.upl !== undefined ? pos : { ...pos, upl: 0, uplPct: 0, lever: 1, posSide: pos.side }
       const color = p.upl >= 0 ? 'var(--green)' : 'var(--red)'
-      const sideLabel = (p.posSide||p.side) === 'long' ? '多' : '空'
+      const sideLabel = (p.posSide||p.side) === 'long' ? L('多', 'Long') : L('空', 'Short')
       const sideBg = (p.posSide||p.side) === 'long' ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)'
       const sideColor = (p.posSide||p.side) === 'long' ? 'var(--green)' : 'var(--red)'
       const asset = (p.asset || p.instId || '').replace('-USDT','').replace('-SWAP','')
@@ -2590,26 +2620,26 @@ function renderRiskPage() {
       </div>`
     }).join('')
   } else {
-    posHtml = '<div style="text-align:center;padding:24px 0"><div style="font-size:40px;margin-bottom:12px;opacity:0.3">&#128737;</div><div style="color:var(--dim);font-size:19px">当前无持仓 — 系统待命中</div></div>'
+    posHtml = `<div style="text-align:center;padding:24px 0"><div style="font-size:40px;margin-bottom:12px;opacity:0.3">&#128737;</div><div style="color:var(--dim);font-size:19px">${L('当前无持仓 — 系统待命中', 'No open positions - system idle')}</div></div>`
   }
 
   const cbEvents = d?.events || []
   const eventsHtml = cbEvents.length > 0 ? cbEvents.slice(0, 8).map(e => {
     const tierColor = e.tier >= 3 ? 'var(--red)' : e.tier >= 2 ? 'var(--yellow)' : 'var(--green)'
     const resolved = e.resolved_at
-      ? '<span style="padding:4px 12px;border-radius:5px;font-size:14px;background:rgba(34,197,94,0.1);color:var(--green);font-weight:600">已恢复</span>'
-      : '<span style="padding:4px 12px;border-radius:5px;font-size:14px;background:rgba(239,68,68,0.1);color:var(--red);font-weight:600;animation:pulse 2s infinite">活跃中</span>'
+      ? `<span style="padding:4px 12px;border-radius:5px;font-size:14px;background:rgba(34,197,94,0.1);color:var(--green);font-weight:600">${L('已恢复', 'Resolved')}</span>`
+      : `<span style="padding:4px 12px;border-radius:5px;font-size:14px;background:rgba(239,68,68,0.1);color:var(--red);font-weight:600;animation:pulse 2s infinite">${L('活跃中', 'Active')}</span>`
     return `<div style="display:flex;align-items:center;gap:15px;padding:15px 15px;margin-bottom:10px;border-radius:12px;background:var(--subtle-bg);border:1px solid var(--border)">
       <span style="font-size:17px;font-weight:800;color:${tierColor};min-width:28px">T${e.tier}</span>
       <span style="flex:1;font-size:17px;color:var(--text)">${cnEvent(e.trigger_reason)}</span>
       ${resolved}
       <span style="font-size:16px;color:var(--dim);font-family:'SF Mono',monospace">${fmtTime(e.triggered_at)}</span>
     </div>`
-  }).join('') : '<div style="text-align:center;padding:24px 0"><div style="font-size:40px;margin-bottom:12px;opacity:0.3">&#9989;</div><div style="color:var(--dim);font-size:19px">暂无熔断事件 — 系统运行平稳</div></div>'
+  }).join('') : `<div style="text-align:center;padding:24px 0"><div style="font-size:40px;margin-bottom:12px;opacity:0.3">&#9989;</div><div style="color:var(--dim);font-size:19px">${L('暂无熔断事件 — 系统运行平稳', 'No breaker events - system stable')}</div></div>`
 
   let actions = ''
-  if (active.includes(3)) actions += '<button class="btn btn-danger" onclick="resetTier(3)" style="font-size:17px;padding:8px 18px;border-radius:12px">&#128260; 重置 T3</button>'
-  if (active.includes(4)) actions += '<button class="btn btn-danger" onclick="resetTier(4)" style="font-size:17px;padding:8px 18px;border-radius:12px">&#9888; 紧急重置 T4</button>'
+  if (active.includes(3)) actions += `<button class="btn btn-danger" onclick="resetTier(3)" style="font-size:17px;padding:8px 18px;border-radius:12px">&#128260; ${L('重置 T3', 'Reset T3')}</button>`
+  if (active.includes(4)) actions += `<button class="btn btn-danger" onclick="resetTier(4)" style="font-size:17px;padding:8px 18px;border-radius:12px">&#9888; ${L('紧急重置 T4', 'Reset T4')}</button>`
 
   $('riskContent').innerHTML = `
   <!-- Hero Header -->
@@ -2627,12 +2657,12 @@ function renderRiskPage() {
         </div>
         <div>
           <div style="font-size:27px;font-weight:800;background:linear-gradient(90deg,${statusColor},var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent">${statusText}</div>
-          <div style="font-size:19px;color:var(--dim);margin-top:5px">风控等级: <span style="color:${riskColor};font-weight:800;font-size:20px">${riskLabel}</span> · 四层渐进熔断体系 · 实时监控</div>
+          <div style="font-size:19px;color:var(--dim);margin-top:5px">${L('风控等级:', 'Risk Tier:')} <span style="color:${riskColor};font-weight:800;font-size:20px">${riskLabel}</span> · ${L('四层渐进熔断体系 · 实时监控', 'Four-tier halts · live monitoring')}</div>
         </div>
       </div>
       <div style="display:flex;gap:12px;align-items:center">
         <div style="padding:12px 25px;border-radius:12px;background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.12)">
-          <div style="font-size:14px;color:var(--dim);text-transform:uppercase;letter-spacing:1px">账户权益</div>
+          <div style="font-size:14px;color:var(--dim);text-transform:uppercase;letter-spacing:1px">${L('账户权益', 'Equity')}</div>
           <div style="font-size:25px;font-weight:800;color:var(--accent)">${fmtUSD(acc.equity || s.equity || 0)}</div>
         </div>
         ${actions}
@@ -2657,9 +2687,9 @@ function renderRiskPage() {
         + '<div style="width:10px;height:10px;border-radius:50%;background:' + (isActive ? t.color : '#22c55e') + ';' + (isActive ? 'box-shadow:0 0 10px '+t.color+';animation:pulse 2s infinite' : '') + '"></div></div>'
         + '<div style="font-size:20px;font-weight:700;color:' + (isActive ? t.color : 'var(--text)') + ';margin-bottom:15px">' + t.name + '</div>'
         + '<div style="font-size:16px;color:var(--dim);line-height:1.8">'
-        + '<div style="display:flex;gap:10px"><span style="color:var(--dim);min-width:30px">触发:</span><span>' + t.trigger + '</span></div>'
-        + '<div style="display:flex;gap:10px"><span style="color:var(--dim);min-width:30px">动作:</span><span style="font-weight:600">' + t.action + '</span></div>'
-        + '<div style="display:flex;gap:10px"><span style="color:var(--dim);min-width:30px">恢复:</span><span style="color:' + (t.recovery.includes('审批') ? t.color : 'var(--dim)') + ';font-weight:' + (t.recovery.includes('审批')?'700':'400') + '">' + t.recovery + '</span></div>'
+        + '<div style="display:flex;gap:10px"><span style="color:var(--dim);min-width:30px">' + L('触发:', 'Trigger:') + '</span><span>' + t.trigger + '</span></div>'
+        + '<div style="display:flex;gap:10px"><span style="color:var(--dim);min-width:30px">' + L('动作:', 'Action:') + '</span><span style="font-weight:600">' + t.action + '</span></div>'
+        + '<div style="display:flex;gap:10px"><span style="color:var(--dim);min-width:30px">' + L('恢复:', 'Recovery:') + '</span><span style="color:' + ((currentLang === 'en' ? /approval/i.test(t.recovery) : t.recovery.includes('审批')) ? t.color : 'var(--dim)') + ';font-weight:' + ((currentLang === 'en' ? /approval/i.test(t.recovery) : t.recovery.includes('审批'))?'700':'400') + '">' + t.recovery + '</span></div>'
         + '</div></div>'
     }).join('')}
   </div>
@@ -2668,16 +2698,16 @@ function renderRiskPage() {
   <div class="card" style="margin-bottom:24px;padding:24px 28px;border-left:3px solid ${riskColor}">
     <div style="display:flex;align-items:center;gap:15px;margin-bottom:25px">
       <span style="font-size:25px">&#9881;</span>
-      <span style="font-size:21px;font-weight:700">风控参数配置</span>
+      <span style="font-size:21px;font-weight:700">${L('风控参数配置', 'Risk Parameters')}</span>
       <span style="margin-left:auto;padding:5px 15px;border-radius:10px;font-size:19px;font-weight:700;
         background:${riskColor}15;color:${riskColor};border:1px solid ${riskColor}33">${riskLabel}</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:15px">
       ${[
-        { label:'最大回撤', val:p.dd, icon:'&#128201;', color:'var(--red)' },
-        { label:'资金池上限', val:p.pool, icon:'&#128176;', color:'var(--accent)' },
-        { label:'单策略上限', val:p.single, icon:'&#127919;', color:'var(--purple)' },
-        { label:'极端部署上限', val:'5%', icon:'&#9888;', color:'var(--yellow)' },
+        { label:L('最大回撤', 'Max Drawdown'), val:p.dd, icon:'&#128201;', color:'var(--red)' },
+        { label:L('资金池上限', 'Pool Limit'), val:p.pool, icon:'&#128176;', color:'var(--accent)' },
+        { label:L('单策略上限', 'Per-strategy Limit'), val:p.single, icon:'&#127919;', color:'var(--purple)' },
+        { label:L('极端部署上限', 'Extreme Exposure Limit'), val:'5%', icon:'&#9888;', color:'var(--yellow)' },
       ].map(r => '<div style="padding:18px;border-radius:12px;background:var(--subtle-bg);border:1px solid var(--border);text-align:center">'
         + '<div style="font-size:22px;margin-bottom:10px">' + r.icon + '</div>'
         + '<div style="font-size:25px;font-weight:800;color:' + r.color + ';margin-bottom:6px">' + r.val + '</div>'
@@ -2690,15 +2720,15 @@ function renderRiskPage() {
     <div class="card" style="padding:24px 28px;border-left:3px solid var(--accent)">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px">
         <span style="font-size:21px">&#128181;</span>
-        <span style="font-size:21px;font-weight:700">实时持仓</span>
+        <span style="font-size:21px;font-weight:700">${L('实时持仓', 'Live Positions')}</span>
       </div>
       <div style="max-height:220px;overflow-y:auto">${posHtml}</div>
     </div>
     <div class="card" style="padding:24px 28px;border-left:3px solid var(--yellow)">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px">
         <span style="font-size:21px">&#128339;</span>
-        <span style="font-size:21px;font-weight:700">熔断事件记录</span>
-        <span style="margin-left:auto;font-size:16px;color:var(--dim)">${cbEvents.length} 条记录</span>
+        <span style="font-size:21px;font-weight:700">${L('熔断事件记录', 'Breaker Events')}</span>
+        <span style="margin-left:auto;font-size:16px;color:var(--dim)">${cbEvents.length} ${L('条记录', 'records')}</span>
       </div>
       <div class="scroll-y" style="max-height:220px">${eventsHtml}</div>
     </div>
@@ -2708,8 +2738,8 @@ function renderRiskPage() {
 }
 
 function resetTier(tier) {
-  const label = tier === 3 ? 'T3 组合级' : 'T4 紧急级'
-  showModal('重置确认', `确定要重置 ${label} 熔断器吗？这将恢复交易活动。`, async () => {
+  const label = tier === 3 ? L('T3 组合级', 'T3 Portfolio') : L('T4 紧急级', 'T4 Emergency')
+  showModal(L('重置确认', 'Confirm Reset'), L(`确定要重置 ${label} 熔断器吗？这将恢复交易活动。`, `Reset the ${label} breaker? This will resume trading activity.`), async () => {
     try {
       const r = await fetch(API + '/approval/tier' + tier + '-reset', {
         method: 'POST',
@@ -2717,9 +2747,9 @@ function resetTier(tier) {
         body: JSON.stringify({ approvedBy: 'dashboard_user' })
       })
       const d = await r.json()
-      if (d.ok) { alert('重置成功'); await fetchAll() }
-      else alert('重置失败: ' + (d.error || ''))
-    } catch (e) { alert('请求失败: ' + e) }
+      if (d.ok) { alert(L('重置成功', 'Reset completed')); await fetchAll() }
+      else alert(L('重置失败: ', 'Reset failed: ') + (d.error || ''))
+    } catch (e) { alert(L('请求失败: ', 'Request failed: ') + e) }
   })
 }
 
@@ -4634,6 +4664,7 @@ function renderSettingsPage() {
       </div>
     </div>`
   }
+  if (currentLang === 'en') localizeSettingsPage()
 }
 
 // ════════════════════════════════════════
