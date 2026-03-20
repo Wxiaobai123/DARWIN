@@ -2023,6 +2023,66 @@ function renderOverview() {
   const mktStates = { oscillation:0, trend:0, extreme:0 }
   market.forEach(m => mktStates[m.state]++)
   const dominantState = Object.entries(mktStates).sort((a,b)=>b[1]-a[1])[0] || ['oscillation',0]
+  const thesis = L(
+    'DARWIN 不是交易信号机器人，而是把市场识别、策略切换、真实执行、风险熔断和审计报告放在同一条责任链上的 AI 交易治理系统。',
+    'DARWIN is not a trading signal bot. It is an AI trading governance system that keeps market interpretation, strategy switching, live execution, risk halts, and audit reporting on one accountable rail.'
+  )
+  const proofRail = [
+    {
+      step: '01',
+      page: 'overview',
+      title: L('总览', 'Overview'),
+      desc: L('先看权益、市场主导状态、策略数量和系统健康。', 'Start with live equity, dominant regime, strategy count, and system health.'),
+      color: 'var(--accent)',
+    },
+    {
+      step: '02',
+      page: 'decision',
+      title: L('决策', 'Decision'),
+      desc: L('再看 DARWIN 为什么在当前市场状态下选择这组策略。', 'See why DARWIN selected this posture for the current market regime.'),
+      color: 'var(--purple)',
+    },
+    {
+      step: '03',
+      page: 'risk',
+      title: L('风控', 'Risk'),
+      desc: L('确认 4 层熔断和审批门禁是否生效。', 'Confirm the 4-tier breaker logic and approval gates.'),
+      color: 'var(--red)',
+    },
+    {
+      step: '04',
+      page: 'reports',
+      title: L('报告', 'Reports'),
+      desc: L('最后看日报与审计闭环，证明它不是一次性 demo。', 'End with the daily report and audit loop to prove this is not a one-off demo.'),
+      color: 'var(--yellow)',
+    },
+  ]
+  const atkProof = [
+    {
+      icon: '&#128225;',
+      title: 'ATK Market',
+      detail: L(`${market.length} 个资产 · ATR / 资金费率 / 多空比`, `${market.length} assets · ATR / funding / L/S ratio`),
+      color: 'var(--green)',
+    },
+    {
+      icon: '&#128179;',
+      title: 'ATK Account',
+      detail: L(`权益 ${fmtUSD(equity)} · 持仓 ${(cache.positions?.positionCount||0)} 个`, `Equity ${fmtUSD(equity)} · ${(cache.positions?.positionCount||0)} open positions`),
+      color: 'var(--blue)',
+    },
+    {
+      icon: '&#9889;',
+      title: 'ATK Execution',
+      detail: L(`${totalTrades} 笔成交 · 现货 / 合约 / 移动止损`, `${totalTrades} trades · spot / swap / trailing stop`),
+      color: 'var(--accent)',
+    },
+    {
+      icon: '&#129302;',
+      title: 'ATK Bot + Algo',
+      detail: L(`${botsCount} 个机器人 · 网格 / 马丁 / 套利`, `${botsCount} bots · grid / martingale / arb`),
+      color: 'var(--purple)',
+    },
+  ]
 
   $('overviewContent').innerHTML = `
   <!-- Hero Banner -->
@@ -2073,6 +2133,63 @@ function renderOverview() {
           <span style="padding:5px 12px;border-radius:5px;background:rgba(234,179,8,0.08);color:var(--yellow);border:1px solid rgba(234,179,8,0.1)">部署 ${fmtUSD(deployed)}</span>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Product thesis + guide rail -->
+  <div class="g2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px;margin-bottom:25px">
+    <div class="card" style="padding:25px;border:1px solid rgba(6,182,212,0.1);background:linear-gradient(135deg,rgba(6,182,212,0.05),rgba(168,85,247,0.03))">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px">
+        <div style="font-size:20px;font-weight:800;color:var(--text)">${L('一句话定位', 'One-Line Thesis')}</div>
+        <div style="font-size:13px;padding:5px 10px;border-radius:999px;background:rgba(6,182,212,0.08);color:var(--accent);border:1px solid rgba(6,182,212,0.12)">Claw · OKX ATK · Paperclip</div>
+      </div>
+      <div style="font-size:26px;font-weight:800;line-height:1.45;color:var(--text);letter-spacing:-0.4px">${thesis}</div>
+      <div style="font-size:17px;color:var(--dim);line-height:1.7;margin-top:14px">${L('如果只给评审一分钟，这个系统最该证明的不是“会下单”，而是“会治理”：它会解释为什么做、何时停、以及事后如何追责。', 'If you only have one minute, the key proof is not that DARWIN can place trades. It is that DARWIN can govern them: why to act, when to stop, and how to audit the result afterwards.')}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px">
+        ${[
+          'pnpm run verify',
+          'pnpm run demo:guided',
+          'pnpm run bridge',
+        ].map(cmd => `<span style="font-size:14px;padding:6px 12px;border-radius:999px;background:var(--subtle-bg);border:1px solid var(--border);font-family:'SF Mono',monospace;color:var(--text)">${cmd}</span>`).join('')}
+      </div>
+    </div>
+
+    <div class="card" style="padding:25px;border:1px solid rgba(168,85,247,0.1)">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px">
+        <div style="font-size:20px;font-weight:800;color:var(--text)">${L('90 秒导览', '90-Second Tour')}</div>
+        <div style="font-size:15px;color:var(--dim)">${L('按这个顺序看', 'Use this order')}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+        ${proofRail.map(step => `<button onclick="go('${step.page}')" style="text-align:left;padding:15px 16px;border-radius:14px;background:${step.color}12;border:1px solid ${step.color}22;cursor:pointer;transition:all 0.2s"
+          onmouseover="this.style.transform='translateY(-2px)';this.style.borderColor='${step.color}'" onmouseout="this.style.transform='';this.style.borderColor='${step.color}22'">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <span style="font-size:13px;font-weight:800;letter-spacing:1px;color:${step.color}">${step.step}</span>
+            <span style="font-size:18px;color:${step.color}">&#10132;</span>
+          </div>
+          <div style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:6px">${step.title}</div>
+          <div style="font-size:15px;line-height:1.55;color:var(--dim)">${step.desc}</div>
+        </button>`).join('')}
+      </div>
+    </div>
+  </div>
+
+  <!-- ATK proof layer -->
+  <div class="card" style="padding:25px;margin-bottom:25px;border:1px solid rgba(34,197,94,0.12);background:linear-gradient(135deg,rgba(34,197,94,0.04),rgba(59,130,246,0.03))">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:18px">
+      <div>
+        <div style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:6px">${L('OKX Agent Trade Kit 证据层', 'OKX Agent Trade Kit Proof Layer')}</div>
+        <div style="font-size:17px;color:var(--dim);line-height:1.6">${L('DARWIN 不是“接了交易 API”而已。没有 ATK，它无法同时完成市场读取、账户约束、真实执行和策略机器人编排。', 'DARWIN is more than an exchange API wrapper. Without ATK, it cannot combine market reads, account constraints, live execution, and bot orchestration in one operating layer.')}</div>
+      </div>
+      <div style="font-size:14px;padding:6px 12px;border-radius:999px;background:rgba(34,197,94,0.08);color:var(--green);border:1px solid rgba(34,197,94,0.16)">market · account · execution · bot / algo</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+      ${atkProof.map(item => `<div style="padding:16px;border-radius:14px;background:var(--card);border:1px solid var(--border)">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <span style="width:32px;height:32px;border-radius:10px;background:${item.color}15;color:${item.color};display:flex;align-items:center;justify-content:center;font-size:18px">${item.icon}</span>
+          <div style="font-size:18px;font-weight:800;color:var(--text)">${item.title}</div>
+        </div>
+        <div style="font-size:16px;line-height:1.6;color:var(--dim)">${item.detail}</div>
+      </div>`).join('')}
     </div>
   </div>
 

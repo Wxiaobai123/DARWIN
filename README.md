@@ -13,6 +13,60 @@
 
 ---
 
+## 一句话定位
+
+> **DARWIN 不是一个交易信号机器人，而是一个把市场识别、策略切换、真实执行、风险熔断和审计报告放在同一条责任链上的 AI 交易治理系统。**
+
+---
+
+## 30 秒快速判断这个项目值不值得看
+
+如果你只看一分钟，先看这 4 件事：
+
+| 先看什么 | 它证明什么 |
+|---|---|
+| `pnpm run verify` | 项目不是概念稿，最短验证链路可直接运行 |
+| `pnpm run demo:guided` | 有固定的产品演示主链路，不靠临场发挥 |
+| `http://localhost:3200/dashboard?lang=cn#overview` | 能看到实时权益、市场状态、策略管道和系统健康 |
+| `http://localhost:3200/dashboard?lang=en#decision` → `#risk` → `#reports` | 能看到决策依据、风险门禁和审计闭环 |
+
+最短体验路径：
+
+```bash
+pnpm install
+pnpm run verify
+pnpm run demo:guided
+pnpm run bridge
+```
+
+---
+
+## 为什么它不是普通 Trading Bot
+
+| 普通 Bot | DARWIN |
+|---|---|
+| 只执行一个固定策略 | 根据市场状态切换策略簇 |
+| 下单后缺少治理闭环 | 执行、风控、熔断、报告在同一条决策轨道上 |
+| 风控主要靠止损 | 4 层熔断 + 审批门禁 |
+| 很少有可审计日常产物 | 自动生成日报和审计记录 |
+
+---
+
+## OKX Agent Trade Kit 证据链
+
+DARWIN 的主价值不是“接了一个交易 API”，而是把 **OKX Agent Trade Kit** 用成了交易能力底座：
+
+| ATK 能力层 | DARWIN 里怎么体现 |
+|---|---|
+| `market` | ATR、资金费率、成交量、多空比、市场状态识别 |
+| `account` | 权益、仓位、保证金、资金部署和风险快照 |
+| `execution` | 现货、合约、Trailing Stop、真实开平仓链路 |
+| `bot / algo` | Spot Grid、Contract Grid、Martingale、Funding Arb、TWAP、Iceberg |
+
+没有 ATK，DARWIN 就无法同时完成市场感知、账户约束、执行落地和策略机器人编排。
+
+---
+
 ## DARWIN 是什么？
 
 DARWIN 不是一个只会下单的交易 Bot。它是一个**本地优先、风险优先的 AI 交易治理系统**：负责读取市场、识别状态、选择策略，通过 OKX 执行交易，并把风控、熔断和报告保持在同一条决策轨道上。

@@ -20,6 +20,60 @@
 
 ---
 
+## One-Line Thesis
+
+> **DARWIN is not a trading signal bot. It is an AI trading governance system that keeps market interpretation, strategy switching, live execution, risk halts, and audit reporting on one accountable rail.**
+
+---
+
+## 30-Second Proof Path
+
+If you only have a minute, look at these four things:
+
+| Start here | What it proves |
+|---|---|
+| `pnpm run verify` | The project is executable, not just a concept deck |
+| `pnpm run demo:guided` | There is a fixed product walkthrough, not an improvised demo |
+| `http://localhost:3200/dashboard?lang=en#overview` | Live equity, market posture, strategy pipeline, and system health are visible |
+| `http://localhost:3200/dashboard?lang=en#decision` → `#risk` → `#reports` | Decision logic, approval-gated risk control, and the audit loop are all visible |
+
+Fastest local proof:
+
+```bash
+pnpm install
+pnpm run verify
+pnpm run demo:guided
+pnpm run bridge
+```
+
+---
+
+## Why This Is Not a Typical Trading Bot
+
+| Typical bot | DARWIN |
+|---|---|
+| Runs one fixed strategy | Switches strategy packs based on market regime |
+| Stops at execution | Keeps execution, halts, and reporting on one decision rail |
+| Risk is mostly stop-loss based | 4-tier circuit breaker with approval gates |
+| Little daily accountability | Produces audit-ready daily reports and system logs |
+
+---
+
+## OKX Agent Trade Kit Proof Layer
+
+DARWIN does not merely “connect an exchange API.” It turns **OKX Agent Trade Kit** into the operating layer for trading capability:
+
+| ATK capability | Where it appears in DARWIN |
+|---|---|
+| `market` | ATR, funding rate, volume, long/short ratio, market regime detection |
+| `account` | Equity, positions, margin usage, capital deployment, risk snapshots |
+| `execution` | Spot, swap, trailing stop, and live entry/exit paths |
+| `bot / algo` | Spot Grid, Contract Grid, Martingale, Funding Arb, TWAP, Iceberg |
+
+Without ATK, DARWIN cannot combine market sensing, account constraints, execution, and bot orchestration into one system.
+
+---
+
 ## What is DARWIN?
 
 DARWIN is **not** a trading bot.
