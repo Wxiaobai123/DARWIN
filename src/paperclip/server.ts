@@ -20,7 +20,7 @@
 
 import { createServer, type IncomingMessage, type ServerResponse } from 'http'
 import { readFileSync }            from 'fs'
-import { join, dirname }           from 'path'
+import { join, dirname, extname }  from 'path'
 import { fileURLToPath }           from 'url'
 import { recognizeState }          from '../market/state-recognizer.js'
 import { account }                 from '../atk/account.js'
@@ -360,6 +360,30 @@ function serveHtmlPage(filename: string, res: ServerResponse) {
     res.end(html)
   } catch (e) {
     err(res, `HTML page not found: ${e}`, 500)
+  }
+}
+
+function serveStaticAsset(relativePath: string, res: ServerResponse) {
+  if (relativePath.includes('..')) {
+    return err(res, 'Invalid asset path', 400)
+  }
+
+  try {
+    const __dirname = dirname(fileURLToPath(import.meta.url))
+    const assetPath = join(__dirname, '..', '..', relativePath)
+    const ext = extname(assetPath).toLowerCase()
+    const mime =
+      ext === '.svg' ? 'image/svg+xml' :
+      ext === '.png' ? 'image/png' :
+      ext === '.jpg' || ext === '.jpeg' ? 'image/jpeg' :
+      ext === '.webp' ? 'image/webp' :
+      'application/octet-stream'
+
+    const body = readFileSync(assetPath)
+    res.writeHead(200, { 'Content-Type': mime })
+    res.end(body)
+  } catch (e) {
+    err(res, `Asset not found: ${e}`, 404)
   }
 }
 
@@ -950,6 +974,7 @@ async function router(req: IncomingMessage, res: ServerResponse) {
     // Dashboard
     if (method === 'GET'  && (url === '/' || url === '/dashboard')) return await handleDashboardPage(res)
     if (method === 'GET'  && url === '/showcase')                   return await handleShowcasePage(res)
+    if (method === 'GET'  && url.startsWith('/docs/images/'))       return serveStaticAsset(url.slice(1), res)
     if (method === 'GET'  && url === '/api/market-states')         return await handleApiMarketStates(res)
     if (method === 'GET'  && url === '/api/strategies')            return await handleApiStrategies(res)
     if (method === 'GET'  && url === '/api/circuit-breaker')       return await handleApiCircuitBreaker(res)

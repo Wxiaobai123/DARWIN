@@ -527,7 +527,7 @@ tr:hover td { background: rgba(6,182,212,0.03); }
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="logo">DARWIN</div>
-    <div class="logo-sub">本地优先 · 风险优先 / Local-first · Risk-first</div>
+    <div class="logo-sub" id="logoSub">本地优先 · 风险优先</div>
     <div class="sidebar-status">
       <span class="status-dot ok" id="statusDot"></span>
       <span id="statusText">连接中...</span>
@@ -1086,6 +1086,7 @@ function syncLangUrl() {
 function applyStaticI18n() {
   document.title = L('DARWIN Dashboard / 控制面板', 'DARWIN Dashboard')
   const map = {
+    logoSub: L('本地优先 · 风险优先', 'Local-first · Risk-first'),
     navOverview: L('总览仪表盘', 'Overview'),
     navMarket: L('市场情报', 'Market Intel'),
     navStrategy: L('策略中心', 'Strategy Center'),
@@ -1202,10 +1203,10 @@ function getAgentLastRun(agentId, freqStr) {
 }
 function fmtRelativeTime(ts) {
   const diff = Math.max(0, Math.floor((Date.now() - ts) / 1000))
-  if (diff < 60) return diff + '秒前'
-  if (diff < 3600) return Math.floor(diff/60) + '分钟前'
-  if (diff < 86400) return Math.floor(diff/3600) + '小时前'
-  return Math.floor(diff/86400) + '天前'
+  if (diff < 60) return currentLang === 'en' ? diff + 's ago' : diff + '秒前'
+  if (diff < 3600) return currentLang === 'en' ? Math.floor(diff/60) + 'm ago' : Math.floor(diff/60) + '分钟前'
+  if (diff < 86400) return currentLang === 'en' ? Math.floor(diff/3600) + 'h ago' : Math.floor(diff/3600) + '小时前'
+  return currentLang === 'en' ? Math.floor(diff/86400) + 'd ago' : Math.floor(diff/86400) + '天前'
 }
 // 统一过滤: 排除无关资产
 const EXCLUDED_RE = /AVAX/i
@@ -1216,6 +1217,22 @@ function filterAssets(arr) { return (arr || []).filter(a => !EXCLUDED_RE.test(a)
 function cnEvent(s) {
   if (!s) return '--'
   if (typeof s !== 'string') s = String(s)
+  if (currentLang === 'en') {
+    return s
+      .replace(/OSCILLATION/g, 'Oscillation')
+      .replace(/TREND/g, 'Trend')
+      .replace(/EXTREME/g, 'Extreme')
+      .replace(/oscillation/g, 'oscillation')
+      .replace(/trend/g, 'trend')
+      .replace(/extreme/g, 'extreme')
+      .replace(/funding_out_of_range/gi, 'funding out of range')
+      .replace(/atr_out_of_range/gi, 'ATR out of range')
+      .replace(/stop_loss/gi, 'stop loss')
+      .replace(/take_profit/gi, 'take profit')
+      .replace(/max_hold/gi, 'max hold')
+      .replace(/loss_pause/gi, 'loss pause')
+      .replace(/_/g, ' ')
+  }
   return s
     // Full sentence patterns first (CTO decision common outputs)
     .replace(/Market state stable at OSCILLATION[^.]*/gi,'市场状态稳定于震荡区间')
@@ -1262,6 +1279,221 @@ function cnEvent(s) {
     .replace(/watchlist/gi,'观察列表').replace(/activate/gi,'激活')
     .replace(/strategies/gi,'策略').replace(/strategy/gi,'策略')
     .replace(/stable/gi,'稳定').replace(/adjust/gi,'调整')
+}
+
+function replaceHtmlIn(id, replacements) {
+  const el = $(id)
+  if (!el) return
+  let html = el.innerHTML
+  replacements.forEach(([from, to]) => {
+    html = html.replaceAll(from, to)
+  })
+  el.innerHTML = html
+}
+
+function localizeOverviewPage() {
+  replaceHtmlIn('overviewContent', [
+    ['储备金', 'Reserve'],
+    ['已部署', 'Deployed'],
+    ['模拟盘', 'Demo'],
+    ['保守', 'Conservative'],
+    ['平衡', 'Balanced'],
+    ['激进', 'Aggressive'],
+    ['熔断: ', 'Breaker: '],
+    ['正常', 'Normal'],
+    ['全部Normal', 'All Clear'],
+    ['模板', 'Templates'],
+    ['扩展', 'Expanded'],
+    ['影子策略', 'Shadow Strategies'],
+    ['实盘运行', 'Live Strategies'],
+    ['活跃机器人', 'Active Bots'],
+    ['总交易', 'Total Trades'],
+    ['储备 ', 'Reserve '],
+    ['部署 ', 'Deployed '],
+    ['资金分配', 'Capital Allocation'],
+    ['部署 <strong', 'Deployed <strong'],
+    ['储备 <strong', 'Reserve <strong'],
+    ['策略进化管道', 'Strategy Pipeline'],
+    ['影子', 'Shadow'],
+    ['实盘', 'Live'],
+    ['6 模板 × ', '6 templates × '],
+    [' 币种 = ', ' assets = '],
+    [' 实例', ' instances'],
+    ['晋升率 ', 'Promotion rate '],
+    ['市场状态', 'Market Regime'],
+    ['主导:', 'Dominant:'],
+    ['震荡', 'Oscillation'],
+    ['趋势', 'Trend'],
+    ['极端', 'Extreme'],
+    ['监控中', 'Watching'],
+    ['熔断器', 'Circuit Breaker'],
+    ['策略级', 'Strategy'],
+    ['资产级', 'Asset'],
+    ['系统级', 'System'],
+    ['紧急', 'Emergency'],
+    ['系统停机', 'System Halted'],
+    ['触发中', 'Triggered'],
+    ['全部正常', 'All Clear'],
+    ['当前持仓', 'Open Positions'],
+    ['持仓 <strong', 'Positions <strong'],
+    ['保证金 <strong', 'Margin <strong'],
+    ['浮盈 <strong', 'Unrealized <strong'],
+    ['实时市场全景', 'Market Panorama'],
+    ['点击币种查看详情', 'Open asset detail'],
+    ['系统事件流', 'Event Stream'],
+    ['最近12条', 'Last 12'],
+    ['等待系统产生事件...', 'Waiting for events...'],
+    ['系统健康', 'System Health'],
+    ['API 延迟', 'API Latency'],
+    ['心跳间隔', 'Heartbeat Interval'],
+    ['策略总数', 'Total Strategies'],
+    ['数据刷新', 'Refresh Cadence'],
+    ['API 延迟趋势', 'Latency Trend'],
+    ['当前无持仓 — 系统待命中', 'No open positions - system idle'],
+    ['交易对', 'Pair'],
+    ['方向', 'Side'],
+    ['数量', 'Size'],
+    ['开仓均价', 'Avg Entry'],
+    ['标记价格', 'Mark Price'],
+    ['杠杆', 'Leverage'],
+    ['浮动盈亏', 'Unrealized'],
+    ['收益率', 'Return'],
+    ['>多<', '>Long<'],
+    ['>空<', '>Short<'],
+    ['等待市场数据', 'Waiting for market data'],
+    ['系统启动后将自动获取市场行情，请等待首次心跳完成', 'Market data will appear after the first completed heartbeat.'],
+    ['费率 ', 'Funding '],
+    ['暂无事件', 'No events'],
+    ['>熔断<', '>Breaker<'],
+    ['>市场<', '>Market<'],
+    ['>今日<', '>Today<'],
+    ['>累计<', '>Total<'],
+  ])
+}
+
+function localizeMarketPage() {
+  replaceHtmlIn('page-market', [
+    ['等待市场数据加载…首次启动需要约 30 秒', 'Waiting for market data... first startup may take about 30s'],
+    ['震荡', 'Oscillation'],
+    ['趋势', 'Trend'],
+    ['极端', 'Extreme'],
+    ['监控中', 'Watching'],
+    ['置信度 ', 'Confidence '],
+    ['ATR 比率', 'ATR Ratio'],
+    ['波动率 vs 20期均值', 'Volatility vs 20-period avg'],
+    ['资金费率', 'Funding Rate'],
+    ['多空力量对比', 'Long / short skew'],
+    ['成交量比', 'Volume Ratio'],
+    ['相对平均成交量', 'Relative volume'],
+    ['多空比', 'Long/Short Ratio'],
+    ['市场情绪指标', 'Sentiment indicator'],
+    ['相对强弱指数', 'Relative strength index'],
+    ['趋势方向', 'Trend direction'],
+    ['暂无历史数据', 'No history yet'],
+    ['该币种暂无历史数据', 'No history for this asset yet'],
+    ['>时间<', '>Time<'],
+    ['>状态<', '>State<'],
+    ['>置信度<', '>Confidence<'],
+  ])
+}
+
+function localizeRiskPage() {
+  replaceHtmlIn('riskContent', [
+    ['系统安全 · 全部正常', 'System Safe · All Clear'],
+    [' 层熔断触发中', ' breaker tiers active'],
+    ['风控等级:', 'Risk Tier:'],
+    ['四层渐进熔断体系 · 实时监控', 'Four-tier halts · live monitoring'],
+    ['账户权益', 'Equity'],
+    ['策略级熔断', 'Strategy Breaker'],
+    ['资产级熔断', 'Asset Breaker'],
+    ['组合级熔断', 'Portfolio Breaker'],
+    ['紧急级熔断', 'Emergency Breaker'],
+    ['单策略回撤超限', 'Strategy drawdown exceeded'],
+    ['币种敞口回撤高', 'Asset exposure drawdown high'],
+    ['账户回撤达上限', 'Portfolio drawdown limit hit'],
+    ['极端亏损/断连', 'Extreme loss / connectivity failure'],
+    ['暂停该策略', 'Pause strategy'],
+    ['暂停币种策略', 'Pause asset strategies'],
+    ['暂停全部交易', 'Halt all trading'],
+    ['全系统停机', 'Emergency shutdown'],
+    ['自动恢复', 'Auto recover'],
+    ['需Paperclip审批', 'Paperclip approval'],
+    ['紧急审批', 'Emergency approval'],
+    ['触发:', 'Trigger:'],
+    ['动作:', 'Action:'],
+    ['恢复:', 'Recovery:'],
+    ['风控参数配置', 'Risk Parameters'],
+    ['最大回撤', 'Max Drawdown'],
+    ['资金池上限', 'Pool Limit'],
+    ['单策略上限', 'Per-strategy Limit'],
+    ['极端部署上限', 'Extreme Exposure Limit'],
+    ['实时持仓', 'Live Positions'],
+    ['熔断事件记录', 'Breaker Events'],
+    [' 条记录', ' records'],
+    ['当前无持仓 — 系统待命中', 'No open positions - system idle'],
+    ['已恢复', 'Resolved'],
+    ['活跃中', 'Active'],
+    ['暂无熔断事件 — 系统运行平稳', 'No breaker events - system stable'],
+    ['重置 T3', 'Reset T3'],
+    ['紧急重置 T4', 'Reset T4'],
+    ['>多<', '>Long<'],
+    ['>空<', '>Short<'],
+  ])
+}
+
+function localizeReportsPage() {
+  replaceHtmlIn('reportsContent', [
+    ['每日审计报告', 'Daily Audit Report'],
+    ['由 DARWIN AI 自动生成', 'Generated automatically by DARWIN AI'],
+    ['风控正常', 'Risk Normal'],
+    ['熔断触发', 'Breaker Triggered'],
+    [' 晋升', ' promotions'],
+    ['导出CSV', 'Export CSV'],
+    ['净盈亏', 'Net PnL'],
+    ['持平', 'Flat'],
+    ['交易执行', 'Trades Executed'],
+    ['笔交易', 'trades'],
+    ['等待中', 'Waiting'],
+    ['活跃策略', 'Active Strategies'],
+    [' 盈 / ', ' win / '],
+    [' 平', ' flat'],
+    ['主导行情', 'Dominant Regime'],
+    [' 币种', ' assets'],
+    ['熔断事件', 'Breaker Events'],
+    ['一切正常', 'All Clear'],
+    ['需关注', 'Attention needed'],
+    ['市场概况', 'Market Summary'],
+    ['风控状态', 'Risk Status'],
+    ['明日展望', 'Tomorrow Outlook'],
+    ['市场状态全景', 'Market Regime Map'],
+    ['策略分类分布', 'Strategy Mix'],
+    ['策略类别', 'Categories'],
+    ['个策略', ' strategies'],
+    ['策略表现矩阵', 'Strategy Performance Matrix'],
+    [' 盈利', ' winners'],
+    [' 持平', ' flat'],
+    [' 亏损', ' losers'],
+    [' 个策略 · ', ' strategies · '],
+    [' 活跃', ' active'],
+    [' 笔交易', ' trades'],
+    ['AI 分析摘要', 'AI Summary'],
+    ['市场格局', 'Market Regime'],
+    ['策略状态', 'Strategy Status'],
+    ['风险评估', 'Risk Assessment'],
+    ['展望建议', 'Outlook'],
+    ['报告时间线', 'Report Timeline'],
+    [' 份报告', ' reports'],
+    ['最新', 'Latest'],
+    ['震荡', 'Oscillation'],
+    ['趋势', 'Trend'],
+    ['极端', 'Extreme'],
+    ['网格策略', 'Grid'],
+    ['马丁格尔', 'Martingale'],
+    ['极端防守', 'Defense'],
+    ['趋势追踪', 'Trend'],
+    ['资金费率', 'Funding'],
+    ['其他', 'Other'],
+  ])
 }
 
 // ── Navigation ──
@@ -1687,6 +1919,7 @@ function renderOverview() {
   renderOverviewPositions()
   renderMarketHeatmapStrip()
   renderOverviewEvents()
+  if (currentLang === 'en') localizeOverviewPage()
 }
 
 function renderOverviewPositions() {
@@ -1780,7 +2013,7 @@ function renderMarketPage() {
   const data = (cache.market || []).filter(m => !EXCLUDED_RE.test(m.asset || ''))
   if (!data || !data.length) {
     const heroEl = $('mktHeroStats')
-    if (heroEl) heroEl.innerHTML = `<div style="text-align:center;padding:30px;color:var(--dim);font-size:18px;grid-column:1/-1">&#128225; 等待市场数据加载…首次启动需要约 30 秒</div>`
+    if (heroEl) heroEl.innerHTML = `<div style="text-align:center;padding:30px;color:var(--dim);font-size:18px;grid-column:1/-1">&#128225; ${L('等待市场数据加载…首次启动需要约 30 秒', 'Waiting for market data... first startup may take about 30s')}</div>`
     return
   }
 
@@ -1858,6 +2091,7 @@ function renderMarketPage() {
   ).join('')
 
   renderMarketHistory()
+  if (currentLang === 'en') localizeMarketPage()
 }
 
 function selectAsset(asset) {
@@ -1867,17 +2101,17 @@ function selectAsset(asset) {
 
 async function renderMarketHistory() {
   const data = await fetchJSON('/api/history')
-  if (!data || !data.length) { $('mktHistory').innerHTML = '<div style="color:var(--dim);font-size:19px">暂无历史数据</div>'; return }
+  if (!data || !data.length) { $('mktHistory').innerHTML = `<div style="color:var(--dim);font-size:19px">${L('暂无历史数据', 'No history yet')}</div>`; return }
   const filtered = data.filter(r => r.asset === selectedAsset)
-  if (filtered.length === 0) { $('mktHistory').innerHTML = '<div style="color:var(--dim);font-size:19px">该币种暂无历史数据</div>'; return }
+  if (filtered.length === 0) { $('mktHistory').innerHTML = `<div style="color:var(--dim);font-size:19px">${L('该币种暂无历史数据', 'No history for this asset yet')}</div>`; return }
 
-  $('mktHistory').innerHTML = '<table><thead><tr><th>时间</th><th>状态</th><th>置信度</th></tr></thead><tbody>' +
+  $('mktHistory').innerHTML = `<table><thead><tr><th>${L('时间', 'Time')}</th><th>${L('状态', 'State')}</th><th>${L('置信度', 'Confidence')}</th></tr></thead><tbody>` +
     filtered.slice(0, 50).map(r => {
       const st = r.state
       const barColor = st === 'oscillation' ? 'var(--yellow)' : st === 'trend' ? 'var(--green)' : 'var(--red)'
       return `<tr>
         <td style="font-family:monospace;font-size:19px">${fmtTime(r.recorded_at)}</td>
-        <td><span class="state-badge s-${st}" style="font-size:17px">${S_ICON[st]} ${S_CN[st]}</span></td>
+        <td><span class="state-badge s-${st}" style="font-size:17px">${S_ICON[st]} ${stateName(st)}</span></td>
         <td><div style="display:flex;align-items:center;gap:10px"><div class="score-bar"><div class="score-fill" style="width:${Math.round(r.confidence*100)}%;background:${barColor}"></div></div>${Math.round(r.confidence*100)}%</div></td>
       </tr>`
     }).join('') + '</tbody></table>'
@@ -2160,7 +2394,7 @@ function renderRiskPage() {
       : '<span style="padding:4px 12px;border-radius:5px;font-size:14px;background:rgba(239,68,68,0.1);color:var(--red);font-weight:600;animation:pulse 2s infinite">活跃中</span>'
     return `<div style="display:flex;align-items:center;gap:15px;padding:15px 15px;margin-bottom:10px;border-radius:12px;background:var(--subtle-bg);border:1px solid var(--border)">
       <span style="font-size:17px;font-weight:800;color:${tierColor};min-width:28px">T${e.tier}</span>
-      <span style="flex:1;font-size:17px;color:var(--text)">${e.trigger_reason}</span>
+      <span style="flex:1;font-size:17px;color:var(--text)">${cnEvent(e.trigger_reason)}</span>
       ${resolved}
       <span style="font-size:16px;color:var(--dim);font-family:'SF Mono',monospace">${fmtTime(e.triggered_at)}</span>
     </div>`
@@ -2263,6 +2497,7 @@ function renderRiskPage() {
     </div>
   </div>
   `
+  if (currentLang === 'en') localizeRiskPage()
 }
 
 function resetTier(tier) {
@@ -2981,6 +3216,20 @@ function renderReportsPage() {
   const promoCount = (d.promotions || []).length
   const demoCount = (d.demotions || []).length
 
+  if (currentLang === 'en') {
+    marketLine =
+      dominantState[0] === 'trend' ? 'Trend conditions dominate across the monitored assets, with directional posture outperforming range-bound assumptions.' :
+      dominantState[0] === 'extreme' ? 'Extreme volatility is the dominant condition, so DARWIN stays defensive and keeps exposure constrained.' :
+      'Oscillation remains the dominant regime, which keeps grid-oriented posture in its strongest operating environment.'
+    riskLine = cbOk
+      ? 'All circuit breaker tiers remain clear and the system is operating inside its configured risk envelope.'
+      : `${cbEvents.length} circuit breaker events were recorded and require operator attention before posture can expand.`
+    outlookLine =
+      dominantState[0] === 'trend' ? 'Directional conditions remain constructive, so wider ranges and trend-following posture stay favored.' :
+      dominantState[0] === 'extreme' ? 'Keep exposure light until volatility and breaker pressure normalize.' :
+      'Range-bound conditions still favor grid harvesting while DARWIN keeps reserve capital available for state changes.'
+  }
+
   $('reportsContent').innerHTML = `
   <!-- ═══ REPORT HERO HEADER ═══ -->
   <div style="position:relative;border-radius:20px;overflow:hidden;margin-bottom:24px;background:linear-gradient(135deg,rgba(6,182,212,0.08) 0%,rgba(168,85,247,0.06) 40%,rgba(236,72,153,0.04) 100%);border:1px solid rgba(6,182,212,0.12);padding:28px 32px">
@@ -3218,9 +3467,10 @@ function renderReportsPage() {
           </div>`
         }).join('') : '<div style="color:var(--dim);font-size:17px;padding:25px 0;text-align:center">暂无历史报告</div>'}
       </div>
-    </div>
+  </div>
   </div>
   `
+  if (currentLang === 'en') localizeReportsPage()
 }
 
 // ════════════════════════════════════════
@@ -3643,14 +3893,15 @@ function renderAboutPage() {
   const assetCount = filterAssets(cfg.assets).length || 8
   const templateCount = 6
   const instanceCount = templateCount * assetCount
+  const flowDiagramSrc = currentLang === 'en' ? 'docs/images/darwin-system-flow-en.svg' : 'docs/images/darwin-system-flow-cn.svg'
 
   $('aboutContent').innerHTML = `
   <!-- Hero -->
   <div style="text-align:center;padding:32px 0 24px;position:relative">
     <div style="font-size:68px;font-weight:900;letter-spacing:-2px;background:linear-gradient(135deg,var(--accent),var(--purple),#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1">DARWIN</div>
-    <div style="font-size:21px;color:var(--dim);letter-spacing:3px;margin-top:10px;font-weight:600">动态自适应风险加权智能网络</div>
-    <div style="font-size:24px;color:var(--text);margin-top:15px;opacity:0.8">本地优先、风险优先的 AI 交易治理系统</div>
-    <div style="font-size:18px;color:var(--dim);margin-top:8px;opacity:0.9">Local-first, risk-first AI trading governance system</div>
+    <div style="font-size:21px;color:var(--dim);letter-spacing:3px;margin-top:10px;font-weight:600">${L('动态自适应风险加权智能网络', 'Dynamic Adaptive Risk-Weighted Intelligence Network')}</div>
+    <div style="font-size:24px;color:var(--text);margin-top:15px;opacity:0.8">${L('本地优先、风险优先的 AI 交易治理系统', 'Local-first, risk-first AI trading governance system')}</div>
+    ${currentLang === 'cn' ? '<div style="font-size:18px;color:var(--dim);margin-top:8px;opacity:0.9">Local-first, risk-first AI trading governance system</div>' : ''}
     <div style="font-size:17px;color:var(--dim);margin-top:10px;opacity:0.9">Powered by Claw · OKX Agent Trade Kit · Paperclip AI</div>
   </div>
 
@@ -3662,7 +3913,7 @@ function renderAboutPage() {
       { icon:'&#9889;',   val: instanceCount, label:'策略实例' },
       { icon:'&#129302;', val: 5, label:'AI 智能体' },
       { icon:'&#129504;', val: 16, label:'LLM 提供商' },
-      { icon:'&#9881;',   val: 9, label:'执行工具' },
+      { icon:'&#9881;',   val: '30+', label:'ATK 能力' },
     ].map(m => `<div class="glow-card" style="text-align:center;min-width:120px;padding:25px 24px">
       <div style="font-size:25px;margin-bottom:10px">${m.icon}</div>
       <div class="stat-hero-sm">${m.val}</div>
@@ -3674,6 +3925,11 @@ function renderAboutPage() {
   <div class="card" style="margin-bottom:24px;padding:24px">
     <div class="card-title"><span class="icon">&#127959;</span> 八层系统架构</div>
     ${renderArchitectureSVG()}
+    <div style="margin-top:18px;padding:18px;border-radius:14px;background:var(--subtle-bg);border:1px solid var(--border)">
+      <div style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:12px">${L('系统决策主链路', 'Decision Rail')}</div>
+      <img src="${flowDiagramSrc}" alt="${L('DARWIN 系统主链路', 'DARWIN system flow')}" style="display:block;width:100%;height:auto;border-radius:12px;border:1px solid rgba(255,255,255,0.06)">
+      <div style="font-size:16px;color:var(--dim);line-height:1.6;margin-top:12px">${L('从用户意图到 OKX 执行、再到熔断与审计，所有动作都保持在同一条责任链上。', 'From user intent to OKX execution, then through halts and audit, every action stays on one accountable rail.')}</div>
+    </div>
   </div>
 
   <!-- 4 Core Innovations -->
@@ -3899,7 +4155,7 @@ function localizeAboutPage() {
     ['策略实例', 'Strategy Instances'],
     ['AI 智能体', 'AI Agents'],
     ['LLM 提供商', 'LLM Providers'],
-    ['执行工具', 'Execution Tools'],
+    ['ATK 能力', 'ATK Coverage'],
     ['八层系统架构', 'Eight-Layer Architecture'],
     ['影子优先生命周期', 'Shadow-First Lifecycle'],
     ['所有策略都先在影子模式中验证，再按策略类型感知阈值晋升为 live。表现不佳会被降级或淘汰。', 'Every strategy is validated in shadow mode first, then promoted to live with tool-aware thresholds. Underperformers are demoted or eliminated.'],

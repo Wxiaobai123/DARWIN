@@ -53,9 +53,9 @@ Project docs:
 
 ## Product Preview
 
-Chinese overview:
+English overview:
 
-![DARWIN Dashboard Overview (CN)](docs/images/dashboard-overview-cn.png)
+![DARWIN Dashboard Overview (EN)](docs/images/dashboard-overview-en.png)
 
 English about page:
 
@@ -72,6 +72,8 @@ English about page:
 ---
 
 ## Architecture At A Glance
+
+![DARWIN System Flow](docs/images/darwin-system-flow-en.svg)
 
 ```mermaid
 flowchart LR

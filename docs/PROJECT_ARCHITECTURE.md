@@ -31,6 +31,8 @@ DARWIN solves that by keeping the full decision rail connected from regime detec
 
 ## System Diagram
 
+![DARWIN System Flow](images/darwin-system-flow-en.svg)
+
 ```mermaid
 flowchart LR
     U["User / Operator"] --> D["Dashboard / Control Panel"]
