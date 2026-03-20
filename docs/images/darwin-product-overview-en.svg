@@ -1,0 +1,120 @@
+<svg width="1600" height="1080" viewBox="0 0 1600 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="80" x2="1480" y2="980" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="0.5" stop-color="#111827"/>
+      <stop offset="1" stop-color="#0B1120"/>
+    </linearGradient>
+    <linearGradient id="hero" x1="280" y1="120" x2="1320" y2="260" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06B6D4"/>
+      <stop offset="0.5" stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#EC4899"/>
+    </linearGradient>
+    <linearGradient id="rail" x1="220" y1="520" x2="1380" y2="520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06B6D4"/>
+      <stop offset="1" stop-color="#A855F7"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="1080" rx="36" fill="url(#bg)"/>
+  <circle cx="1320" cy="180" r="220" fill="#8B5CF6" opacity="0.08"/>
+  <circle cx="260" cy="180" r="180" fill="#06B6D4" opacity="0.08"/>
+  <circle cx="1460" cy="860" r="240" fill="#EC4899" opacity="0.06"/>
+
+  <text x="800" y="132" text-anchor="middle" fill="url(#hero)" font-size="72" font-weight="800" font-family="Inter, Arial, sans-serif">DARWIN</text>
+  <text x="800" y="176" text-anchor="middle" fill="#CBD5E1" font-size="26" font-weight="600" font-family="Inter, Arial, sans-serif">Local-first, risk-first AI trading governance system</text>
+  <text x="800" y="214" text-anchor="middle" fill="#94A3B8" font-size="20" font-family="Inter, Arial, sans-serif">Claw handles intent and orchestration, OKX Agent Trade Kit handles trading capability, and Paperclip AI governs the loop</text>
+
+  <rect x="110" y="280" width="330" height="206" rx="22" fill="#111827" stroke="#1E293B"/>
+  <text x="140" y="324" fill="#22D3EE" font-size="20" font-weight="700" font-family="Inter, Arial, sans-serif">1. Intent &amp; Control</text>
+  <text x="140" y="360" fill="#F8FAFC" font-size="34" font-weight="700" font-family="Inter, Arial, sans-serif">User sets the frame</text>
+  <text x="140" y="396" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">Risk tier, asset whitelist, and approvals</text>
+  <text x="140" y="432" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">stay under explicit human control.</text>
+  <rect x="140" y="452" width="124" height="28" rx="14" fill="#083344"/>
+  <text x="202" y="471" text-anchor="middle" fill="#67E8F9" font-size="14" font-weight="700" font-family="Inter, Arial, sans-serif">Explainable input</text>
+
+  <rect x="470" y="280" width="330" height="206" rx="22" fill="#111827" stroke="#1E293B"/>
+  <text x="500" y="324" fill="#F59E0B" font-size="20" font-weight="700" font-family="Inter, Arial, sans-serif">2. Governance Layer</text>
+  <text x="500" y="360" fill="#F8FAFC" font-size="34" font-weight="700" font-family="Inter, Arial, sans-serif">Not a chat shell</text>
+  <text x="500" y="396" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">Five Paperclip agents split responsibility</text>
+  <text x="500" y="432" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">across market, risk, CTO, strategy, and audit.</text>
+  <rect x="500" y="452" width="154" height="28" rx="14" fill="#3F2A00"/>
+  <text x="577" y="471" text-anchor="middle" fill="#FCD34D" font-size="14" font-weight="700" font-family="Inter, Arial, sans-serif">Multi-agent governance</text>
+
+  <rect x="830" y="280" width="330" height="206" rx="22" fill="#111827" stroke="#1E293B"/>
+  <text x="860" y="324" fill="#4ADE80" font-size="20" font-weight="700" font-family="Inter, Arial, sans-serif">3. Execution Layer</text>
+  <text x="860" y="360" fill="#F8FAFC" font-size="34" font-weight="700" font-family="Inter, Arial, sans-serif">Real OKX connectivity</text>
+  <text x="860" y="396" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">Market data, account state, spot, swap, bots,</text>
+  <text x="860" y="432" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">and algo orders all flow through OKX ATK.</text>
+  <rect x="860" y="452" width="144" height="28" rx="14" fill="#052E16"/>
+  <text x="932" y="471" text-anchor="middle" fill="#86EFAC" font-size="14" font-weight="700" font-family="Inter, Arial, sans-serif">Execution loop</text>
+
+  <rect x="1190" y="280" width="300" height="206" rx="22" fill="#111827" stroke="#1E293B"/>
+  <text x="1220" y="324" fill="#C084FC" font-size="20" font-weight="700" font-family="Inter, Arial, sans-serif">4. Outcome Layer</text>
+  <text x="1220" y="360" fill="#F8FAFC" font-size="34" font-weight="700" font-family="Inter, Arial, sans-serif">Protection + audit</text>
+  <text x="1220" y="396" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">Four breaker tiers, approval resets, daily audit,</text>
+  <text x="1220" y="432" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">and one accountable operating rail.</text>
+  <rect x="1220" y="452" width="120" height="28" rx="14" fill="#3B0764"/>
+  <text x="1280" y="471" text-anchor="middle" fill="#D8B4FE" font-size="14" font-weight="700" font-family="Inter, Arial, sans-serif">Auditable ops</text>
+
+  <text x="120" y="556" fill="#E2E8F0" font-size="24" font-weight="700" font-family="Inter, Arial, sans-serif">DARWIN Decision Rail</text>
+  <rect x="120" y="584" width="1360" height="12" rx="6" fill="url(#rail)" opacity="0.18"/>
+  <rect x="220" y="576" width="180" height="96" rx="18" fill="#0F172A" stroke="#155E75"/>
+  <rect x="456" y="576" width="180" height="96" rx="18" fill="#0F172A" stroke="#4C1D95"/>
+  <rect x="692" y="576" width="180" height="96" rx="18" fill="#0F172A" stroke="#065F46"/>
+  <rect x="928" y="576" width="180" height="96" rx="18" fill="#0F172A" stroke="#9A3412"/>
+  <rect x="1164" y="576" width="180" height="96" rx="18" fill="#0F172A" stroke="#7C3AED"/>
+
+  <text x="310" y="614" text-anchor="middle" fill="#67E8F9" font-size="18" font-weight="700" font-family="Inter, Arial, sans-serif">Regime Detection</text>
+  <text x="310" y="644" text-anchor="middle" fill="#CBD5E1" font-size="15" font-family="Inter, Arial, sans-serif">oscillation / trend / extreme</text>
+
+  <text x="546" y="614" text-anchor="middle" fill="#C4B5FD" font-size="18" font-weight="700" font-family="Inter, Arial, sans-serif">Strategy Governance</text>
+  <text x="546" y="644" text-anchor="middle" fill="#CBD5E1" font-size="15" font-family="Inter, Arial, sans-serif">shadow validation → promote / demote</text>
+
+  <text x="782" y="614" text-anchor="middle" fill="#86EFAC" font-size="18" font-weight="700" font-family="Inter, Arial, sans-serif">Capital Allocation</text>
+  <text x="782" y="644" text-anchor="middle" fill="#CBD5E1" font-size="15" font-family="Inter, Arial, sans-serif">weighted score + vol / correlation discount</text>
+
+  <text x="1018" y="614" text-anchor="middle" fill="#FDBA74" font-size="18" font-weight="700" font-family="Inter, Arial, sans-serif">OKX Execution</text>
+  <text x="1018" y="644" text-anchor="middle" fill="#CBD5E1" font-size="15" font-family="Inter, Arial, sans-serif">spot / swap / bot / algo</text>
+
+  <text x="1254" y="614" text-anchor="middle" fill="#D8B4FE" font-size="18" font-weight="700" font-family="Inter, Arial, sans-serif">Risk + Audit</text>
+  <text x="1254" y="644" text-anchor="middle" fill="#CBD5E1" font-size="15" font-family="Inter, Arial, sans-serif">4-tier breakers + audit + approval reset</text>
+
+  <path d="M400 624H456" stroke="#475569" stroke-width="2"/>
+  <path d="M636 624H692" stroke="#475569" stroke-width="2"/>
+  <path d="M872 624H928" stroke="#475569" stroke-width="2"/>
+  <path d="M1108 624H1164" stroke="#475569" stroke-width="2"/>
+
+  <text x="120" y="742" fill="#E2E8F0" font-size="24" font-weight="700" font-family="Inter, Arial, sans-serif">Why it beats a normal trading bot</text>
+
+  <rect x="120" y="772" width="430" height="150" rx="22" fill="#111827" stroke="#1E293B"/>
+  <text x="150" y="812" fill="#F8FAFC" font-size="24" font-weight="700" font-family="Inter, Arial, sans-serif">Governance, not just execution</text>
+  <text x="150" y="850" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">DARWIN decides which strategy should run, how much</text>
+  <text x="150" y="880" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">capital it gets, when it must halt, and how it restarts.</text>
+
+  <rect x="585" y="772" width="430" height="150" rx="22" fill="#111827" stroke="#1E293B"/>
+  <text x="615" y="812" fill="#F8FAFC" font-size="24" font-weight="700" font-family="Inter, Arial, sans-serif">Risk-first, not PnL theater</text>
+  <text x="615" y="850" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">Four breaker tiers, approval resets, risk tier controls,</text>
+  <text x="615" y="880" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">and an audit trail make it an operating system, not a demo.</text>
+
+  <rect x="1050" y="772" width="430" height="150" rx="22" fill="#111827" stroke="#1E293B"/>
+  <text x="1080" y="812" fill="#F8FAFC" font-size="24" font-weight="700" font-family="Inter, Arial, sans-serif">Local-first, not a hosted black box</text>
+  <text x="1080" y="850" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">Keys stay local while Dashboard, Bridge, SQLite,</text>
+  <text x="1080" y="880" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">Paperclip, and OKX ATK form a reproducible product stack.</text>
+
+  <rect x="120" y="958" width="1360" height="86" rx="22" fill="#0F172A" stroke="#1E293B"/>
+  <text x="170" y="1000" fill="#22D3EE" font-size="20" font-weight="700" font-family="Inter, Arial, sans-serif">Tech Spine</text>
+  <text x="300" y="1000" fill="#E2E8F0" font-size="18" font-family="Inter, Arial, sans-serif">Claw</text>
+  <text x="370" y="1000" fill="#64748B" font-size="18" font-family="Inter, Arial, sans-serif">·</text>
+  <text x="395" y="1000" fill="#E2E8F0" font-size="18" font-family="Inter, Arial, sans-serif">Paperclip AI</text>
+  <text x="540" y="1000" fill="#64748B" font-size="18" font-family="Inter, Arial, sans-serif">·</text>
+  <text x="565" y="1000" fill="#E2E8F0" font-size="18" font-family="Inter, Arial, sans-serif">OKX Agent Trade Kit</text>
+  <text x="810" y="1000" fill="#64748B" font-size="18" font-family="Inter, Arial, sans-serif">·</text>
+  <text x="835" y="1000" fill="#E2E8F0" font-size="18" font-family="Inter, Arial, sans-serif">TypeScript</text>
+  <text x="955" y="1000" fill="#64748B" font-size="18" font-family="Inter, Arial, sans-serif">·</text>
+  <text x="980" y="1000" fill="#E2E8F0" font-size="18" font-family="Inter, Arial, sans-serif">Node.js 22</text>
+  <text x="1108" y="1000" fill="#64748B" font-size="18" font-family="Inter, Arial, sans-serif">·</text>
+  <text x="1133" y="1000" fill="#E2E8F0" font-size="18" font-family="Inter, Arial, sans-serif">SQLite</text>
+  <text x="1245" y="1000" fill="#64748B" font-size="18" font-family="Inter, Arial, sans-serif">·</text>
+  <text x="1270" y="1000" fill="#E2E8F0" font-size="18" font-family="Inter, Arial, sans-serif">Local Dashboard</text>
+</svg>

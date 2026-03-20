@@ -1,0 +1,127 @@
+<svg width="1600" height="1080" viewBox="0 0 1600 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="80" x2="1480" y2="980" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="0.5" stop-color="#111827"/>
+      <stop offset="1" stop-color="#0B1120"/>
+    </linearGradient>
+    <linearGradient id="hero" x1="280" y1="120" x2="1320" y2="260" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06B6D4"/>
+      <stop offset="0.5" stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#EC4899"/>
+    </linearGradient>
+    <linearGradient id="rail" x1="220" y1="520" x2="1380" y2="520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06B6D4"/>
+      <stop offset="1" stop-color="#A855F7"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="1080" rx="36" fill="url(#bg)"/>
+  <circle cx="1320" cy="180" r="220" fill="#8B5CF6" opacity="0.08"/>
+  <circle cx="260" cy="180" r="180" fill="#06B6D4" opacity="0.08"/>
+  <circle cx="1460" cy="860" r="240" fill="#EC4899" opacity="0.06"/>
+
+  <text x="800" y="132" text-anchor="middle" fill="url(#hero)" font-size="72" font-weight="800" font-family="Inter, Arial, sans-serif">DARWIN</text>
+  <text x="800" y="176" text-anchor="middle" fill="#CBD5E1" font-size="26" font-weight="600" font-family="Inter, Arial, sans-serif">本地优先、风险优先的 AI 交易治理系统</text>
+  <text x="800" y="214" text-anchor="middle" fill="#94A3B8" font-size="20" font-family="Inter, Arial, sans-serif">Claw 负责意图与编排，OKX Agent Trade Kit 负责真实交易能力，Paperclip AI 负责治理与审批</text>
+
+  <rect x="110" y="280" width="330" height="206" rx="22" fill="#111827" stroke="#1E293B"/>
+  <text x="140" y="324" fill="#22D3EE" font-size="20" font-weight="700" font-family="Inter, Arial, sans-serif">1. 用户意图与控制</text>
+  <text x="140" y="360" fill="#F8FAFC" font-size="34" font-weight="700" font-family="Inter, Arial, sans-serif">目标先行</text>
+  <text x="140" y="396" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">风险等级、币种白名单、审批操作</text>
+  <text x="140" y="432" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">都由用户明确控制。</text>
+  <rect x="140" y="452" width="112" height="28" rx="14" fill="#083344"/>
+  <text x="196" y="471" text-anchor="middle" fill="#67E8F9" font-size="14" font-weight="700" font-family="Inter, Arial, sans-serif">可解释输入</text>
+
+  <rect x="470" y="280" width="330" height="206" rx="22" fill="#111827" stroke="#1E293B"/>
+  <text x="500" y="324" fill="#F59E0B" font-size="20" font-weight="700" font-family="Inter, Arial, sans-serif">2. 治理层</text>
+  <text x="500" y="360" fill="#F8FAFC" font-size="34" font-weight="700" font-family="Inter, Arial, sans-serif">不是聊天壳</text>
+  <text x="500" y="396" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">5 个 Paperclip 智能体分工负责</text>
+  <text x="500" y="432" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">市场、风控、CTO、策略、审计。</text>
+  <rect x="500" y="452" width="138" height="28" rx="14" fill="#3F2A00"/>
+  <text x="569" y="471" text-anchor="middle" fill="#FCD34D" font-size="14" font-weight="700" font-family="Inter, Arial, sans-serif">多智能体治理</text>
+
+  <rect x="830" y="280" width="330" height="206" rx="22" fill="#111827" stroke="#1E293B"/>
+  <text x="860" y="324" fill="#4ADE80" font-size="20" font-weight="700" font-family="Inter, Arial, sans-serif">3. 执行层</text>
+  <text x="860" y="360" fill="#F8FAFC" font-size="34" font-weight="700" font-family="Inter, Arial, sans-serif">真实连接 OKX</text>
+  <text x="860" y="396" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">行情、账户、现货、合约、Bot、算法单</text>
+  <text x="860" y="432" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">都走 OKX Agent Trade Kit。</text>
+  <rect x="860" y="452" width="128" height="28" rx="14" fill="#052E16"/>
+  <text x="924" y="471" text-anchor="middle" fill="#86EFAC" font-size="14" font-weight="700" font-family="Inter, Arial, sans-serif">真实执行闭环</text>
+
+  <rect x="1190" y="280" width="300" height="206" rx="22" fill="#111827" stroke="#1E293B"/>
+  <text x="1220" y="324" fill="#C084FC" font-size="20" font-weight="700" font-family="Inter, Arial, sans-serif">4. 结果层</text>
+  <text x="1220" y="360" fill="#F8FAFC" font-size="34" font-weight="700" font-family="Inter, Arial, sans-serif">有风控也有审计</text>
+  <text x="1220" y="396" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">四级熔断、审批恢复、每日报告、</text>
+  <text x="1220" y="432" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">把结果留在同一条责任链上。</text>
+  <rect x="1220" y="452" width="144" height="28" rx="14" fill="#3B0764"/>
+  <text x="1292" y="471" text-anchor="middle" fill="#D8B4FE" font-size="14" font-weight="700" font-family="Inter, Arial, sans-serif">可审计治理</text>
+
+  <text x="120" y="556" fill="#E2E8F0" font-size="24" font-weight="700" font-family="Inter, Arial, sans-serif">DARWIN 决策主链路</text>
+  <rect x="120" y="584" width="1360" height="12" rx="6" fill="url(#rail)" opacity="0.18"/>
+  <rect x="220" y="576" width="180" height="96" rx="18" fill="#0F172A" stroke="#155E75"/>
+  <rect x="456" y="576" width="180" height="96" rx="18" fill="#0F172A" stroke="#4C1D95"/>
+  <rect x="692" y="576" width="180" height="96" rx="18" fill="#0F172A" stroke="#065F46"/>
+  <rect x="928" y="576" width="180" height="96" rx="18" fill="#0F172A" stroke="#9A3412"/>
+  <rect x="1164" y="576" width="180" height="96" rx="18" fill="#0F172A" stroke="#7C3AED"/>
+
+  <text x="310" y="614" text-anchor="middle" fill="#67E8F9" font-size="18" font-weight="700" font-family="Inter, Arial, sans-serif">市场识别</text>
+  <text x="310" y="644" text-anchor="middle" fill="#CBD5E1" font-size="15" font-family="Inter, Arial, sans-serif">震荡 / 趋势 / 极端</text>
+
+  <text x="546" y="614" text-anchor="middle" fill="#C4B5FD" font-size="18" font-weight="700" font-family="Inter, Arial, sans-serif">策略治理</text>
+  <text x="546" y="644" text-anchor="middle" fill="#CBD5E1" font-size="15" font-family="Inter, Arial, sans-serif">影子验证 → 晋升 / 降级</text>
+
+  <text x="782" y="614" text-anchor="middle" fill="#86EFAC" font-size="18" font-weight="700" font-family="Inter, Arial, sans-serif">资金分配</text>
+  <text x="782" y="644" text-anchor="middle" fill="#CBD5E1" font-size="15" font-family="Inter, Arial, sans-serif">加权评分 + 波动率 / 相关性折扣</text>
+
+  <text x="1018" y="614" text-anchor="middle" fill="#FDBA74" font-size="18" font-weight="700" font-family="Inter, Arial, sans-serif">OKX 执行</text>
+  <text x="1018" y="644" text-anchor="middle" fill="#CBD5E1" font-size="15" font-family="Inter, Arial, sans-serif">现货 / 合约 / Bot / Algo</text>
+
+  <text x="1254" y="614" text-anchor="middle" fill="#D8B4FE" font-size="18" font-weight="700" font-family="Inter, Arial, sans-serif">风控与审计</text>
+  <text x="1254" y="644" text-anchor="middle" fill="#CBD5E1" font-size="15" font-family="Inter, Arial, sans-serif">四级熔断 + 日报 + 审批恢复</text>
+
+  <path d="M400 624H456" stroke="#475569" stroke-width="2"/>
+  <path d="M636 624H692" stroke="#475569" stroke-width="2"/>
+  <path d="M872 624H928" stroke="#475569" stroke-width="2"/>
+  <path d="M1108 624H1164" stroke="#475569" stroke-width="2"/>
+
+  <text x="120" y="742" fill="#E2E8F0" font-size="24" font-weight="700" font-family="Inter, Arial, sans-serif">为什么它比普通交易 Bot 更强</text>
+
+  <rect x="120" y="772" width="430" height="150" rx="22" fill="#111827" stroke="#1E293B"/>
+  <text x="150" y="812" fill="#F8FAFC" font-size="24" font-weight="700" font-family="Inter, Arial, sans-serif">治理，而不是只会执行</text>
+  <text x="150" y="850" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">DARWIN 不只“给信号”，而是决定应该用什么策略、</text>
+  <text x="150" y="880" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">投入多少资金、什么时候暂停，以及何时恢复。</text>
+
+  <rect x="585" y="772" width="430" height="150" rx="22" fill="#111827" stroke="#1E293B"/>
+  <text x="615" y="812" fill="#F8FAFC" font-size="24" font-weight="700" font-family="Inter, Arial, sans-serif">风险优先，而不是收益口号</text>
+  <text x="615" y="850" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">四层熔断、审批恢复、风险等级切换和审计链路，</text>
+  <text x="615" y="880" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">决定它更像一个可运营系统，而不是一次性 Demo。</text>
+
+  <rect x="1050" y="772" width="430" height="150" rx="22" fill="#111827" stroke="#1E293B"/>
+  <text x="1080" y="812" fill="#F8FAFC" font-size="24" font-weight="700" font-family="Inter, Arial, sans-serif">本地优先，而不是黑盒托管</text>
+  <text x="1080" y="850" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">密钥留在本地，Dashboard、Bridge、SQLite、</text>
+  <text x="1080" y="880" fill="#94A3B8" font-size="18" font-family="Inter, Arial, sans-serif">Paperclip 与 OKX ATK 构成可复制的独立产品栈。</text>
+
+  <rect x="120" y="958" width="1360" height="86" rx="22" fill="#0F172A" stroke="#1E293B"/>
+  <text x="170" y="1000" fill="#22D3EE" font-size="20" font-weight="700" font-family="Inter, Arial, sans-serif">技术脊柱</text>
+  <text x="320" y="1000" fill="#E2E8F0" font-size="18" font-family="Inter, Arial, sans-serif">Claw</text>
+  <text x="390" y="1000" fill="#64748B" font-size="18" font-family="Inter, Arial, sans-serif">·</text>
+  <text x="415" y="1000" fill="#E2E8F0" font-size="18" font-family="Inter, Arial, sans-serif">Paperclip AI</text>
+  <text x="560" y="1000" fill="#64748B" font-size="18" font-family="Inter, Arial, sans-serif">·</text>
+  <text x="585" y="1000" fill="#E2E8F0" font-size="18" font-family="Inter, Arial, sans-serif">OKX Agent Trade Kit</text>
+  <text x="830" y="1000" fill="#64748B" font-size="18" font-family="Inter, Arial, sans-serif">·</text>
+  <text x="855" y="1000" fill="#E2E8F0" font-size="18" font-family="Inter, Arial, sans-serif">TypeScript</text>
+  <text x="975" y="1000" fill="#64748B" font-size="18" font-family="Inter, Arial, sans-serif">·</text>
+  <text x="1000" y="1000" fill="#E2E8F0" font-size="18" font-family="Inter, Arial, sans-serif">Node.js 22</text>
+  <text x="1128" y="1000" fill="#64748B" font-size="18" font-family="Inter, Arial, sans-serif">·</text>
+  <text x="1153" y="1000" fill="#E2E8F0" font-size="18" font-family="Inter, Arial, sans-serif">SQLite</text>
+  <text x="1265" y="1000" fill="#64748B" font-size="18" font-family="Inter, Arial, sans-serif">·</text>
+  <text x="1290" y="1000" fill="#E2E8F0" font-size="18" font-family="Inter, Arial, sans-serif">本地 Dashboard</text>
+</svg>

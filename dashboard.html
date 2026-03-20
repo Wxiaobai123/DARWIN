@@ -2765,6 +2765,7 @@ function renderDecisionPage() {
   const market = (cache.market || []).filter(m => !EXCLUDED_RE.test(m.asset || ''))
   const alloc = cache.alloc || {}
   const posInfo = cache.positions || {}
+  const eventText = msg => currentLang === 'en' ? escapeHtml(msg || '--') : cnEvent(msg)
   // Use real position margin for deployed calculation
   if (posInfo.totalMargin > 0) {
     alloc.deployedUSDT = posInfo.totalMargin
@@ -2785,19 +2786,19 @@ function renderDecisionPage() {
 
   // Agent nodes for SVG
   const agents = [
-    { id:'researcher', icon:'\uD83D\uDCE1', name:'市场分析师', role:'RESEARCHER', freq:'15分', x:120, y:75,  color:'#22c55e' },
-    { id:'devops',     icon:'\uD83D\uDEE1', name:'风控员',     role:'DEVOPS',     freq:'5分',  x:440, y:75,  color:'#ef4444' },
-    { id:'cto',        icon:'\uD83E\uDDE0', name:'CTO 智能体', role:'LEADERSHIP', freq:'60分', x:280, y:235, color:'#06b6d4' },
-    { id:'pm',         icon:'\uD83D\uDCCB', name:'策略经理',   role:'PM',         freq:'每日', x:135, y:355, color:'#eab308' },
-    { id:'auditor',    icon:'\uD83D\uDCCA', name:'审计员',     role:'GENERAL',    freq:'每日', x:425, y:355, color:'#a78bfa' },
+    { id:'researcher', icon:'\uD83D\uDCE1', name:L('市场分析师', 'Market Analyst'), role:'RESEARCHER', freq:L('15分', '15m'), x:120, y:75,  color:'#22c55e' },
+    { id:'devops',     icon:'\uD83D\uDEE1', name:L('风控员', 'Risk Agent'), role:'DEVOPS', freq:L('5分', '5m'),  x:440, y:75,  color:'#ef4444' },
+    { id:'cto',        icon:'\uD83E\uDDE0', name:L('CTO 智能体', 'CTO Agent'), role:'LEADERSHIP', freq:L('60分', '60m'), x:280, y:235, color:'#06b6d4' },
+    { id:'pm',         icon:'\uD83D\uDCCB', name:L('策略经理', 'Strategy Manager'), role:'PM', freq:L('每日', 'daily'), x:135, y:355, color:'#eab308' },
+    { id:'auditor',    icon:'\uD83D\uDCCA', name:L('审计员', 'Auditor'), role:'GENERAL', freq:L('每日', 'daily'), x:425, y:355, color:'#a78bfa' },
   ]
   const edges = [
-    { from:'researcher', to:'cto', label:'市场状态', color:'#22c55e' },
-    { from:'devops', to:'cto', label:'风险数据', color:'#ef4444' },
-    { from:'cto', to:'pm', label:'策略指令', color:'#06b6d4' },
-    { from:'cto', to:'auditor', label:'决策记录', color:'#06b6d4' },
-    { from:'pm', to:'cto', label:'反馈', color:'#eab308', dashed:true },
-    { from:'devops', to:'pm', label:'熔断', color:'#ef4444', dashed:true },
+    { from:'researcher', to:'cto', label:L('市场状态', 'Regime State'), color:'#22c55e' },
+    { from:'devops', to:'cto', label:L('风险数据', 'Risk Data'), color:'#ef4444' },
+    { from:'cto', to:'pm', label:L('策略指令', 'Strategy Orders'), color:'#06b6d4' },
+    { from:'cto', to:'auditor', label:L('决策记录', 'Decision Log'), color:'#06b6d4' },
+    { from:'pm', to:'cto', label:L('反馈', 'Feedback'), color:'#eab308', dashed:true },
+    { from:'devops', to:'pm', label:L('熔断', 'Breaker'), color:'#ef4444', dashed:true },
   ]
   function nodeAt(id) { return agents.find(n => n.id === id) }
   function arrowPath(e) {
@@ -2819,13 +2820,13 @@ function renderDecisionPage() {
 
   // Pipeline steps
   const pipeSteps = [
-    { icon:'&#128225;', label:'市场感知', detail:'15min' },
-    { icon:'&#127919;', label:'状态识别', detail:'3确认' },
-    { icon:'&#128737;', label:'风险评估', detail:'5min' },
-    { icon:'&#129504;', label:'CTO决策', detail:'60min' },
-    { icon:'&#128176;', label:'资金分配', detail:'加权' },
-    { icon:'&#9881;',   label:'策略执行', detail:'OKX' },
-    { icon:'&#128196;', label:'每日审计', detail:'报告' },
+    { icon:'&#128225;', label:L('市场感知', 'Market Sense'), detail:'15m' },
+    { icon:'&#127919;', label:L('状态识别', 'Regime ID'), detail:L('3确认', '3 checks') },
+    { icon:'&#128737;', label:L('风险评估', 'Risk Scan'), detail:'5m' },
+    { icon:'&#129504;', label:L('CTO决策', 'CTO Decision'), detail:'60m' },
+    { icon:'&#128176;', label:L('资金分配', 'Capital Allocation'), detail:L('加权', 'weighted') },
+    { icon:'&#9881;',   label:L('策略执行', 'Execution'), detail:'OKX' },
+    { icon:'&#128196;', label:L('每日审计', 'Daily Audit'), detail:L('报告', 'report') },
   ]
   const pipelineHtml = `<div style="display:flex;align-items:center;gap:6px;justify-content:center;flex-wrap:wrap">${pipeSteps.map((p,i) =>
     `<div id="ps-${i}" class="pipe-stage" style="text-align:center;padding:12px 15px;border-radius:12px;background:var(--subtle-bg);border:1px solid var(--border);min-width:60px;transition:all 0.3s"><div style="font-size:27px">${p.icon}</div><div style="font-size:16px;font-weight:600;color:var(--text);margin-top:4px">${p.label}</div><div style="font-size:13px;color:var(--dim)">${p.detail}</div></div>${i<6?'<span style="color:var(--dim);font-size:17px">&#10132;</span>':''}`
@@ -2840,15 +2841,15 @@ function renderDecisionPage() {
     { name:'Mistral', icon:'M', color:'#8b5cf6' },
     { name:'xAI', icon:'X', color:'#ef4444' },
     { name:'Moonshot', icon:'\uD83C\uDF19', color:'#6366f1' },
-    { name:'\u667A\u8C31', icon:'\u667A', color:'#06b6d4' },
-    { name:'\u767E\u5DDD', icon:'\u767E', color:'#ec4899' },
-    { name:'\u96F6\u4E00', icon:'01', color:'#14b8a6' },
-    { name:'\u901A\u4E49', icon:'\u901A', color:'#f59e0b' },
+    { name:L('\u667A\u8C31', 'Zhipu'), icon:currentLang === 'en' ? 'ZH' : '\u667A', color:'#06b6d4' },
+    { name:L('\u767E\u5DDD', 'Baichuan'), icon:currentLang === 'en' ? 'BC' : '\u767E', color:'#ec4899' },
+    { name:L('\u96F6\u4E00', '01.AI'), icon:'01', color:'#14b8a6' },
+    { name:L('\u901A\u4E49', 'Tongyi'), icon:currentLang === 'en' ? 'TY' : '\u901A', color:'#f59e0b' },
     { name:'OpenRouter', icon:'OR', color:'#a855f7' },
     { name:'Together', icon:'T', color:'#22c55e' },
     { name:'SiliconFlow', icon:'SF', color:'#64748b' },
     { name:'Ollama', icon:'\uD83E\uDD99', color:'#84cc16' },
-    { name:'+\u81EA\u5B9A\u4E49', icon:'++', color:'var(--dim)' },
+    { name:L('+\u81EA\u5B9A\u4E49', '+Custom'), icon:currentLang === 'en' ? '+' : '++', color:'var(--dim)' },
   ]
   const llmGrid = providers.map(p => {
     const bdr = p.primary ? `border:1px solid ${p.color};box-shadow:0 0 8px ${p.color}22` : `border:1px solid var(--border)`
@@ -2860,24 +2861,24 @@ function renderDecisionPage() {
   const posPositions = (posInfo.positions || [])
   let allocHtml = ''
   if (activeAllocs.length > 0) {
-    allocHtml = activeAllocs.map(a => `<div style="display:flex;justify-content:space-between;font-size:16px;padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--dim)">${a.name}</span><span style="font-weight:600">${fmtUSD(a.allocUSDT)}</span></div>`).join('')
+    allocHtml = activeAllocs.map(a => `<div style="display:flex;justify-content:space-between;font-size:16px;padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--dim)">${strategyNameLabel(a.name)}</span><span style="font-weight:600">${fmtUSD(a.allocUSDT)}</span></div>`).join('')
   } else if (posPositions.length > 0) {
     allocHtml = posPositions.map(p => {
       const name = (p.asset || p.instId || '').replace('-USDT','').replace('-SWAP','')
-      const side = (p.posSide||'') === 'long' ? '多' : '空'
+      const side = (p.posSide||'') === 'long' ? L('多', 'Long') : L('空', 'Short')
       const color = p.upl >= 0 ? 'var(--green)' : 'var(--red)'
       return `<div style="display:flex;justify-content:space-between;align-items:center;font-size:16px;padding:4px 0;border-bottom:1px solid var(--border)"><span style="color:var(--dim)">${name} <span style="font-size:14px;color:${(p.posSide||'') === 'long' ? 'var(--green)' : 'var(--red)'}">${side}</span></span><span style="font-weight:600;color:${color}">${fmtUSD(p.margin||0)}</span></div>`
     }).join('')
   } else {
-    allocHtml = '<div style="font-size:16px;color:var(--dim)">储备金模式 — 未部署</div>'
+    allocHtml = `<div style="font-size:16px;color:var(--dim)">${L('储备金模式 — 未部署', 'Reserve-only mode - nothing deployed')}</div>`
   }
 
   // Events
   const evHtml = events.length > 0 ? events.slice(0,10).map(e => {
     const typeColor = e.type === 'circuit_breaker' ? 'var(--red)' : 'var(--accent)'
-    const typeLabel = e.type === 'circuit_breaker' ? '\uD83D\uDEE1 熔断' : '\uD83D\uDCE1 市场'
-    return `<div class="ev-item"><span class="ev-type" style="color:${typeColor}">${typeLabel}</span><span class="ev-msg">${cnEvent(e.detail)} \u2014 ${cnEvent(e.message)}</span><span class="ev-time">${fmtTime(e.timestamp)}</span></div>`
-  }).join('') : '<div style="color:var(--dim);font-size:17px">暂无决策事件</div>'
+    const typeLabel = e.type === 'circuit_breaker' ? `\uD83D\uDEE1 ${L('熔断', 'Breaker')}` : `\uD83D\uDCE1 ${L('市场', 'Market')}`
+    return `<div class="ev-item"><span class="ev-type" style="color:${typeColor}">${typeLabel}</span><span class="ev-msg">${eventText(e.detail)} \u2014 ${eventText(e.message)}</span><span class="ev-time">${fmtTime(e.timestamp)}</span></div>`
+  }).join('') : `<div style="color:var(--dim);font-size:17px">${L('暂无决策事件', 'No decision events yet')}</div>`
 
   $('decisionContent').innerHTML = `
   <!-- Hero Banner — compact -->
@@ -2885,14 +2886,14 @@ function renderDecisionPage() {
     <div style="position:absolute;top:-30px;right:-30px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(6,182,212,0.08),transparent 70%)"></div>
     <div style="font-size:32px;flex-shrink:0">&#129504;</div>
     <div style="flex:1;position:relative">
-      <div style="font-size:25px;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Paperclip AI 多智能体决策系统</div>
-      <div style="font-size:16px;color:var(--dim);margin-top:3px">5 智能体 · 16 LLM · 自动感知 → 决策 → 执行 → 风控 → 审计</div>
+      <div style="font-size:25px;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent">${L('Paperclip AI 多智能体决策系统', 'Paperclip AI Multi-Agent Decision System')}</div>
+      <div style="font-size:16px;color:var(--dim);margin-top:3px">${L('5 智能体 · 16 LLM · 自动感知 → 决策 → 执行 → 风控 → 审计', '5 agents · 16 LLMs · sense → decide → execute → protect → audit')}</div>
     </div>
     <div style="display:flex;gap:12px;position:relative">
       ${[
-        { val:hb, label:'心跳', color:'var(--green)' },
-        { val:shadowCount, label:'影子', color:'var(--yellow)' },
-        { val:liveCount, label:'实盘', color:'var(--green)' },
+        { val:hb, label:L('心跳', 'Heartbeats'), color:'var(--green)' },
+        { val:shadowCount, label:L('影子', 'Shadow'), color:'var(--yellow)' },
+        { val:liveCount, label:L('实盘', 'Live'), color:'var(--green)' },
       ].map(m => `<div style="text-align:center;padding:8px 18px;border-radius:12px;background:var(--subtle-bg);border:1px solid var(--border)"><div style="font-size:21px;font-weight:800;color:${m.color}">${m.val}</div><div style="font-size:13px;color:var(--dim)">${m.label}</div></div>`).join('')}
     </div>
   </div>
@@ -2904,8 +2905,8 @@ function renderDecisionPage() {
       <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(6,182,212,0.05),transparent 70%)"></div>
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;position:relative">
         <span style="width:3px;height:20px;border-radius:2px;background:linear-gradient(180deg,var(--accent),var(--purple))"></span>
-        <span style="font-size:20px;font-weight:900;color:var(--text)">&#129302; 五大智能体协作架构</span>
-        <span style="font-size:13px;padding:4px 10px;border-radius:5px;background:rgba(6,182,212,0.1);color:var(--accent);border:1px solid rgba(6,182,212,0.15);font-weight:600">实时动态</span>
+        <span style="font-size:20px;font-weight:900;color:var(--text)">&#129302; ${L('五大智能体协作架构', 'Five-Agent Collaboration')}</span>
+        <span style="font-size:13px;padding:4px 10px;border-radius:5px;background:rgba(6,182,212,0.1);color:var(--accent);border:1px solid rgba(6,182,212,0.15);font-weight:600">${L('实时动态', 'Live')}</span>
       </div>
       <div style="position:relative;margin:0 auto;flex:1;display:flex;align-items:center">${agentSvg}</div>
     </div>
@@ -2914,14 +2915,14 @@ function renderDecisionPage() {
       <div class="card" style="padding:15px 22px;border:1px solid rgba(6,182,212,0.08)">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
           <span style="width:3px;height:18px;border-radius:2px;background:var(--accent)"></span>
-          <span style="font-size:19px;font-weight:800;color:var(--text)">&#128260; 实时决策流水线</span>
+          <span style="font-size:19px;font-weight:800;color:var(--text)">&#128260; ${L('实时决策流水线', 'Live Decision Pipeline')}</span>
         </div>
         ${pipelineHtml}
       </div>
       <div class="card" style="padding:15px 22px;border:1px solid rgba(168,85,247,0.08);flex:1">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
           <span style="width:3px;height:18px;border-radius:2px;background:var(--purple)"></span>
-          <span style="font-size:19px;font-weight:800;color:var(--text)">&#128338; 智能体心跳</span>
+          <span style="font-size:19px;font-weight:800;color:var(--text)">&#128338; ${L('智能体心跳', 'Agent Heartbeats')}</span>
         </div>
         ${agents.map(a => {
           const lastRunTs = getAgentLastRun(a.id, a.freq)
@@ -2938,14 +2939,14 @@ function renderDecisionPage() {
     <div class="card" style="padding:15px 22px;border:1px solid rgba(234,179,8,0.08);display:flex;flex-direction:column">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
         <span style="width:3px;height:18px;border-radius:2px;background:var(--yellow)"></span>
-        <span style="font-size:19px;font-weight:800;color:var(--text)">&#127919; 市场判断</span>
-        <span style="margin-left:auto;font-size:13px;color:var(--dim)">主导: <strong style="color:var(--text)">${S_CN[dominant[0]]}</strong></span>
+        <span style="font-size:19px;font-weight:800;color:var(--text)">&#127919; ${L('市场判断', 'Market Read')}</span>
+        <span style="margin-left:auto;font-size:13px;color:var(--dim)">${L('主导:', 'Dominant:')} <strong style="color:var(--text)">${stateName(dominant[0])}</strong></span>
       </div>
       <div style="display:flex;gap:10px;flex:1;align-items:stretch">
         ${[
-          { val:stateCounts.oscillation, label:'\u301C震荡', color:'var(--yellow)' },
-          { val:stateCounts.trend, label:'\u2197趋势', color:'var(--green)' },
-          { val:stateCounts.extreme, label:'\u26A1极端', color:'var(--red)' },
+          { val:stateCounts.oscillation, label:L('\u301C震荡', '\u301C Oscillation'), color:'var(--yellow)' },
+          { val:stateCounts.trend, label:L('\u2197趋势', '\u2197 Trend'), color:'var(--green)' },
+          { val:stateCounts.extreme, label:L('\u26A1极端', '\u26A1 Extreme'), color:'var(--red)' },
         ].map(m => `<div style="flex:1;text-align:center;padding:12px 5px;border-radius:9px;background:var(--subtle-bg);border:1px solid var(--border);display:flex;flex-direction:column;justify-content:center"><div style="font-size:25px;font-weight:800;color:${m.color}">${m.val}</div><div style="font-size:14px;color:var(--dim);margin-top:3px">${m.label}</div></div>`).join('')}
       </div>
     </div>
@@ -2953,30 +2954,35 @@ function renderDecisionPage() {
     <div class="card" style="padding:15px 22px;border:1px solid rgba(6,182,212,0.08);display:flex;flex-direction:column">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
         <span style="width:3px;height:18px;border-radius:2px;background:var(--accent)"></span>
-        <span style="font-size:19px;font-weight:800;color:var(--text)">&#128176; 智能资金分配</span>
+        <span style="font-size:19px;font-weight:800;color:var(--text)">&#128176; ${L('智能资金分配', 'Adaptive Capital Allocation')}</span>
       </div>
       <div style="display:flex;gap:12px;margin-bottom:10px">
-        <div style="padding:12px;border-radius:9px;background:var(--subtle-bg);border:1px solid var(--border);flex:1;text-align:center"><div style="font-size:24px;font-weight:800;color:var(--accent)">${fmtUSD(alloc.totalEquity||0)}</div><div style="font-size:13px;color:var(--dim);margin-top:3px">总权益</div></div>
-        <div style="padding:12px;border-radius:9px;background:var(--subtle-bg);border:1px solid var(--border);flex:1;text-align:center"><div style="font-size:24px;font-weight:800;color:var(--yellow)">${fmtPct(alloc.deployedPct||0)}</div><div style="font-size:13px;color:var(--dim);margin-top:3px">已部署</div></div>
+        <div style="padding:12px;border-radius:9px;background:var(--subtle-bg);border:1px solid var(--border);flex:1;text-align:center"><div style="font-size:24px;font-weight:800;color:var(--accent)">${fmtUSD(alloc.totalEquity||0)}</div><div style="font-size:13px;color:var(--dim);margin-top:3px">${L('总权益', 'Total Equity')}</div></div>
+        <div style="padding:12px;border-radius:9px;background:var(--subtle-bg);border:1px solid var(--border);flex:1;text-align:center"><div style="font-size:24px;font-weight:800;color:var(--yellow)">${fmtPct(alloc.deployedPct||0)}</div><div style="font-size:13px;color:var(--dim);margin-top:3px">${L('已部署', 'Deployed')}</div></div>
       </div>
       <div style="flex:1">${allocHtml}</div>
-      <div style="font-size:13px;color:var(--dim);margin-top:8px;padding-top:6px;border-top:1px solid var(--border)">波动率 + 相关性折扣 + 加权评分</div>
+      <div style="font-size:13px;color:var(--dim);margin-top:8px;padding-top:6px;border-top:1px solid var(--border)">${L('波动率 + 相关性折扣 + 加权评分', 'Volatility + correlation discount + weighted score')}</div>
     </div>
     <!-- 策略晋升管道 -->
     <div class="card" style="padding:15px 22px;border:1px solid rgba(34,197,94,0.08);display:flex;flex-direction:column">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
         <span style="width:3px;height:18px;border-radius:2px;background:var(--green)"></span>
-        <span style="font-size:19px;font-weight:800;color:var(--text)">&#128163; 策略晋升管道</span>
+        <span style="font-size:19px;font-weight:800;color:var(--text)">&#128163; ${L('策略晋升管道', 'Strategy Promotion Pipeline')}</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px;justify-content:center;flex:1">
         ${[
-          { label:'影子验证', count:shadowCount, color:'var(--yellow)', bg:'rgba(234,179,8,0.1)' },
-          { label:'实盘运行', count:liveCount, color:'var(--green)', bg:'rgba(34,197,94,0.1)' },
-          { label:'已降级', count:demotedCount, color:'var(--red)', bg:'rgba(239,68,68,0.1)' },
+          { label:L('影子验证', 'Shadow'), count:shadowCount, color:'var(--yellow)', bg:'rgba(234,179,8,0.1)' },
+          { label:L('实盘运行', 'Live'), count:liveCount, color:'var(--green)', bg:'rgba(34,197,94,0.1)' },
+          { label:L('已降级', 'Demoted'), count:demotedCount, color:'var(--red)', bg:'rgba(239,68,68,0.1)' },
         ].map((st,i) => `${i>0?'<span style="color:var(--dim);font-size:16px">&#10132;</span>':''}<div style="text-align:center;padding:12px 18px;border-radius:9px;background:${st.bg};border:1px solid ${st.color}22;min-width:52px"><div style="font-size:25px;font-weight:800;color:${st.color}">${st.count}</div><div style="font-size:13px;color:var(--dim);margin-top:3px">${st.label}</div></div>`).join('')}
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center;font-size:13px;margin-top:12px">
-        ${['天数\u22653','交易\u22655','胜率\u226555%','回撤\u226410%'].map(c => `<span style="padding:4px 8px;border-radius:5px;background:rgba(34,197,94,0.08);color:var(--green);border:1px solid rgba(34,197,94,0.12);font-weight:600">&#10003; ${c}</span>`).join('')}
+        ${[
+          L('天数\u22653', 'Days \u2265 3'),
+          L('交易\u22655', 'Trades \u2265 5'),
+          L('胜率\u226555%', 'Win rate \u2265 55%'),
+          L('回撤\u226410%', 'Drawdown \u2264 10%'),
+        ].map(c => `<span style="padding:4px 8px;border-radius:5px;background:rgba(34,197,94,0.08);color:var(--green);border:1px solid rgba(34,197,94,0.12);font-weight:600">&#10003; ${c}</span>`).join('')}
       </div>
     </div>
   </div>
@@ -2987,23 +2993,23 @@ function renderDecisionPage() {
     <div class="card" style="padding:22px 25px;border:1px solid rgba(217,119,6,0.08);display:flex;flex-direction:column">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
         <span style="width:3px;height:18px;border-radius:2px;background:#d97706"></span>
-        <span style="font-size:19px;font-weight:800;color:var(--text)">&#129504; 16 LLM 引擎</span>
+        <span style="font-size:19px;font-weight:800;color:var(--text)">&#129504; ${L('16 LLM 引擎', '16 LLM Engines')}</span>
       </div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px">${llmGrid}</div>
-      <div style="font-size:13px;color:var(--dim);padding-top:5px;border-top:1px solid var(--border)">降级链: <span style="color:#d97706">Anthropic</span> → <span style="color:#10b981">OpenAI</span> → <span style="color:#3b82f6">DeepSeek</span> → <span style="color:#f97316">Groq</span> → ...</div>
+      <div style="font-size:13px;color:var(--dim);padding-top:5px;border-top:1px solid var(--border)">${L('降级链', 'Fallback chain')}: <span style="color:#d97706">Anthropic</span> → <span style="color:#10b981">OpenAI</span> → <span style="color:#3b82f6">DeepSeek</span> → <span style="color:#f97316">Groq</span> → ...</div>
     </div>
     <!-- 审批工作流 -->
     <div class="card" style="padding:22px 25px;border:1px solid rgba(234,179,8,0.08);display:flex;flex-direction:column">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:15px">
         <span style="width:3px;height:18px;border-radius:2px;background:var(--yellow)"></span>
-        <span style="font-size:19px;font-weight:800;color:var(--text)">&#9989; 审批工作流</span>
+        <span style="font-size:19px;font-weight:800;color:var(--text)">&#9989; ${L('审批工作流', 'Approval Workflow')}</span>
       </div>
       <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
         ${[
-          { icon:'&#128680;', label:'风险触发', desc:'T3/T4', color:'var(--red)' },
-          { icon:'&#128221;', label:'创建审批', desc:'Paperclip', color:'var(--yellow)' },
-          { icon:'&#128100;', label:'人工审核', desc:'确认/拒绝', color:'var(--accent)' },
-          { icon:'&#9989;', label:'执行重置', desc:'恢复活动', color:'var(--green)' },
+          { icon:'&#128680;', label:L('风险触发', 'Risk Trigger'), desc:'T3/T4', color:'var(--red)' },
+          { icon:'&#128221;', label:L('创建审批', 'Create Approval'), desc:'Paperclip', color:'var(--yellow)' },
+          { icon:'&#128100;', label:L('人工审核', 'Human Review'), desc:L('确认/拒绝', 'approve / reject'), color:'var(--accent)' },
+          { icon:'&#9989;', label:L('执行重置', 'Execute Reset'), desc:L('恢复活动', 'resume trading'), color:'var(--green)' },
         ].map((st,i) => `<div style="display:flex;align-items:center;gap:12px;width:100%;padding:10px 15px;border-radius:9px;background:var(--subtle-bg);border:1px solid var(--border)"><div style="font-size:22px;flex-shrink:0">${st.icon}</div><div style="flex:1"><div style="font-size:16px;font-weight:700;color:var(--text)">${st.label}</div><div style="font-size:13px;color:var(--dim)">${st.desc}</div></div>${i<3?'<span style="color:var(--dim);font-size:14px">↓</span>':''}</div>`).join('')}
       </div>
     </div>
@@ -3011,39 +3017,39 @@ function renderDecisionPage() {
     <div class="card" style="padding:22px 25px;border:1px solid rgba(168,85,247,0.12);position:relative;overflow:hidden;display:flex;flex-direction:column">
       <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,0.06),transparent 70%)"></div>
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:15px;font-size:19px;font-weight:800">
-        <span style="width:3px;height:18px;border-radius:2px;background:var(--purple)"></span> &#129504; AI 市场研判
-        <span style="margin-left:auto;font-size:13px;padding:4px 10px;border-radius:5px;background:rgba(168,85,247,0.1);color:var(--purple);border:1px solid rgba(168,85,247,0.2)">CTO 智能体</span>
+        <span style="width:3px;height:18px;border-radius:2px;background:var(--purple)"></span> &#129504; ${L('AI 市场研判', 'AI Market Insight')}
+        <span style="margin-left:auto;font-size:13px;padding:4px 10px;border-radius:5px;background:rgba(168,85,247,0.1);color:var(--purple);border:1px solid rgba(168,85,247,0.2)">${L('CTO 智能体', 'CTO Agent')}</span>
       </div>
       ${(function() {
         const osc = stateCounts.oscillation, tr = stateCounts.trend, ext = stateCounts.extreme
-        const total = market.length || 1
         const cb = cache.cb; const cbActive = cb?.state?.activeTiers?.length || 0
         const deployPct = Math.round((alloc.deployedPct||0)*100)
 
         let analysis = '', action = '', risk = ''
         if (ext > 0) {
-          analysis = '检测到极端市场状态，波动率大幅超出历史均值。系统已自动收窄网格范围并降低敞口比例。'
-          action = '建议维持保守模式，等待波动率回落至正常水平后再恢复部署。'
-          risk = '高'
+          analysis = L('检测到极端市场状态，波动率大幅超出历史均值。系统已自动收窄网格范围并降低敞口比例。', 'Extreme market conditions detected. Volatility is materially above baseline, so DARWIN has narrowed grid ranges and reduced exposure.');
+          action = L('建议维持保守模式，等待波动率回落至正常水平后再恢复部署。', 'Stay conservative until volatility normalizes before expanding deployment again.');
+          risk = L('高', 'High')
         } else if (tr > osc) {
-          analysis = '多数资产呈现趋势特征，ATR比率高于基准。趋势追踪策略适用性提升，网格策略需扩大范围。'
-          action = '建议增加趋势类策略权重，网格策略需调整至宽网格模式减少库存风险。'
-          risk = '中'
+          analysis = L('多数资产呈现趋势特征，ATR比率高于基准。趋势追踪策略适用性提升，网格策略需扩大范围。', 'Trend behavior dominates across the watchlist. ATR is elevated, so trend-following posture is stronger while grids should widen their range.');
+          action = L('建议增加趋势类策略权重，网格策略需调整至宽网格模式减少库存风险。', 'Increase trend strategy weight and move grid posture into a wider range to reduce inventory risk.');
+          risk = L('中', 'Medium')
         } else {
-          analysis = '市场以震荡为主，价格在区间内反复波动。网格策略处于最优运行环境，成交密度高。'
-          action = '建议维持当前配置，网格策略在震荡环境中收益最大化。可考虑适度提高部署比例。'
-          risk = '低'
+          analysis = L('市场以震荡为主，价格在区间内反复波动。网格策略处于最优运行环境，成交密度高。', 'Oscillation is the dominant regime. Price keeps rotating inside ranges, which is the strongest operating environment for grid strategies.');
+          action = L('建议维持当前配置，网格策略在震荡环境中收益最大化。可考虑适度提高部署比例。', 'Maintain current posture. Grid strategies should remain efficient here, with room for a modest deployment increase.');
+          risk = L('低', 'Low')
         }
+        const riskColor = risk === L('高', 'High') ? 'var(--red)' : risk === L('中', 'Medium') ? 'var(--yellow)' : 'var(--green)'
 
         return `<div style="font-size:17px;color:var(--text);line-height:1.7;margin-bottom:15px">${analysis}</div>
         <div style="padding:12px 15px;border-radius:9px;background:rgba(6,182,212,0.04);border:1px solid rgba(6,182,212,0.08);margin-bottom:12px">
-          <div style="font-size:16px;color:var(--accent);font-weight:700;margin-bottom:5px">&#128161; 操作建议</div>
+          <div style="font-size:16px;color:var(--accent);font-weight:700;margin-bottom:5px">&#128161; ${L('操作建议', 'Action Note')}</div>
           <div style="font-size:16px;color:var(--dim);line-height:1.6">${action}</div>
         </div>
         <div style="display:flex;gap:15px;font-size:16px">
-          <div>风险: <span style="font-weight:700;color:${risk==='高'?'var(--red)':risk==='中'?'var(--yellow)':'var(--green)'}">${risk}</span></div>
-          <div>部署: <span style="font-weight:700;color:var(--accent)">${deployPct}%</span></div>
-          <div>熔断: <span style="font-weight:700;color:${cbActive?'var(--red)':'var(--green)'}">${cbActive?cbActive+'层':'正常'}</span></div>
+          <div>${L('风险', 'Risk')}: <span style="font-weight:700;color:${riskColor}">${risk}</span></div>
+          <div>${L('部署', 'Deployment')}: <span style="font-weight:700;color:var(--accent)">${deployPct}%</span></div>
+          <div>${L('熔断', 'Breakers')}: <span style="font-weight:700;color:${cbActive?'var(--red)':'var(--green)'}">${cbActive ? `${cbActive}${L('层', ' active')}` : L('正常', 'Normal')}</span></div>
         </div>`
       })()}
     </div>
@@ -3054,8 +3060,8 @@ function renderDecisionPage() {
     <div class="card" style="padding:22px 25px;border:1px solid rgba(6,182,212,0.12);position:relative;overflow:hidden">
       <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(6,182,212,0.06),transparent 70%)"></div>
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:15px;font-size:19px;font-weight:800">
-        <span style="width:3px;height:18px;border-radius:2px;background:var(--accent)"></span> &#128202; AI 策略评估
-        <span style="margin-left:auto;font-size:13px;padding:4px 10px;border-radius:5px;background:rgba(6,182,212,0.1);color:var(--accent);border:1px solid rgba(6,182,212,0.2)">策略管理器</span>
+        <span style="width:3px;height:18px;border-radius:2px;background:var(--accent)"></span> &#128202; ${L('AI 策略评估', 'AI Strategy Review')}
+        <span style="margin-left:auto;font-size:13px;padding:4px 10px;border-radius:5px;background:rgba(6,182,212,0.1);color:var(--accent);border:1px solid rgba(6,182,212,0.2)">${L('策略管理器', 'Strategy Manager')}</span>
       </div>
       ${(function() {
         const lb = filterStrats(cache.leaderboard || [])
@@ -3063,24 +3069,25 @@ function renderDecisionPage() {
         const worstStrat = lb[lb.length - 1]
         const avgScore = lb.length > 0 ? (lb.reduce((s,x) => s + (x.score||0), 0) / lb.length).toFixed(2) : '0'
         const readyCount = lb.filter(x => (x.score||0) >= 0.6).length
+        const topName = topStrat ? strategyNameLabel(topStrat.name?.slice(0,15) || '--') : '--'
 
         return `<div style="font-size:17px;color:var(--text);line-height:1.7;margin-bottom:15px">
-          策略池平均评分 <strong style="color:var(--accent)">${avgScore}</strong>，
-          ${readyCount > 0 ? `共 <strong style="color:var(--green)">${readyCount}</strong> 个策略达到实盘标准 (≥0.6)。` : '暂无策略达到实盘晋升标准。'}
-          ${topStrat ? `最优「<strong style="color:var(--accent)">${topStrat.name?.slice(0,15)||'--'}</strong>」评分 ${(topStrat.score||0).toFixed(2)}。` : ''}
+          ${L('策略池平均评分', 'Average pool score')} <strong style="color:var(--accent)">${avgScore}</strong>，
+          ${readyCount > 0 ? L(`共 <strong style="color:var(--green)">${readyCount}</strong> 个策略达到实盘标准 (≥0.6)。`, `<strong style="color:var(--green)">${readyCount}</strong> strategies meet the live threshold (≥0.6).`) : L('暂无策略达到实盘晋升标准。', 'No strategies meet the live promotion threshold yet.')}
+          ${topStrat ? L(`最优「<strong style="color:var(--accent)">${topName}</strong>」评分 ${(topStrat.score||0).toFixed(2)}。`, `Top strategy "<strong style="color:var(--accent)">${topName}</strong>" scores ${(topStrat.score||0).toFixed(2)}.`) : ''}
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
           <div style="padding:12px;border-radius:9px;background:rgba(34,197,94,0.04);border:1px solid rgba(34,197,94,0.08);text-align:center">
-            <div style="font-size:13px;color:var(--dim)">最优策略评分</div>
+            <div style="font-size:13px;color:var(--dim)">${L('最优策略评分', 'Top strategy score')}</div>
             <div style="font-size:25px;font-weight:800;color:var(--green)">${topStrat?(topStrat.score||0).toFixed(2):'--'}</div>
           </div>
           <div style="padding:12px;border-radius:9px;background:rgba(239,68,68,0.04);border:1px solid rgba(239,68,68,0.08);text-align:center">
-            <div style="font-size:13px;color:var(--dim)">需关注策略</div>
+            <div style="font-size:13px;color:var(--dim)">${L('需关注策略', 'Needs attention')}</div>
             <div style="font-size:25px;font-weight:800;color:var(--red)">${worstStrat?(worstStrat.score||0).toFixed(2):'--'}</div>
           </div>
         </div>
         <div style="font-size:14px;color:var(--dim);line-height:1.5">
-          &#9889; 晋升条件: 影子运行≥3天 + 交易≥5笔 + 胜率≥55% + 回撤≤10%
+          &#9889; ${L('晋升条件: 影子运行≥3天 + 交易≥5笔 + 胜率≥55% + 回撤≤10%', 'Promotion thresholds: shadow ≥ 3 days + trades ≥ 5 + win rate ≥ 55% + drawdown ≤ 10%')}
         </div>`
       })()}
     </div>
@@ -3088,7 +3095,7 @@ function renderDecisionPage() {
     <div class="card" style="padding:22px 25px;border:1px solid rgba(59,130,246,0.08)">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
         <span style="width:3px;height:18px;border-radius:2px;background:var(--blue)"></span>
-        <span style="font-size:19px;font-weight:800;color:var(--text)">&#128196; 决策事件流</span>
+        <span style="font-size:19px;font-weight:800;color:var(--text)">&#128196; ${L('决策事件流', 'Decision Event Stream')}</span>
       </div>
       <div class="scroll-y" style="max-height:200px">${evHtml}</div>
     </div>
@@ -4137,6 +4144,7 @@ function renderAboutPage() {
   const instanceCount = templateCount * assetCount
   const flowDiagramSrc = currentLang === 'en' ? 'docs/images/darwin-system-flow-en.svg' : 'docs/images/darwin-system-flow-cn.svg'
   const valueMapSrc = currentLang === 'en' ? 'docs/images/darwin-value-map-en.svg' : 'docs/images/darwin-value-map-cn.svg'
+  const productOverviewSrc = currentLang === 'en' ? 'docs/images/darwin-product-overview-en.svg' : 'docs/images/darwin-product-overview-cn.svg'
 
   $('aboutContent').innerHTML = `
   <!-- Hero -->
@@ -4162,6 +4170,14 @@ function renderAboutPage() {
       <div class="stat-hero-sm">${m.val}</div>
       <div style="font-size:17px;color:var(--dim);letter-spacing:1px;margin-top:5px">${m.label}</div>
     </div>`).join('')}
+  </div>
+
+  <div class="card" style="margin-bottom:24px;padding:24px">
+    <div class="card-title"><span class="icon">&#127912;</span> ${L('产品总览', 'Product Overview')}</div>
+    <div style="padding:18px;border-radius:14px;background:var(--subtle-bg);border:1px solid var(--border)">
+      <img src="${productOverviewSrc}" alt="${L('DARWIN 产品总览', 'DARWIN product overview')}" style="display:block;width:100%;height:auto;border-radius:12px;border:1px solid rgba(255,255,255,0.06)">
+      <div style="font-size:16px;color:var(--dim);line-height:1.6;margin-top:12px">${L('这张长图把 DARWIN 的产品角色、决策主链路与核心价值放在同一张画布里，方便在 GitHub 首页、答辩材料和产品内页中保持同一套外部表达。', 'This long-form graphic keeps DARWIN’s product role, decision rail, and value proposition on one canvas so GitHub, product pages, and external materials all tell the same story.')}</div>
+    </div>
   </div>
 
   <!-- 8-Layer Architecture SVG -->
@@ -4723,17 +4739,17 @@ async function showStratDetail(id) {
     return
   }
 
-  $('smTitle').textContent = d.name
+  $('smTitle').textContent = strategyNameLabel(d.name)
   const toolLabel = TOOL_SHORT[d.tool] || d.tool
-  const stateLabels = (d.marketStates || []).map(s => S_CN[s] || s).join(', ')
+  const stateLabels = (d.marketStates || []).map(s => stateName(s)).join(', ')
 
   let perfTable = ''
   if (d.performances && d.performances.length) {
-    perfTable = `<table style="font-size:19px;margin-top:15px"><thead><tr><th>市场状态</th><th>交易数</th><th>胜率</th><th>收益率</th><th>最大回撤</th></tr></thead><tbody>` +
+    perfTable = `<table style="font-size:19px;margin-top:15px"><thead><tr><th>${L('市场状态', 'Market Regime')}</th><th>${L('交易数', 'Trades')}</th><th>${L('胜率', 'Win Rate')}</th><th>${L('收益率', 'Return')}</th><th>${L('最大回撤', 'Max Drawdown')}</th></tr></thead><tbody>` +
       d.performances.map(p => {
         const wr = p.trades > 0 ? Math.round(p.winning_trades / p.trades * 100) : 0
         return `<tr>
-          <td><span class="state-badge s-${p.market_state}">${S_CN[p.market_state] || p.market_state}</span></td>
+          <td><span class="state-badge s-${p.market_state}">${stateName(p.market_state)}</span></td>
           <td>${p.trades}</td>
           <td style="color:${wr >= 50 ? 'var(--green)' : 'var(--red)'}">${wr}%</td>
           <td style="color:${(p.total_return||0) >= 0 ? 'var(--green)' : 'var(--red)'}">${((p.total_return||0) * 100).toFixed(2)}%</td>
@@ -4749,21 +4765,21 @@ async function showStratDetail(id) {
     </div>
     <div class="grid g2" style="margin-bottom:15px">
       <div>
-        <div class="settings-row"><span>交易对</span><span style="font-weight:600">${(d.assets || []).join(', ')}</span></div>
-        <div class="settings-row"><span>市场状态</span><span style="font-weight:600">${stateLabels}</span></div>
-        <div class="settings-row"><span>总交易</span><span style="font-weight:600">${d.totalTrades}</span></div>
-        <div class="settings-row"><span>胜率</span><span style="font-weight:600;color:${d.winRate >= 50 ? 'var(--green)' : 'var(--red)'}">${d.winRate}%</span></div>
+        <div class="settings-row"><span>${L('交易对', 'Pairs')}</span><span style="font-weight:600">${(d.assets || []).join(', ')}</span></div>
+        <div class="settings-row"><span>${L('市场状态', 'Market Regimes')}</span><span style="font-weight:600">${stateLabels}</span></div>
+        <div class="settings-row"><span>${L('总交易', 'Total Trades')}</span><span style="font-weight:600">${d.totalTrades}</span></div>
+        <div class="settings-row"><span>${L('胜率', 'Win Rate')}</span><span style="font-weight:600;color:${d.winRate >= 50 ? 'var(--green)' : 'var(--red)'}">${d.winRate}%</span></div>
       </div>
       <div>
-        <div class="settings-row"><span>总收益</span><span style="font-weight:600;color:${(d.totalReturn||0) >= 0 ? 'var(--green)' : 'var(--red)'}">${((d.totalReturn||0) * 100).toFixed(2)}%</span></div>
-        <div class="settings-row"><span>最大回撤</span><span style="font-weight:600;color:var(--red)">${d.maxDrawdown ?? 0}%</span></div>
-        <div class="settings-row"><span>创建时间</span><span style="font-weight:600">${fmtTime(d.createdAt)}</span></div>
-        <div class="settings-row"><span>作者</span><span style="font-weight:600">${escapeHtml(d.author || '--')}</span></div>
+        <div class="settings-row"><span>${L('总收益', 'Total Return')}</span><span style="font-weight:600;color:${(d.totalReturn||0) >= 0 ? 'var(--green)' : 'var(--red)'}">${((d.totalReturn||0) * 100).toFixed(2)}%</span></div>
+        <div class="settings-row"><span>${L('最大回撤', 'Max Drawdown')}</span><span style="font-weight:600;color:var(--red)">${d.maxDrawdown ?? 0}%</span></div>
+        <div class="settings-row"><span>${L('创建时间', 'Created At')}</span><span style="font-weight:600">${fmtTime(d.createdAt)}</span></div>
+        <div class="settings-row"><span>${L('作者', 'Author')}</span><span style="font-weight:600">${escapeHtml(d.author || '--')}</span></div>
       </div>
     </div>
-    ${d.params ? `<div style="margin-bottom:15px"><div style="font-weight:700;font-size:20px;margin-bottom:10px">执行参数</div><div style="font-size:19px;background:var(--subtle-bg);padding:12px;border-radius:10px;font-family:'SF Mono',monospace;white-space:pre-wrap;color:var(--dim)">${escapeHtml(JSON.stringify(d.params, null, 2))}</div></div>` : ''}
-    ${d.risk ? `<div style="margin-bottom:15px"><div style="font-weight:700;font-size:20px;margin-bottom:10px">风控配置</div><div style="font-size:19px;background:var(--subtle-bg);padding:12px;border-radius:10px;font-family:'SF Mono',monospace;white-space:pre-wrap;color:var(--dim)">${escapeHtml(JSON.stringify(d.risk, null, 2))}</div></div>` : ''}
-    ${perfTable ? `<div><div style="font-weight:700;font-size:20px;margin-bottom:10px">按市场状态表现</div>${perfTable}</div>` : ''}`
+    ${d.params ? `<div style="margin-bottom:15px"><div style="font-weight:700;font-size:20px;margin-bottom:10px">${L('执行参数', 'Execution Parameters')}</div><div style="font-size:19px;background:var(--subtle-bg);padding:12px;border-radius:10px;font-family:'SF Mono',monospace;white-space:pre-wrap;color:var(--dim)">${escapeHtml(JSON.stringify(d.params, null, 2))}</div></div>` : ''}
+    ${d.risk ? `<div style="margin-bottom:15px"><div style="font-weight:700;font-size:20px;margin-bottom:10px">${L('风控配置', 'Risk Configuration')}</div><div style="font-size:19px;background:var(--subtle-bg);padding:12px;border-radius:10px;font-family:'SF Mono',monospace;white-space:pre-wrap;color:var(--dim)">${escapeHtml(JSON.stringify(d.risk, null, 2))}</div></div>` : ''}
+    ${perfTable ? `<div><div style="font-weight:700;font-size:20px;margin-bottom:10px">${L('按市场状态表现', 'Performance by Regime')}</div>${perfTable}</div>` : ''}`
 }
 
 function closeStratModal() {

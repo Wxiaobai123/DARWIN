@@ -51,6 +51,12 @@ Project docs:
 
 ---
 
+## Product Overview
+
+![DARWIN Product Overview](docs/images/darwin-product-overview-en.svg)
+
+---
+
 ## Product Preview
 
 English overview:
