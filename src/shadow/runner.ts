@@ -48,6 +48,9 @@ import {
 import type { StrategySpec } from '../strategy/validator.js'
 import type { MarketState } from '../market/state-recognizer.js'
 
+const EN = process.env.DARWIN_LANG === 'en' || /^en/i.test(process.env.LANG ?? '')
+const L = (cn: string, en: string) => EN ? en : cn
+
 // Maps strategy DB id → prefixed algoId (persisted to DB, restored on startup)
 const activeBots = new Map<string, string>()
 
@@ -69,7 +72,7 @@ export function restoreActiveBotsFromDB(): void {
       }
     }
     if (rows.length > 0) {
-      console.log(`  [Shadow] Restored ${rows.length} active bot(s) from DB`)
+      console.log(`  [Shadow] ${EN ? `Restored ${rows.length} active bot(s) from DB` : `已从数据库恢复 ${rows.length} 个活跃机器人`}`)
     }
   } catch {}
 }
@@ -117,9 +120,13 @@ export async function startShadowBot(strategyId: string, allocUSDT?: number): Pr
 
     // Check min/max ATR ratio
     if (spec.conditions.min_atr_ratio != null && atrRatio < spec.conditions.min_atr_ratio)
-      throw new Error(`ATR ${atrRatio.toFixed(2)}x < 最小值 ${spec.conditions.min_atr_ratio} — 跳过`)
+      throw new Error(EN
+        ? `ATR ${atrRatio.toFixed(2)}x < min ${spec.conditions.min_atr_ratio} — skipping`
+        : `ATR ${atrRatio.toFixed(2)}x < 最小值 ${spec.conditions.min_atr_ratio} — 跳过`)
     if (spec.conditions.max_atr_ratio != null && atrRatio > spec.conditions.max_atr_ratio)
-      throw new Error(`ATR ${atrRatio.toFixed(2)}x > 最大值 ${spec.conditions.max_atr_ratio} — 跳过`)
+      throw new Error(EN
+        ? `ATR ${atrRatio.toFixed(2)}x > max ${spec.conditions.max_atr_ratio} — skipping`
+        : `ATR ${atrRatio.toFixed(2)}x > 最大值 ${spec.conditions.max_atr_ratio} — 跳过`)
 
     // Check min/max funding rate
     if (spec.conditions.min_funding_rate != null && fundingRate < spec.conditions.min_funding_rate)
@@ -135,7 +142,7 @@ export async function startShadowBot(strategyId: string, allocUSDT?: number): Pr
         if (!signalCheck.triggered) {
           throw new Error(`Signal "${spec.execution.entry_signal}" not triggered: ${signalCheck.detail} — skipping`)
         }
-        console.log(`  [Shadow] Entry signal OK: ${signalCheck.detail}`)
+        console.log(`  [Shadow] ${L('入场信号通过', 'Entry signal OK')}: ${signalCheck.detail}`)
       } catch (sigErr) {
         // Signal evaluation failed — fail-closed, do not proceed
         throw new Error(`Signal check failed: ${sigErr} — skipping`)
@@ -204,7 +211,7 @@ export async function startShadowBot(strategyId: string, allocUSDT?: number): Pr
     sizeScale = Math.max(effectiveAlloc / refDeployed, 1.0)
   }
   if (sizeScale > 1.05) {
-    console.log(`  [Shadow] Size scale: ${sizeScale.toFixed(1)}x (equity-based)`)
+    console.log(`  [Shadow] ${L('仓位缩放', 'Size scale')}: ${sizeScale.toFixed(1)}x ${L('(基于权益)', '(equity-based)')}`)
   }
 
   // ── Route to tool-specific start ──────────────────────────────────────────
@@ -276,7 +283,7 @@ function startGridBot(
     cfg.sz          = Math.round(((p.order_amount_usdt as number) ?? 100) * sizeScale)
     cfg.basePos     = (p.base_pos as boolean) ?? true
 
-    console.log(`  [Shadow] Starting CONTRACT grid for "${rec.name}"`)
+    console.log(`  [Shadow] ${L('启动合约网格', 'Starting CONTRACT grid')} for "${rec.name}"`)
     console.log(`    ${instId}  ${cfg.direction}  ${cfg.lever}x  Range: $${minPx}–$${maxPx}  Grids: ${gridNum}  Size: $${cfg.sz}`)
   } else {
     // Spot grid — quoteSz (scaled by equity)
@@ -287,10 +294,10 @@ function startGridBot(
     const maxPos = spec.risk.max_position_usdt
     if (maxPos != null && maxPos > 0 && cfg.quoteSz > maxPos * sizeScale) {
       cfg.quoteSz = Math.round(maxPos * sizeScale)
-      console.log(`  [Shadow] Grid quoteSz capped to $${cfg.quoteSz} (max_position_usdt)`)
+      console.log(`  [Shadow] ${L('网格资金上限收敛', 'Grid quote size capped')} to $${cfg.quoteSz} (max_position_usdt)`)
     }
 
-    console.log(`  [Shadow] Starting SPOT grid for "${rec.name}"`)
+    console.log(`  [Shadow] ${L('启动现货网格', 'Starting SPOT grid')} for "${rec.name}"`)
     console.log(`    ${instId}  Range: $${minPx}–$${maxPx}  Grids: ${gridNum}  Size: $${cfg.quoteSz}`)
   }
 
@@ -334,13 +341,13 @@ function startDCABot(
     ...(p.sl_pct != null ? { slPct: (p.sl_pct as number) / 100, slMode: 'market' as const } : {}),
   }
 
-  console.log(`  [Shadow] Starting DCA bot for "${rec.name}"`)
+  console.log(`  [Shadow] ${L('启动 DCA 机器人', 'Starting DCA bot')} for "${rec.name}"`)
   console.log(`    ${swapId}  ${direction}  ${lever}x  Init: $${initOrdAmt}  Safety: ${maxSafetyOrds}  TP: ${tpPct}%`)
 
   const algoId = dcaClient.create(cfg)
   const botId = `dca_${algoId}`
   persistBot(strategyId, botId)
-  console.log(`  [Shadow] DCA bot started: algoId=${algoId}`)
+  console.log(`  [Shadow] ${L('DCA 机器人已启动', 'DCA bot started')}: algoId=${algoId}`)
   return botId
 }
 
@@ -385,7 +392,7 @@ function startSwapPosition(
     posSide,
   })
 
-  console.log(`  [Shadow] Swap position opened for "${rec.name}"`)
+  console.log(`  [Shadow] ${L('合约仓位已打开', 'Swap position opened')} for "${rec.name}"`)
   console.log(`    ${swapId}  ${direction}  ${lever}x  Size: ${sz} contracts  ≈$${szUsdt}`)
 
   // If trailing stop tool, also place trailing stop order
@@ -494,7 +501,7 @@ function startRecurringBuy(
     maxBuys:       (p.max_buys as number) ?? undefined,
   }
 
-  console.log(`  [Shadow] Starting recurring buy for "${rec.name}"`)
+  console.log(`  [Shadow] ${L('启动定投', 'Starting recurring buy')} for "${rec.name}"`)
   console.log(`    ${asset}  $${cfg.amountUsdt} every ${cfg.intervalHours}h`)
 
   const botId = initRecurringBuy(strategyId, cfg)
@@ -528,7 +535,7 @@ function startFundingArb(
     exitAnnualPct: (p.exit_annual_pct as number) ?? 5,
   }
 
-  console.log(`  [Shadow] Opening funding arb for "${rec.name}"`)
+  console.log(`  [Shadow] ${L('启动资金费率套利', 'Opening funding arb')} for "${rec.name}"`)
   const botId = openFundingArb(strategyId, cfg)
   persistBot(strategyId, botId)
   return botId
@@ -553,7 +560,7 @@ function startTWAPOrder(
     maxSlippage:     (p.max_slippage_pct as number) ?? undefined,
   }
 
-  console.log(`  [Shadow] Starting TWAP for "${rec.name}"`)
+  console.log(`  [Shadow] ${L('启动 TWAP', 'Starting TWAP')} for "${rec.name}"`)
   console.log(`    ${instId}  ${cfg.side}  $${cfg.totalAmountUsdt} in ${cfg.slices} slices @ ${cfg.intervalMinutes}min`)
 
   const botId = initTWAP(strategyId, cfg)
@@ -579,7 +586,7 @@ function startIcebergOrder(
     lever:             (p.lever as number) ?? undefined,
   }
 
-  console.log(`  [Shadow] Starting Iceberg for "${rec.name}"`)
+  console.log(`  [Shadow] ${L('启动 Iceberg', 'Starting Iceberg')} for "${rec.name}"`)
   console.log(`    ${instId}  ${cfg.side}  $${cfg.totalAmountUsdt} visible $${cfg.visibleAmountUsdt}`)
 
   const botId = initIceberg(strategyId, cfg)
@@ -590,7 +597,7 @@ function startIcebergOrder(
 function startSentinel(strategyId: string, rec: StrategyRecord): string {
   const sentinelId = `monitor_${strategyId}`
   persistBot(strategyId, sentinelId)
-  console.log(`  [Shadow] "${rec.name}" — monitoring mode (tool=${rec.spec.execution.tool})`)
+  console.log(`  [Shadow] "${rec.name}" — ${L('监控模式', 'monitoring mode')} (tool=${rec.spec.execution.tool})`)
   return sentinelId
 }
 
@@ -636,12 +643,12 @@ export function stopShadowBot(strategyId: string): void {
       // Contract grid bot
       const swapId = toSwapId(asset)
       botClient.stop(algoId.slice(6), swapId, 'contract_grid')
-      console.log(`  [Shadow] Stopped contract grid for "${rec.name}"`)
+      console.log(`  [Shadow] ${L('已停止合约网格', 'Stopped contract grid')} for "${rec.name}"`)
 
     } else if (algoId.startsWith('dca_')) {
       // DCA bot
       dcaClient.stop(algoId.slice(4))
-      console.log(`  [Shadow] Stopped DCA bot for "${rec.name}"`)
+      console.log(`  [Shadow] ${L('已停止 DCA 机器人', 'Stopped DCA bot')} for "${rec.name}"`)
 
     } else if (algoId.startsWith('swap_')) {
       // Swap position — cancel algo orders first (trailing stops), then close positions
@@ -656,7 +663,7 @@ export function stopShadowBot(strategyId: string): void {
       } catch {}
       try { swapClient.close(swapId, tdMode, 'long') } catch {}
       try { swapClient.close(swapId, tdMode, 'short') } catch {}
-      console.log(`  [Shadow] Closed swap position for "${rec.name}" (${tdMode})`)
+      console.log(`  [Shadow] ${L('已关闭合约仓位', 'Closed swap position')} for "${rec.name}" (${tdMode})`)
 
     } else if (algoId.startsWith('spot_')) {
       // Spot order — cancel if still pending, then sell any acquired position
@@ -670,15 +677,15 @@ export function stopShadowBot(strategyId: string): void {
             instId: asset, side: 'sell', ordType: 'market',
             sz: String(filledQty),
           })
-          console.log(`  [Shadow] Sold ${filledQty} for "${rec.name}"`)
+          console.log(`  [Shadow] ${L('已卖出', 'Sold')} ${filledQty} ${L('以关闭', 'for')} "${rec.name}"`)
         }
       } catch {}
-      console.log(`  [Shadow] Cancelled spot order for "${rec.name}"`)
+      console.log(`  [Shadow] ${L('已取消现货订单', 'Cancelled spot order')} for "${rec.name}"`)
 
     } else {
       // Grid bot (default / backward compatible)
       botClient.stop(algoId, asset)
-      console.log(`  [Shadow] Stopped grid bot algoId=${algoId} for "${rec.name}"`)
+      console.log(`  [Shadow] ${L('已停止网格机器人', 'Stopped grid bot')} algoId=${algoId} for "${rec.name}"`)
     }
   } catch (err) {
     console.warn(`  [Shadow] Failed to stop ${algoId}: ${err}`)

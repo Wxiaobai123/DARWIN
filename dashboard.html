@@ -2098,6 +2098,9 @@ function renderOverview() {
           <span style="font-size:16px;padding:5px 15px;border-radius:10px;background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.15);font-weight:600">${RISK_CN[s.riskTier] || '--'}</span>
           <span style="font-size:16px;padding:5px 15px;border-radius:10px;background:rgba(${halted?'239,68,68':'34,197,94'},0.1);color:${cbColor};border:1px solid ${cbColor}33;font-weight:600">熔断: ${cbLabel}</span>
         </div>
+        <div style="font-size:16px;line-height:1.65;color:var(--dim);max-width:760px;margin-bottom:12px">
+          ${L('AI 交易治理系统 · Claw 负责意图与编排，OKX Agent Trade Kit 负责交易能力，Paperclip 负责治理与审批。', 'AI trading governance system · Claw handles intent, OKX Agent Trade Kit handles trading capability, and Paperclip governs approvals.')}
+        </div>
         <div style="font-size:52px;font-weight:900;letter-spacing:-1.5px;background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1">${fmtUSD(equity)}</div>
         <div style="display:flex;align-items:center;gap:25px;margin-top:12px;flex-wrap:wrap">
           <div style="display:flex;align-items:center;gap:10px;white-space:nowrap">
@@ -2147,8 +2150,8 @@ function renderOverview() {
       <div style="font-size:17px;color:var(--dim);line-height:1.7;margin-top:14px">${L('如果只给评审一分钟，这个系统最该证明的不是“会下单”，而是“会治理”：它会解释为什么做、何时停、以及事后如何追责。', 'If you only have one minute, the key proof is not that DARWIN can place trades. It is that DARWIN can govern them: why to act, when to stop, and how to audit the result afterwards.')}</div>
       <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px">
         ${[
+          'pnpm run proof',
           'pnpm run verify',
-          'pnpm run demo:guided',
           'pnpm run bridge',
         ].map(cmd => `<span style="font-size:14px;padding:6px 12px;border-radius:999px;background:var(--subtle-bg);border:1px solid var(--border);font-family:'SF Mono',monospace;color:var(--text)">${cmd}</span>`).join('')}
       </div>

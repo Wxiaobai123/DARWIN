@@ -26,10 +26,20 @@ Watch the daily report, strategy mix, risk summary, and historical timeline.
 
 ```bash
 pnpm install
-pnpm run verify
-pnpm run demo:guided
+pnpm run proof
 pnpm run bridge
 ```
+
+Additional note:
+
+- `pnpm run proof`: zero-key, deterministic, best for first-pass product understanding.
+- `pnpm run verify`: requires configured OKX demo credentials and validates the live ATK execution path.
+
+## Claw Intent Handoff
+
+If you want to see where the public `Claw-powered` claim becomes concrete inside the repo, start here:
+
+- [Claw Intent Handoff](CLAW_INTENT_HANDOFF_EN.md)
 
 Open:
 

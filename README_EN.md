@@ -32,19 +32,22 @@ If you only have a minute, look at these four things:
 
 | Start here | What it proves |
 |---|---|
-| `pnpm run verify` | The project is executable, not just a concept deck |
-| `pnpm run demo:guided` | There is a fixed product walkthrough, not an improvised demo |
-| `http://localhost:3200/dashboard?lang=en#overview` | Live equity, market posture, strategy pipeline, and system health are visible |
-| `http://localhost:3200/dashboard?lang=en#decision` → `#risk` → `#reports` | Decision logic, approval-gated risk control, and the audit loop are all visible |
+| `pnpm run proof` | Zero-key, deterministic product proof showing the Claw -> DARWIN -> ATK rail |
+| `pnpm run verify` | Validates live OKX demo integration when demo credentials are configured |
+| `http://localhost:3200/dashboard?lang=en#overview` | After starting the bridge, live equity, regime, strategy pipeline, and health are visible |
+| `http://localhost:3200/dashboard?lang=en#decision` → `#risk` → `#reports` | After starting the bridge, the decision logic, approval-gated risk control, and audit loop are visible |
 
 Fastest local proof:
 
 ```bash
 pnpm install
-pnpm run verify
-pnpm run demo:guided
+pnpm run proof
 pnpm run bridge
 ```
+
+Two validation modes:
+- `pnpm run proof`: zero-key, deterministic, best for first-pass product understanding.
+- `pnpm run verify`: requires configured OKX demo credentials and validates the live OKX Agent Trade Kit path.
 
 ---
 
@@ -98,6 +101,7 @@ Two foundations make this possible:
 **You set the risk profile and coin whitelist. DARWIN handles everything else.**
 
 Project docs:
+- [Claw Intent Handoff](docs/CLAW_INTENT_HANDOFF_EN.md)
 - [Product Positioning](docs/PRODUCT_POSITIONING.md)
 - [Product Walkthrough](docs/PRODUCT_WALKTHROUGH_EN.md)
 - [Project Architecture](docs/PROJECT_ARCHITECTURE.md)
@@ -445,8 +449,9 @@ pnpm start
 ### 5. Demo Scenarios
 
 ```bash
-pnpm run verify       # Fastest project verification path
-pnpm run demo:guided  # Guided end-to-end demo
+pnpm run proof                      # Zero-key deterministic product proof
+pnpm run verify                     # Live OKX demo validation (credentials required)
+pnpm run demo:guided:deterministic  # Fixture-backed walkthrough
 
 pnpm run demo:a    # Scenario A: Normal full-system operation
 pnpm run demo:b    # Scenario B: Market regime transition (oscillation -> trend)
@@ -510,12 +515,13 @@ DARWIN integrates **8 distinct execution tools** through the OKX Agent Trade Kit
 For the shortest proof path, run:
 
 ```bash
-pnpm run verify
-pnpm run demo:guided
+pnpm run proof
+pnpm run bridge
 ```
 
 Current verified status as of 2026-03-20:
 
+- `pnpm run proof` passes
 - `pnpm build` passes
 - `pnpm test:strategies` passes with `6 passed / 0 failed / 0 skipped`
 

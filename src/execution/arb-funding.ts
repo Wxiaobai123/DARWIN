@@ -23,6 +23,9 @@ import { swapClient } from '../atk/swap.js'
 import { atk } from '../atk/client.js'
 import { ensureSwapLeverage } from './ensure-swap-leverage.js'
 
+const EN = process.env.DARWIN_LANG === 'en' || /^en/i.test(process.env.LANG ?? '')
+const L = (cn: string, en: string) => EN ? en : cn
+
 // ── Types ─────────────────────────────────────────────────────────────────────
 
 export interface FundingArbConfig {
@@ -138,7 +141,7 @@ export function openFundingArb(strategyId: string, cfg: FundingArbConfig): strin
   `).run(strategyId, spotOrdId, swapOrdId, fr.fundingRate)
 
   const annualized = Math.abs(fr.fundingRate) * 1095 * 100
-  console.log(`  [FundingArb] Opened: ${cfg.spotInstId} spot long + ${cfg.swapInstId} swap short`)
+  console.log(`  [FundingArb] ${L('已打开', 'Opened')}: ${cfg.spotInstId} spot long + ${cfg.swapInstId} swap short`)
   console.log(`    Spot: $${cfg.amountUsdt}  Swap: ${swapSz} contracts  Funding: ${(fr.fundingRate * 100).toFixed(4)}% (${annualized.toFixed(1)}% ann.)`)
 
   const botId = `arb_${strategyId}`
@@ -185,7 +188,7 @@ export function closeFundingArb(strategyId: string, cfg: FundingArbConfig): void
     db.prepare('DELETE FROM funding_arb WHERE strategy_id = ?').run(strategyId)
   } catch {}
 
-  console.log(`  [FundingArb] Closed position for strategy ${strategyId}`)
+  console.log(`  [FundingArb] ${L('已关闭仓位', 'Closed position')} for strategy ${strategyId}`)
 }
 
 /**
@@ -200,7 +203,9 @@ export function shouldCloseArb(strategyId: string, cfg: FundingArbConfig): {
   if (annualizedPct < cfg.exitAnnualPct) {
     return {
       shouldClose: true,
-      reason: `资金费率 ${annualizedPct.toFixed(1)}% 年化 < 退出阈值 ${cfg.exitAnnualPct}%`,
+      reason: EN
+        ? `Funding ${annualizedPct.toFixed(1)}% annualized < exit threshold ${cfg.exitAnnualPct}%`
+        : `资金费率 ${annualizedPct.toFixed(1)}% 年化 < 退出阈值 ${cfg.exitAnnualPct}%`,
       currentAnnualized: annualizedPct,
     }
   }
@@ -209,7 +214,9 @@ export function shouldCloseArb(strategyId: string, cfg: FundingArbConfig): {
   if (fundingRate < 0) {
     return {
       shouldClose: true,
-      reason: `资金费率转负: ${(fundingRate * 100).toFixed(4)}%`,
+      reason: EN
+        ? `Funding flipped negative: ${(fundingRate * 100).toFixed(4)}%`
+        : `资金费率转负: ${(fundingRate * 100).toFixed(4)}%`,
       currentAnnualized: annualizedPct,
     }
   }

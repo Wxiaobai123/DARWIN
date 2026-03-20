@@ -3,8 +3,9 @@
  * Tests: grid, contract grid, DCA, swap, spot, recurring buy, funding arb
  *
  * Usage:
- *   pnpm run test:strategies          # BTC-USDT only (fast)
- *   pnpm run test:strategies -- --all  # All 6 coins
+ *   pnpm run test:strategies             # BTC-USDT only (fast)
+ *   pnpm run test:strategies -- --all    # all configured assets
+ *   pnpm run test:strategies -- --en     # English console output
  */
 
 import { config } from './config.js'
@@ -24,6 +25,9 @@ const C = {
   reset:  '\x1b[0m',
 }
 
+const EN = process.argv.includes('--en') || process.env.DARWIN_LANG === 'en' || /^en/i.test(process.env.LANG ?? '')
+const L = (cn: string, en: string) => EN ? en : cn
+
 const pass = (msg: string) => console.log(`  ${C.green}✓${C.reset} ${msg}`)
 const fail = (msg: string, err: unknown) => console.log(`  ${C.red}✗${C.reset} ${msg}: ${C.dim}${String(err).slice(0, 200)}${C.reset}`)
 const skip = (msg: string, reason: string) => console.log(`  ${C.yellow}⊘${C.reset} ${msg} ${C.dim}(${reason})${C.reset}`)
@@ -37,9 +41,9 @@ async function sleep(ms: number) {
 
 async function main() {
   console.log()
-  console.log(`${C.bold}  DARWIN Strategy Integration Test${C.reset}`)
+  console.log(`${C.bold}  ${L('DARWIN 策略集成测试', 'DARWIN Strategy Integration Test')}${C.reset}`)
   console.log(`  ${'─'.repeat(50)}`)
-  console.log(`  ${C.dim}Assets: ${TEST_ASSETS.join(', ')}  Mode: ${config.okx.demoMode ? 'DEMO' : 'LIVE'}${C.reset}`)
+  console.log(`  ${C.dim}${L('资产', 'Assets')}: ${TEST_ASSETS.join(', ')}  ${L('模式', 'Mode')}: ${config.okx.demoMode ? 'DEMO' : 'LIVE'}${C.reset}`)
   console.log()
 
   // Initialize DB and load strategies
@@ -50,7 +54,7 @@ async function main() {
   loadOfficialStrategies()
 
   const strategies = getAllStrategies('shadow')
-  console.log(`  ${C.dim}Loaded ${strategies.length} strategy instances${C.reset}`)
+  console.log(`  ${C.dim}${EN ? `Loaded ${strategies.length} strategy instances` : `已加载 ${strategies.length} 个策略实例`}${C.reset}`)
   console.log()
 
   // Group by tool type
@@ -78,19 +82,19 @@ async function main() {
       let opened = false
       try {
         const botId = await startShadowBot(strat.id)
-        pass(`开仓成功  botId=${botId.slice(0, 20)}...`)
+        pass(EN ? `Opened successfully  botId=${botId.slice(0, 20)}...` : `开仓成功  botId=${botId.slice(0, 20)}...`)
         opened = true
       } catch (err) {
         const errStr = String(err)
         if (errStr.includes('skipping')) {
-          skip('跳过', errStr.match(/Signal.*skipping|Funding.*skipping|ATR.*skipping/)?.[0] ?? '')
+          skip(L('跳过', 'Skipped'), errStr.match(/Signal.*skipping|Funding.*skipping|ATR.*skipping/)?.[0] ?? '')
           // Only add to forced retry for BTC (avoid duplicate forced tests for all coins)
           if (asset === 'BTC-USDT') skippedTools.push({ tool, strat })
           skipped++
           console.log()
           continue
         }
-        fail('开仓失败', err)
+        fail(L('开仓失败', 'Open failed'), err)
         failed++
         console.log()
         continue
@@ -102,10 +106,10 @@ async function main() {
       if (opened) {
         try {
           stopShadowBot(strat.id)
-          pass('平仓成功')
+          pass(L('平仓成功', 'Closed successfully'))
           passed++
         } catch (err) {
-          fail('平仓失败', err)
+          fail(L('平仓失败', 'Close failed'), err)
           failed++
         }
       }
@@ -117,12 +121,12 @@ async function main() {
   // ── Second pass: force-test skipped tools by overriding entry signals ──
   if (skippedTools.length > 0) {
     console.log(`  ${'─'.repeat(50)}`)
-    console.log(`${C.bold}  强制测试跳过的策略 (绕过入场信号)${C.reset}`)
+    console.log(`${C.bold}  ${L('强制测试跳过的策略 (绕过入场信号)', 'Forced retry for skipped strategies (entry checks bypassed)')}${C.reset}`)
     console.log()
 
     for (const { tool, strat } of skippedTools) {
       const asset = strat.spec.conditions.assets[0]
-      console.log(`${C.bold}  [${tool}]${C.reset} ${strat.name} ${C.dim}(${asset}) (强制)${C.reset}`)
+      console.log(`${C.bold}  [${tool}]${C.reset} ${strat.name} ${C.dim}(${asset}) ${EN ? '(forced)' : '(强制)'}${C.reset}`)
 
       // Save original spec JSON from DB
       const origRow = db.prepare('SELECT spec FROM strategies WHERE id = ?').get(strat.id) as { spec: string }
@@ -140,10 +144,10 @@ async function main() {
       let opened = false
       try {
         const botId = await startShadowBot(strat.id)
-        pass(`开仓成功  botId=${botId.slice(0, 20)}...`)
+        pass(EN ? `Opened successfully  botId=${botId.slice(0, 20)}...` : `开仓成功  botId=${botId.slice(0, 20)}...`)
         opened = true
       } catch (err) {
-        fail('开仓失败', err)
+        fail(L('开仓失败', 'Open failed'), err)
         failed++
         db.prepare('UPDATE strategies SET spec = ? WHERE id = ?').run(origSpec, strat.id)
         console.log()
@@ -155,11 +159,11 @@ async function main() {
       if (opened) {
         try {
           stopShadowBot(strat.id)
-          pass('平仓成功')
+          pass(L('平仓成功', 'Closed successfully'))
           passed++
           skipped--
         } catch (err) {
-          fail('平仓失败', err)
+          fail(L('平仓失败', 'Close failed'), err)
           failed++
           skipped--
         }
@@ -174,10 +178,10 @@ async function main() {
   // ── Summary ──
   console.log(`  ${'─'.repeat(50)}`)
   console.log(
-    `  ${C.bold}结果:${C.reset}  ` +
-    `${C.green}${passed} 通过${C.reset}  ` +
-    `${C.red}${failed} 失败${C.reset}  ` +
-    `${C.yellow}${skipped} 跳过${C.reset}`
+    `  ${C.bold}${L('结果', 'Result')}:${C.reset}  ` +
+    `${C.green}${passed} ${L('通过', 'passed')}${C.reset}  ` +
+    `${C.red}${failed} ${L('失败', 'failed')}${C.reset}  ` +
+    `${C.yellow}${skipped} ${L('跳过', 'skipped')}${C.reset}`
   )
   console.log()
 

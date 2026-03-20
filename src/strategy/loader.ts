@@ -13,6 +13,9 @@ import db from '../db.js'
 import { config } from '../config.js'
 import { validateStrategy, type StrategySpec } from './validator.js'
 
+const EN = process.env.DARWIN_LANG === 'en' || /^en/i.test(process.env.LANG ?? '')
+const L = (cn: string, en: string) => EN ? en : cn
+
 /**
  * Parse a YAML strategy file into a StrategySpec.
  * Fills in defaults for optional fields.
@@ -133,10 +136,10 @@ export function loadOfficialStrategies(): void {
       const content = readFileSync(path.join(strategiesDir, file), 'utf8')
       const spec = parseStrategyYaml(content)
 
-      // 官方策略也需通过验证，确保 YAML 无误
+      // Official strategies are validated too, so YAML issues fail early.
       const vr = validateStrategy(spec)
       if (!vr.ok) {
-        console.warn(`  [Loader] 验证失败 ${file}:\n    ${vr.errors.join('\n    ')}`)
+        console.warn(`  [Loader] ${L('验证失败', 'Validation failed')} ${file}:\n    ${vr.errors.join('\n    ')}`)
         continue
       }
 
@@ -172,7 +175,7 @@ export function loadOfficialStrategies(): void {
               instanceSpec.metadata.id = existing.id
               db.prepare('UPDATE strategies SET spec = ? WHERE id = ?')
                 .run(JSON.stringify(instanceSpec), existing.id)
-              console.log(`  [Loader] 已更新: "${inst.name}" v${dbSpec.metadata.version} → v${instanceSpec.metadata.version}`)
+              console.log(`  [Loader] ${L('已更新', 'Updated')}: "${inst.name}" v${dbSpec.metadata.version} → v${instanceSpec.metadata.version}`)
             }
           } catch {}
           continue
@@ -186,10 +189,10 @@ export function loadOfficialStrategies(): void {
           VALUES (?, ?, ?, ?, 'shadow', datetime('now'))
         `).run(id, inst.name, instanceSpec.metadata.author, JSON.stringify(instanceSpec))
 
-        console.log(`  [Loader] 已注册: "${inst.name}"`)
+        console.log(`  [Loader] ${L('已注册', 'Registered')}: "${inst.name}"`)
       }
     } catch (err) {
-      console.warn(`  [Loader] 加载失败 ${file}: ${err}`)
+      console.warn(`  [Loader] ${L('加载失败', 'Load failed')} ${file}: ${err}`)
     }
   }
 
@@ -211,11 +214,11 @@ export function loadOfficialStrategies(): void {
         db.prepare('DELETE FROM strategies WHERE id = ?').run(row.id)
         try { db.prepare('DELETE FROM shadow_bots WHERE strategy_id = ?').run(row.id) } catch {}
         try { db.prepare('DELETE FROM recurring_buys WHERE strategy_id = ?').run(row.id) } catch {}
-        console.log(`  [Loader] 已清理孤儿策略: "${row.name}"`)
+        console.log(`  [Loader] ${L('已清理孤儿策略', 'Cleaned orphan strategy')}: "${row.name}"`)
       }
     }
   } catch (err) {
-    console.warn(`  [Loader] 孤儿清理失败: ${err}`)
+    console.warn(`  [Loader] ${L('孤儿清理失败', 'Orphan cleanup failed')}: ${err}`)
   }
 }
 

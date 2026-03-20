@@ -8,6 +8,7 @@
  *   pnpm run demo:guided a     # run only scenario A
  *   pnpm run demo:guided b     # run only scenario B
  *   pnpm run demo:guided c     # run only scenario C
+ *   pnpm run demo:guided -- --deterministic  # fixture-backed walkthrough
  */
 
 import { recognizeState, type MarketState } from '../market/state-recognizer.js'
@@ -27,6 +28,8 @@ const yw = (s: string) => `${C.yellow}${s}${C.reset}`
 const rd = (s: string) => `${C.red}${s}${C.reset}`
 const mg = (s: string) => `${C.magenta}${s}${C.reset}`
 const dm = (s: string) => `${C.dim}${s}${C.reset}`
+const args = process.argv.slice(2)
+const DETERMINISTIC = args.includes('--deterministic') || args.includes('--fixture')
 
 function section(title: string, icon: string): void {
   console.log()
@@ -84,7 +87,7 @@ function strategyPack(state: MarketState): Array<{ name: string; role: string; t
   ]
 }
 
-function allocationPack(state: MarketState, equity: number): Array<{ name: string; pct: number }> {
+function allocationPack(state: MarketState): Array<{ name: string; pct: number }> {
   if (state === 'trend') {
     return [
       { name: '趋势追踪', pct: 0.16 },
@@ -116,13 +119,20 @@ function printHeader(): void {
   console.log(`  ${b('One-line thesis:')} DARWIN is not a signal bot. It governs the trading loop.`)
   console.log(`  ${dm('market interpretation -> strategy switching -> ATK execution -> circuit breaker -> audit report')}`)
   console.log()
-  console.log(`  ${b('Fastest verification path:')}`)
-  console.log(`  ${cy('1.')} pnpm run verify`)
-  console.log(`  ${cy('2.')} pnpm run demo:guided`)
+  console.log(`  ${b('Fastest proof path:')}`)
+  console.log(`  ${cy('1.')} pnpm run proof`)
+  console.log(`  ${cy('2.')} pnpm run bridge`)
+  console.log(`  ${cy('3.')} pnpm run verify`)
+  if (DETERMINISTIC) {
+    console.log(`  ${dm('Running in deterministic fixture mode.')}`)
+  }
   console.log()
 }
 
 async function currentStateSnapshot(): Promise<{ state: MarketState; confidence: number }> {
+  if (DETERMINISTIC) {
+    return { state: 'oscillation', confidence: 0.81 }
+  }
   try {
     const r = await recognizeState('BTC-USDT')
     return { state: r.state, confidence: r.confidence }
@@ -150,28 +160,36 @@ async function scenarioA(): Promise<void> {
   await sleep(900)
 
   let equity = 0
-  try { equity = account.totalEquityUSDT() } catch {}
+  if (!DETERMINISTIC) {
+    try { equity = account.totalEquityUSDT() } catch {}
+  }
   if (equity <= 0) equity = 20_000
 
   console.log()
   console.log(`  ${b('Illustrative capital plan')}  ${dm(`(equity baseline: $${Math.round(equity)})`)}`)
-  for (const item of allocationPack(snap.state, equity)) {
+  for (const item of allocationPack(snap.state)) {
     const usdt = Math.round(equity * item.pct)
     console.log(`  ${cy('•')} ${item.name.padEnd(10)}  ${String(Math.round(item.pct * 100)).padStart(2)}%  ${gn('$' + usdt)}`)
   }
   await sleep(900)
 
-  const report = saveAndPrintReport()
-  const excerpt = report
-    .split('\n')
-    .filter(line =>
-      line.trim() &&
-      !line.includes('策略表现') &&
-      !line.includes('风控提示') &&
-      !line.includes('熔断保护')
-    )
-    .slice(0, 4)
-    .join('\n')
+  const excerpt = DETERMINISTIC
+    ? [
+      'Market: BTC is in Oscillation and ETH is in Oscillation.',
+      'Strategy posture: Spot Grid primary, Contract Grid secondary, Funding Arb hedge.',
+      'Risk status: no breaker tiers active; deployment remains inside the balanced envelope.',
+      'Tomorrow outlook: range-bound conditions still favor grid harvesting while reserve capital stays available.',
+    ].join('\n')
+    : saveAndPrintReport()
+      .split('\n')
+      .filter(line =>
+        line.trim() &&
+        !line.includes('策略表现') &&
+        !line.includes('风控提示') &&
+        !line.includes('熔断保护')
+      )
+      .slice(0, 4)
+      .join('\n')
   console.log()
   console.log(`  ${b('Auditor output excerpt:')}`)
   console.log(dm('  ' + '─'.repeat(58)))
@@ -235,11 +253,12 @@ async function runAll(): Promise<void> {
   await scenarioC()
   console.log()
   console.log(`  ${gn('✓ Guided demo complete')}`)
-  console.log(`  ${dm('Use `pnpm run verify` as the hard proof, and this demo as the product walkthrough.')}`)
+  console.log(`  ${dm('Use `pnpm run proof` for the zero-key product thesis, `pnpm run verify` for the live OKX demo path, and this demo for the narrated walkthrough.')}`)
   console.log()
 }
 
-const mode = (process.argv[2] ?? 'all').toLowerCase()
+const modeArg = args.find(arg => !arg.startsWith('--')) ?? 'all'
+const mode = modeArg.toLowerCase()
 
 printHeader()
 
@@ -248,7 +267,7 @@ else if (mode === 'a') await scenarioA()
 else if (mode === 'b') await scenarioB()
 else if (mode === 'c') await scenarioC()
 else {
-  console.log('Usage: pnpm run demo:guided [a|b|c]')
+  console.log('Usage: pnpm run demo:guided [a|b|c] [--deterministic]')
   console.log('  no arg = run full A -> B -> C sequence')
   process.exit(1)
 }
