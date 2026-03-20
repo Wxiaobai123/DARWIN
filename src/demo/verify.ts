@@ -21,9 +21,9 @@ function runStep(title: string, cmd: string, args: string[], extraEnv: NodeJS.Pr
 }
 
 console.log('DARWIN verification')
-console.log('This command runs the fastest local verification path.')
+console.log('This command validates the environment-backed local integration path.')
 console.log('Note: this path validates the environment-backed OKX demo flow and expects configured demo credentials.')
-console.log('For the zero-key deterministic walkthrough, run: pnpm run proof')
+console.log('For a repository-local system overview without exchange credentials, run: pnpm run overview')
 
 runStep('Build', 'pnpm', ['build'])
 runStep('Strategy integration test', 'pnpm', ['test:strategies'], { DARWIN_LANG: 'en' })

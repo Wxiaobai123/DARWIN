@@ -349,9 +349,9 @@ DEMOTION
 
 ---
 
-## Submission Checklist
+## Strategy Onboarding Checklist
 
-Before submitting a community strategy, verify:
+Before onboarding a community strategy, verify:
 
 - [ ] Tested the YAML parses without errors
 - [ ] Declared `market_states` actually matches when your strategy works

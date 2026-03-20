@@ -38,14 +38,14 @@
   </g>
 
   <text x="120" y="92" class="title">DARWIN Decision Rail</text>
-  <text x="120" y="126" class="subtitle">A local-first, risk-first AI trading governance system powered by Claw, OKX Agent Trade Kit, and Paperclip AI.</text>
+  <text x="120" y="126" class="subtitle">A local-first, risk-first AI trading governance system built on OKX Agent Trade Kit and Paperclip AI.</text>
 
   <rect x="120" y="162" width="1360" height="118" rx="28" fill="rgba(6,182,212,0.05)" stroke="rgba(6,182,212,0.18)"/>
   <text x="158" y="210" class="section">Intent &amp; Control</text>
   <rect x="158" y="226" width="280" height="36" rx="18" fill="rgba(6,182,212,0.16)"/>
   <text x="188" y="250" class="chip">1. Set objective, risk tier, and asset whitelist</text>
   <rect x="470" y="192" width="272" height="68" rx="18" fill="rgba(15,23,42,0.82)" stroke="rgba(255,255,255,0.10)"/>
-  <text x="496" y="221" class="label">Claw Intent Layer</text>
+  <text x="496" y="221" class="label">Intent Layer</text>
   <text x="496" y="243" class="body">Turns natural-language goals into an operating objective.</text>
   <rect x="772" y="192" width="312" height="68" rx="18" fill="rgba(15,23,42,0.82)" stroke="rgba(255,255,255,0.10)"/>
   <text x="798" y="221" class="label">DARWIN Dashboard</text>

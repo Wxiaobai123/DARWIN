@@ -925,7 +925,7 @@ tr:hover td { background: rgba(6,182,212,0.03); }
   </div>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- PAGE 5: 关于系统 (Pitch Deck) -->
+  <!-- PAGE 5: 关于系统 -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <!-- PAGE: 回测引擎 -->
@@ -976,10 +976,10 @@ tr:hover td { background: rgba(6,182,212,0.03); }
         &#128214; <span id="aboutQuickRef">快速参考 — 关于 DARWIN</span> <span>&#9660;</span>
       </div>
       <div class="collapse-body">
-        <p><strong>DARWIN</strong> (Dynamic Adaptive Risk-Weighted Intelligence Network) — 一个由 Claw 驱动、基于 OKX Agent Trade Kit 和 Paperclip AI 构建的本地优先、风险优先的 AI 交易治理系统。</p>
-        <p><em>Local-first, risk-first AI trading governance system powered by Claw, OKX Agent Trade Kit, and Paperclip AI.</em></p>
+        <p><strong>DARWIN</strong> (Dynamic Adaptive Risk-Weighted Intelligence Network) — 一个本地优先、风险优先的 AI 交易治理系统。</p>
+        <p><em>Local-first, risk-first AI trading governance system.</em></p>
         <p>它把市场识别、策略治理、真实执行、风控熔断和审计报告保持在同一条决策轨道上。</p>
-        <p><strong>技术栈:</strong> Claw / OKX Agent Trade Kit / Paperclip AI / Node.js 22 / TypeScript / SQLite / Optional LLM providers</p>
+        <p><strong>技术栈:</strong> OKX Agent Trade Kit / Paperclip AI / Node.js 22 / TypeScript / SQLite / Optional LLM providers</p>
       </div>
     </div>
   </div>
@@ -1570,7 +1570,7 @@ function localizeSettingsPage() {
     ['资产白名单', 'Asset Whitelist'],
     ['Telegram 通知', 'Telegram Notifications'],
     ['快速参考 — 关于 DARWIN', 'Quick Reference — About DARWIN'],
-    ['一个由 Claw 驱动、基于 OKX Agent Trade Kit 和 Paperclip AI 构建的本地优先、风险优先的 AI 交易治理系统。', 'A local-first, risk-first AI trading governance system powered by Claw, OKX Agent Trade Kit, and Paperclip AI.'],
+    ['一个本地优先、风险优先的 AI 交易治理系统。', 'A local-first, risk-first AI trading governance system.'],
     ['它把市场识别、策略治理、真实执行、风控熔断和审计报告保持在同一条决策轨道上。', 'It keeps market recognition, strategy governance, live execution, circuit breakers, and audit reporting on one decision track.'],
     ['技术栈:', 'Tech Stack:'],
   ])
@@ -1648,7 +1648,7 @@ function localizeStrategyPage() {
     ['活跃机器人', 'Active Bots'],
     ['策略生命周期说明', 'Strategy Lifecycle'],
     ['影子验证', 'Shadow Validation'],
-    ['模拟盘运行，积累数据', 'Collect proof in demo mode'],
+    ['模拟盘运行，积累运行数据', 'Collect operating data in demo mode'],
     ['实盘晋升', 'Promotion to Live'],
     ['满足条件后分配资金', 'Capital assigned after thresholds are met'],
     ['动态监控', 'Continuous Monitoring'],
@@ -2023,11 +2023,11 @@ function renderOverview() {
   const mktStates = { oscillation:0, trend:0, extreme:0 }
   market.forEach(m => mktStates[m.state]++)
   const dominantState = Object.entries(mktStates).sort((a,b)=>b[1]-a[1])[0] || ['oscillation',0]
-  const thesis = L(
-    'DARWIN 不是交易信号机器人，而是把市场识别、策略切换、真实执行、风险熔断和审计报告放在同一条责任链上的 AI 交易治理系统。',
-    'DARWIN is not a trading signal bot. It is an AI trading governance system that keeps market interpretation, strategy switching, live execution, risk halts, and audit reporting on one accountable rail.'
+  const summary = L(
+    'DARWIN 将市场识别、策略选择、真实执行、风险控制和审计报告组织在同一条治理链上。',
+    'DARWIN keeps market interpretation, strategy selection, live execution, risk controls, and reporting on one operating rail.'
   )
-  const proofRail = [
+  const navigationRail = [
     {
       step: '01',
       page: 'overview',
@@ -2053,7 +2053,7 @@ function renderOverview() {
       step: '04',
       page: 'reports',
       title: L('报告', 'Reports'),
-      desc: L('最后看日报与审计闭环，证明它不是一次性 demo。', 'End with the daily report and audit loop to prove this is not a one-off demo.'),
+      desc: L('最后看日报与审计闭环，确认运行记录和风险回顾。', 'Finish with the daily report and audit loop for the operating record and risk review.'),
       color: 'var(--yellow)',
     },
   ]
@@ -2099,7 +2099,7 @@ function renderOverview() {
           <span style="font-size:16px;padding:5px 15px;border-radius:10px;background:rgba(${halted?'239,68,68':'34,197,94'},0.1);color:${cbColor};border:1px solid ${cbColor}33;font-weight:600">熔断: ${cbLabel}</span>
         </div>
         <div style="font-size:16px;line-height:1.65;color:var(--dim);max-width:760px;margin-bottom:12px">
-          ${L('AI 交易治理系统 · Claw 负责意图与编排，OKX Agent Trade Kit 负责交易能力，Paperclip 负责治理与审批。', 'AI trading governance system · Claw handles intent, OKX Agent Trade Kit handles trading capability, and Paperclip governs approvals.')}
+          ${L('AI 交易治理系统 · 在本地环境中统一市场识别、策略选择、交易执行、风险控制和审计记录。', 'AI trading governance system · unifying market interpretation, strategy selection, execution, risk controls, and reporting in a local operating environment.')}
         </div>
         <div style="font-size:52px;font-weight:900;letter-spacing:-1.5px;background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1">${fmtUSD(equity)}</div>
         <div style="display:flex;align-items:center;gap:25px;margin-top:12px;flex-wrap:wrap">
@@ -2139,18 +2139,18 @@ function renderOverview() {
     </div>
   </div>
 
-  <!-- Product thesis + guide rail -->
+  <!-- System summary + navigation -->
   <div class="g2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px;margin-bottom:25px">
     <div class="card" style="padding:25px;border:1px solid rgba(6,182,212,0.1);background:linear-gradient(135deg,rgba(6,182,212,0.05),rgba(168,85,247,0.03))">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px">
-        <div style="font-size:20px;font-weight:800;color:var(--text)">${L('一句话定位', 'One-Line Thesis')}</div>
-        <div style="font-size:13px;padding:5px 10px;border-radius:999px;background:rgba(6,182,212,0.08);color:var(--accent);border:1px solid rgba(6,182,212,0.12)">Claw · OKX ATK · Paperclip</div>
+        <div style="font-size:20px;font-weight:800;color:var(--text)">${L('系统摘要', 'System Summary')}</div>
+        <div style="font-size:13px;padding:5px 10px;border-radius:999px;background:rgba(6,182,212,0.08);color:var(--accent);border:1px solid rgba(6,182,212,0.12)">${L('本地优先 · 风险优先', 'Local-first · Risk-first')}</div>
       </div>
-      <div style="font-size:26px;font-weight:800;line-height:1.45;color:var(--text);letter-spacing:-0.4px">${thesis}</div>
-      <div style="font-size:17px;color:var(--dim);line-height:1.7;margin-top:14px">${L('如果只给评审一分钟，这个系统最该证明的不是“会下单”，而是“会治理”：它会解释为什么做、何时停、以及事后如何追责。', 'If you only have one minute, the key proof is not that DARWIN can place trades. It is that DARWIN can govern them: why to act, when to stop, and how to audit the result afterwards.')}</div>
+      <div style="font-size:26px;font-weight:800;line-height:1.45;color:var(--text);letter-spacing:-0.4px">${summary}</div>
+      <div style="font-size:17px;color:var(--dim);line-height:1.7;margin-top:14px">${L('这个页面把市场判断、执行状态、风险边界和审计记录放在同一层视图里，便于持续运行和回顾。', 'This page keeps market context, execution status, risk boundaries, and operational records in one view for ongoing operation and review.')}</div>
       <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px">
         ${[
-          'pnpm run proof',
+          'pnpm run overview',
           'pnpm run verify',
           'pnpm run bridge',
         ].map(cmd => `<span style="font-size:14px;padding:6px 12px;border-radius:999px;background:var(--subtle-bg);border:1px solid var(--border);font-family:'SF Mono',monospace;color:var(--text)">${cmd}</span>`).join('')}
@@ -2159,11 +2159,11 @@ function renderOverview() {
 
     <div class="card" style="padding:25px;border:1px solid rgba(168,85,247,0.1)">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px">
-        <div style="font-size:20px;font-weight:800;color:var(--text)">${L('90 秒导览', '90-Second Tour')}</div>
-        <div style="font-size:15px;color:var(--dim)">${L('按这个顺序看', 'Use this order')}</div>
+        <div style="font-size:20px;font-weight:800;color:var(--text)">${L('系统导航', 'Navigation')}</div>
+        <div style="font-size:15px;color:var(--dim)">${L('建议顺序', 'Suggested order')}</div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
-        ${proofRail.map(step => `<button onclick="go('${step.page}')" style="text-align:left;padding:15px 16px;border-radius:14px;background:${step.color}12;border:1px solid ${step.color}22;cursor:pointer;transition:all 0.2s"
+        ${navigationRail.map(step => `<button onclick="go('${step.page}')" style="text-align:left;padding:15px 16px;border-radius:14px;background:${step.color}12;border:1px solid ${step.color}22;cursor:pointer;transition:all 0.2s"
           onmouseover="this.style.transform='translateY(-2px)';this.style.borderColor='${step.color}'" onmouseout="this.style.transform='';this.style.borderColor='${step.color}22'">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
             <span style="font-size:13px;font-weight:800;letter-spacing:1px;color:${step.color}">${step.step}</span>
@@ -2176,12 +2176,12 @@ function renderOverview() {
     </div>
   </div>
 
-  <!-- ATK proof layer -->
+  <!-- ATK integration layer -->
   <div class="card" style="padding:25px;margin-bottom:25px;border:1px solid rgba(34,197,94,0.12);background:linear-gradient(135deg,rgba(34,197,94,0.04),rgba(59,130,246,0.03))">
     <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:18px">
       <div>
-        <div style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:6px">${L('OKX Agent Trade Kit 证据层', 'OKX Agent Trade Kit Proof Layer')}</div>
-        <div style="font-size:17px;color:var(--dim);line-height:1.6">${L('DARWIN 不是“接了交易 API”而已。没有 ATK，它无法同时完成市场读取、账户约束、真实执行和策略机器人编排。', 'DARWIN is more than an exchange API wrapper. Without ATK, it cannot combine market reads, account constraints, live execution, and bot orchestration in one operating layer.')}</div>
+        <div style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:6px">${L('OKX Agent Trade Kit 集成层', 'OKX Agent Trade Kit Integration Layer')}</div>
+        <div style="font-size:17px;color:var(--dim);line-height:1.6">${L('DARWIN 以 ATK 作为交易能力层，用于市场读取、账户约束、真实执行和算法单编排。', 'DARWIN uses ATK as its trading capability layer for market reads, account constraints, live execution, and algorithmic order orchestration.')}</div>
       </div>
       <div style="font-size:14px;padding:6px 12px;border-radius:999px;background:rgba(34,197,94,0.08);color:var(--green);border:1px solid rgba(34,197,94,0.16)">market · account · execution · bot / algo</div>
     </div>
@@ -4332,7 +4332,7 @@ function renderStateAnalysis(snaps) {
 }
 
 // ════════════════════════════════════════
-// PAGE 5: About (Pitch Deck)
+// PAGE 5: About
 // ════════════════════════════════════════
 function renderAboutPage() {
   const cfg = cache.sysConfig || {}
@@ -4352,7 +4352,7 @@ function renderAboutPage() {
     <div style="font-size:21px;color:var(--dim);letter-spacing:3px;margin-top:10px;font-weight:600">${L('动态自适应风险加权智能网络', 'Dynamic Adaptive Risk-Weighted Intelligence Network')}</div>
     <div style="font-size:24px;color:var(--text);margin-top:15px;opacity:0.8">${L('本地优先、风险优先的 AI 交易治理系统', 'Local-first, risk-first AI trading governance system')}</div>
     ${currentLang === 'cn' ? '<div style="font-size:18px;color:var(--dim);margin-top:8px;opacity:0.9">Local-first, risk-first AI trading governance system</div>' : ''}
-    <div style="font-size:17px;color:var(--dim);margin-top:10px;opacity:0.9">Powered by Claw · OKX Agent Trade Kit · Paperclip AI</div>
+    <div style="font-size:17px;color:var(--dim);margin-top:10px;opacity:0.9">${L('构建于 OKX Agent Trade Kit 与 Paperclip AI 之上', 'Built on OKX Agent Trade Kit and Paperclip AI')}</div>
   </div>
 
   <!-- Key Metrics -->
@@ -4599,7 +4599,7 @@ function renderAboutPage() {
         Local-first, risk-first AI trading governance system
       </div>
       <div style="font-size:17px;color:var(--dim);margin-top:6px">
-        Powered by Claw · OKX Agent Trade Kit · Paperclip AI
+        ${L('构建于 OKX Agent Trade Kit 与 Paperclip AI 之上', 'Built on OKX Agent Trade Kit and Paperclip AI')}
       </div>
     </div>
   </div>`

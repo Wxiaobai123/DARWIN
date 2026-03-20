@@ -34,14 +34,14 @@
   </g>
 
   <text x="120" y="92" class="title">DARWIN 系统决策主链路</text>
-  <text x="120" y="126" class="subtitle">由 Claw、OKX Agent Trade Kit 与 Paperclip AI 驱动的本地优先、风险优先 AI 交易治理系统。</text>
+  <text x="120" y="126" class="subtitle">一个基于 OKX Agent Trade Kit 与 Paperclip AI 构建的本地优先、风险优先 AI 交易治理系统。</text>
 
   <rect x="120" y="162" width="1360" height="118" rx="28" fill="rgba(6,182,212,0.05)" stroke="rgba(6,182,212,0.18)"/>
   <text x="158" y="210" class="section">意图与控制层</text>
   <rect x="158" y="226" width="280" height="36" rx="18" fill="rgba(6,182,212,0.16)"/>
   <text x="190" y="250" class="chip">1. 设定目标、风控等级与币种白名单</text>
   <rect x="470" y="192" width="272" height="68" rx="18" fill="rgba(15,23,42,0.82)" stroke="rgba(255,255,255,0.10)"/>
-  <text x="500" y="221" class="label">Claw 意图层</text>
+  <text x="500" y="221" class="label">意图层</text>
   <text x="500" y="243" class="body">把自然语言目标转成系统运行目标。</text>
   <rect x="772" y="192" width="312" height="68" rx="18" fill="rgba(15,23,42,0.82)" stroke="rgba(255,255,255,0.10)"/>
   <text x="802" y="221" class="label">DARWIN 控制面板</text>

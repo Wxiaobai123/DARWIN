@@ -1,14 +1,13 @@
 /**
- * Guided demo launcher
+ * Walkthrough launcher
  *
- * This is a curated product walkthrough, intentionally shorter and more
- * structured than the raw `demo:a|b|c` scenarios.
+ * A structured runtime walkthrough for the main operating loop.
  *
- *   pnpm run demo:guided       # run A -> B -> C
- *   pnpm run demo:guided a     # run only scenario A
- *   pnpm run demo:guided b     # run only scenario B
- *   pnpm run demo:guided c     # run only scenario C
- *   pnpm run demo:guided -- --deterministic  # fixture-backed walkthrough
+ *   pnpm run demo:walkthrough       # run A -> B -> C
+ *   pnpm run demo:walkthrough a     # run only scenario A
+ *   pnpm run demo:walkthrough b     # run only scenario B
+ *   pnpm run demo:walkthrough c     # run only scenario C
+ *   pnpm run demo:walkthrough -- --deterministic  # fixture-backed walkthrough
  */
 
 import { recognizeState, type MarketState } from '../market/state-recognizer.js'
@@ -19,7 +18,7 @@ import { getState, resetTier3, triggerTier3ForDemo } from '../risk/circuit-break
 const C = {
   reset: '\x1b[0m', bold: '\x1b[1m', dim: '\x1b[2m',
   cyan: '\x1b[36m', green: '\x1b[32m', yellow: '\x1b[33m',
-  red: '\x1b[31m', magenta: '\x1b[35m', blue: '\x1b[34m',
+  red: '\x1b[31m', magenta: '\x1b[35m',
 }
 const b  = (s: string) => `${C.bold}${s}${C.reset}`
 const cy = (s: string) => `${C.cyan}${s}${C.reset}`
@@ -111,16 +110,16 @@ function printHeader(): void {
   console.clear()
   console.log()
   console.log(cy('  ╔' + '═'.repeat(72) + '╗'))
-  console.log(cy('  ║ ') + b('DARWIN Guided Demo'.padEnd(71)) + cy('║'))
+  console.log(cy('  ║ ') + b('DARWIN Walkthrough'.padEnd(71)) + cy('║'))
   console.log(cy('  ╠' + '═'.repeat(72) + '╣'))
-  console.log(cy('  ║ ') + 'Claw-driven · Risk-first · Built on OKX Agent Trade Kit'.padEnd(71) + cy('║'))
+  console.log(cy('  ║ ') + 'Local walkthrough for the operating model and runtime behavior'.padEnd(71) + cy('║'))
   console.log(cy('  ╚' + '═'.repeat(72) + '╝'))
   console.log()
-  console.log(`  ${b('One-line thesis:')} DARWIN is not a signal bot. It governs the trading loop.`)
-  console.log(`  ${dm('market interpretation -> strategy switching -> ATK execution -> circuit breaker -> audit report')}`)
+  console.log(`  ${b('System summary:')} DARWIN coordinates market interpretation, execution, risk controls, and reporting.`)
+  console.log(`  ${dm('market interpretation -> strategy switching -> ATK execution -> circuit breaker -> reporting')}`)
   console.log()
-  console.log(`  ${b('Fastest proof path:')}`)
-  console.log(`  ${cy('1.')} pnpm run proof`)
+  console.log(`  ${b('Suggested local workflow:')}`)
+  console.log(`  ${cy('1.')} pnpm run overview`)
   console.log(`  ${cy('2.')} pnpm run bridge`)
   console.log(`  ${cy('3.')} pnpm run verify`)
   if (DETERMINISTIC) {
@@ -143,16 +142,16 @@ async function currentStateSnapshot(): Promise<{ state: MarketState; confidence:
 
 async function scenarioA(): Promise<void> {
   section('Scenario A — Normal Operation', '📡')
-  console.log(`  ${b('Goal:')} show the main DARWIN loop in one screenful`)
+  console.log(`  ${b('Goal:')} summarize the main operating loop in one sequence`)
   console.log()
 
   const snap = await currentStateSnapshot()
   console.log(`  ${mg('Market state')}: BTC-USDT is currently ${stateLabel(snap.state)}  ${dm(`confidence ${Math.round(snap.confidence * 100)}%`)}`)
-  console.log(`  ${mg('Interpretation')}: DARWIN uses live OKX market data before choosing any strategy.`)
+  console.log(`  ${mg('Interpretation')}: DARWIN evaluates market context before selecting an operating posture.`)
   await sleep(900)
 
   console.log()
-  console.log(`  ${b('Focused strategy pack for this regime:')}`)
+  console.log(`  ${b('Active strategy pack for this regime:')}`)
   for (const item of strategyPack(snap.state)) {
     const role = item.role === 'Primary' ? gn(item.role) : item.role === 'Secondary' ? yw(item.role) : dm(item.role)
     console.log(`  ${cy('•')} ${item.name}  ${role}  ${dm(`(${item.tag})`)}`)
@@ -191,17 +190,17 @@ async function scenarioA(): Promise<void> {
       .slice(0, 4)
       .join('\n')
   console.log()
-  console.log(`  ${b('Auditor output excerpt:')}`)
+  console.log(`  ${b('Report excerpt:')}`)
   console.log(dm('  ' + '─'.repeat(58)))
   console.log(excerpt.split('\n').map(line => `  ${line}`).join('\n'))
   console.log(dm('  ' + '─'.repeat(58)))
   console.log()
-  console.log(gn('  ✓ Scenario A complete — full loop summarized'))
+  console.log(gn('  ✓ Scenario A complete — main operating loop summarized'))
 }
 
 async function scenarioB(): Promise<void> {
   section('Scenario B — State-Aware Strategy Switching', '⚡')
-  console.log(`  ${b('Goal:')} prove DARWIN is not a fixed-strategy bot`)
+  console.log(`  ${b('Goal:')} show that DARWIN adjusts posture with market regime changes`)
   console.log()
 
   const states: Array<{ state: MarketState; note: string }> = [
@@ -224,7 +223,7 @@ async function scenarioB(): Promise<void> {
 
 async function scenarioC(): Promise<void> {
   section('Scenario C — Circuit Breaker and Safe Recovery', '🛡')
-  console.log(`  ${b('Goal:')} show risk-first behavior, not blind execution`)
+  console.log(`  ${b('Goal:')} show risk-first controls instead of blind execution`)
   console.log()
 
   const before = getState()
@@ -237,7 +236,7 @@ async function scenarioC(): Promise<void> {
   console.log(`  ${yw('Meaning:')} new entries are blocked until a user-approved reset.`)
   await sleep(1200)
 
-  withMutedConsole(() => resetTier3('guided_demo'))
+  withMutedConsole(() => resetTier3('walkthrough'))
   const after = getState()
   console.log(`  ${gn('After reset:')} tiers=${JSON.stringify(after.activeTiers)}  halted=${after.systemHalted}`)
   console.log()
@@ -252,8 +251,8 @@ async function runAll(): Promise<void> {
   await sleep(1200)
   await scenarioC()
   console.log()
-  console.log(`  ${gn('✓ Guided demo complete')}`)
-  console.log(`  ${dm('Use `pnpm run proof` for the zero-key product thesis, `pnpm run verify` for the live OKX demo path, and this demo for the narrated walkthrough.')}`)
+  console.log(`  ${gn('✓ Walkthrough complete')}`)
+  console.log(`  ${dm('Use `pnpm run overview` for the local system summary, `pnpm run verify` for the OKX demo integration path, and this walkthrough for a narrated runtime sequence.')}`)
   console.log()
 }
 
@@ -267,7 +266,7 @@ else if (mode === 'a') await scenarioA()
 else if (mode === 'b') await scenarioB()
 else if (mode === 'c') await scenarioC()
 else {
-  console.log('Usage: pnpm run demo:guided [a|b|c] [--deterministic]')
+  console.log('Usage: pnpm run demo:walkthrough [a|b|c] [--deterministic]')
   console.log('  no arg = run full A -> B -> C sequence')
   process.exit(1)
 }

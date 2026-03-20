@@ -1,10 +1,10 @@
 /**
- * Zero-key product proof path
+ * Local system overview
  *
- * Runs a deterministic, repository-local walkthrough that does not require
- * exchange credentials, network data, or a pre-seeded database.
+ * Prints a repository-local, deterministic overview of the operating model
+ * without requiring exchange credentials, network data, or seeded state.
  *
- *   pnpm run proof
+ *   pnpm run overview
  */
 
 const C = {
@@ -58,10 +58,10 @@ const strategyPack = [
 ]
 
 const atkLayer = [
-  { area: 'ATK Market', proof: 'ATR / funding / volume / long-short ratio feed regime detection' },
-  { area: 'ATK Account', proof: 'equity, positions, margin, and deployment snapshots constrain decisions' },
-  { area: 'ATK Execution', proof: 'spot / swap / trailing-stop execution provides real entry and exit paths' },
-  { area: 'ATK Bot + Algo', proof: 'grid, martingale, funding arb, TWAP, and iceberg remain on one governance rail' },
+  { area: 'ATK Market', detail: 'ATR / funding / volume / long-short ratio feed regime detection' },
+  { area: 'ATK Account', detail: 'equity, positions, margin, and deployment snapshots constrain decisions' },
+  { area: 'ATK Execution', detail: 'spot / swap / trailing-stop execution provides live entry and exit paths' },
+  { area: 'ATK Bot + Algo', detail: 'grid, martingale, funding arb, TWAP, and iceberg stay on the same operating rail' },
 ]
 
 const auditExcerpt = [
@@ -74,16 +74,16 @@ const auditExcerpt = [
 console.clear()
 console.log()
 console.log(cy('  ╔' + '═'.repeat(74) + '╗'))
-console.log(cy('  ║ ') + b('DARWIN Product Proof'.padEnd(73)) + cy('║'))
+console.log(cy('  ║ ') + b('DARWIN Local Overview'.padEnd(73)) + cy('║'))
 console.log(cy('  ╠' + '═'.repeat(74) + '╣'))
-console.log(cy('  ║ ') + 'Zero-key deterministic walkthrough · no exchange credentials required'.padEnd(73) + cy('║'))
+console.log(cy('  ║ ') + 'Repository-local deterministic output · no exchange credentials required'.padEnd(73) + cy('║'))
 console.log(cy('  ╚' + '═'.repeat(74) + '╝'))
 
-section('1. One-Line Thesis')
-console.log(`  ${b('DARWIN is not a trading signal bot.')}`)
-console.log(`  ${dm('It is an AI trading governance system that keeps market interpretation, strategy switching, live execution, risk halts, and audit reporting on one accountable rail.')}`)
+section('1. System Summary')
+console.log(`  ${b('DARWIN coordinates market interpretation, strategy selection, live execution, risk controls, and reporting on one operating rail.')}`)
+console.log(`  ${dm('This overview is designed for local inspection of the operating model before connecting a live or demo account.')}`)
 
-section('2. Claw Intent Handoff')
+section('2. Intent Pipeline')
 console.log(`  ${mg('Operator objective')}:`)
 console.log(`    ${operatorObjective}`)
 console.log()
@@ -95,7 +95,7 @@ for (const rule of normalizedObjective.guardrails) {
   console.log(`    ${cy('•')} ${rule}`)
 }
 
-section('3. Deterministic Regime Snapshot')
+section('3. Deterministic Market Snapshot')
 console.log(`  ${yw('Dominant regime')}: ${regimeSnapshot.dominantRegime}  ${dm(`confidence ${regimeSnapshot.confidence}`)}`)
 for (const item of regimeSnapshot.evidence) {
   console.log(`    ${cy('•')} ${item}`)
@@ -107,21 +107,21 @@ for (const item of strategyPack) {
   console.log(`    ${cy('•')} ${item.name.padEnd(14)} ${gn(item.role.padEnd(9))} ${dm(item.note)}`)
 }
 
-section('4. OKX Agent Trade Kit Proof Layer')
+section('4. OKX Agent Trade Kit Integration')
 for (const item of atkLayer) {
   console.log(`  ${b(item.area)}:`)
-  console.log(`    ${item.proof}`)
+  console.log(`    ${item.detail}`)
 }
 
-section('5. Risk and Audit Rail')
+section('5. Risk and Reporting')
 console.log(`  ${b('Breaker posture')}: balanced tier, no active breaker resets required`)
-console.log(`  ${b('Audit excerpt')}:`)
+console.log(`  ${b('Report excerpt')}:`)
 for (const line of auditExcerpt) {
   console.log(`    ${line}`)
 }
 
 section('Next Commands')
-console.log(`  ${cy('1.')} pnpm run proof         ${dm('# zero-key deterministic product proof')}`)
-console.log(`  ${cy('2.')} pnpm run verify        ${dm('# environment-backed OKX demo validation')}`)
-console.log(`  ${cy('3.')} pnpm run bridge        ${dm('# local dashboard on http://localhost:3200')}`)
+console.log(`  ${cy('1.')} pnpm run overview     ${dm('# local operating overview')}`)
+console.log(`  ${cy('2.')} pnpm run verify       ${dm('# OKX demo integration validation')}`)
+console.log(`  ${cy('3.')} pnpm run bridge       ${dm('# local dashboard on http://localhost:3200')}`)
 console.log()

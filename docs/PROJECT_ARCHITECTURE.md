@@ -1,6 +1,6 @@
 # DARWIN Project Architecture
 
-DARWIN is a local-first, risk-first AI trading governance system powered by Claw, OKX Agent Trade Kit, and Paperclip AI.
+DARWIN is a local-first, risk-first AI trading governance system built on OKX Agent Trade Kit and Paperclip AI.
 
 Its value comes from unifying five things that are usually fragmented:
 

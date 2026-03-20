@@ -1,7 +1,7 @@
 {
   "id": "dd2ca47a-b060-4b7e-9b14-60a0acc0a12c",
   "name": "DARWIN",
-  "description": "Local-first, risk-first AI trading governance system powered by Claw, OKX Agent Trade Kit, and Paperclip AI",
+  "description": "Local-first, risk-first AI trading governance system built on OKX Agent Trade Kit and Paperclip AI",
   "status": "active",
   "issuePrefix": "DAR",
   "budgetMonthlyCents": 10000,

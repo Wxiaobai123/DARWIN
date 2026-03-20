@@ -6,11 +6,11 @@ This document defines the approved outward-facing wording for DARWIN in both Chi
 
 ### Chinese
 
-DARWIN 是一个由 Claw 驱动、基于 OKX Agent Trade Kit 和 Paperclip AI 构建的本地优先、风险优先的 AI 交易治理系统。
+DARWIN 是一个本地优先、风险优先的 AI 交易治理系统。
 
 ### English
 
-DARWIN is a local-first, risk-first AI trading governance system powered by Claw, OKX Agent Trade Kit, and Paperclip AI.
+DARWIN is a local-first, risk-first AI trading governance system.
 
 ## Short Description
 
@@ -27,7 +27,7 @@ DARWIN keeps market interpretation, strategy selection, live execution, risk hal
 | Surface | Chinese | English |
 |---|---|---|
 | Repository tagline | 本地优先、风险优先的 AI 交易治理系统 | Local-first, risk-first AI trading governance system |
-| README intro | 由 Claw 驱动，基于 OKX ATK 与 Paperclip AI 构建 | Powered by Claw, OKX ATK, and Paperclip AI |
+| README intro | 本地优先、风险优先的 AI 交易治理系统 | Local-first, risk-first AI trading governance system |
 | Dashboard hero | 本地优先、风险优先的 AI 交易治理系统 | Local-first, risk-first AI trading governance system |
 | Architecture summary | 市场识别、策略治理、执行、风控、审计一体化 | Unified market, strategy, execution, risk, and audit flow |
 

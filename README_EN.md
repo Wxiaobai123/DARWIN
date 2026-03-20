@@ -10,7 +10,7 @@
 <h3 align="center">Dynamic Adaptive Risk-Weighted Intelligence Network</h3>
 
 <p align="center">
-  <strong>DARWIN is a local-first, risk-first AI trading governance system powered by Claw, OKX Agent Trade Kit, and Paperclip AI.</strong><br/>
+  <strong>DARWIN is a local-first, risk-first AI trading governance system.</strong><br/>
   It keeps market interpretation, strategy selection, live execution, risk halts, and reporting on one decision rail.
 </p>
 
@@ -20,51 +20,51 @@
 
 ---
 
-## One-Line Thesis
+## System Summary
 
-> **DARWIN is not a trading signal bot. It is an AI trading governance system that keeps market interpretation, strategy switching, live execution, risk halts, and audit reporting on one accountable rail.**
+> **DARWIN keeps market interpretation, strategy selection, live execution, risk controls, and reporting on one operating rail.**
 
 ---
 
-## 30-Second Proof Path
+## Quick Start
 
-If you only have a minute, look at these four things:
+Recommended entry points:
 
-| Start here | What it proves |
+| Entry | Purpose |
 |---|---|
-| `pnpm run proof` | Zero-key, deterministic product proof showing the Claw -> DARWIN -> ATK rail |
+| `pnpm run overview` | Repository-local system overview with no exchange credentials required |
 | `pnpm run verify` | Validates live OKX demo integration when demo credentials are configured |
 | `http://localhost:3200/dashboard?lang=en#overview` | After starting the bridge, live equity, regime, strategy pipeline, and health are visible |
 | `http://localhost:3200/dashboard?lang=en#decision` → `#risk` → `#reports` | After starting the bridge, the decision logic, approval-gated risk control, and audit loop are visible |
 
-Fastest local proof:
+Recommended local flow:
 
 ```bash
 pnpm install
-pnpm run proof
+pnpm run overview
 pnpm run bridge
 ```
 
-Two validation modes:
-- `pnpm run proof`: zero-key, deterministic, best for first-pass product understanding.
+Two local modes:
+- `pnpm run overview`: repository-local system overview for understanding the operating model.
 - `pnpm run verify`: requires configured OKX demo credentials and validates the live OKX Agent Trade Kit path.
 
 ---
 
-## Why This Is Not a Typical Trading Bot
+## Design Characteristics
 
-| Typical bot | DARWIN |
+| Dimension | DARWIN |
 |---|---|
-| Runs one fixed strategy | Switches strategy packs based on market regime |
-| Stops at execution | Keeps execution, halts, and reporting on one decision rail |
-| Risk is mostly stop-loss based | 4-tier circuit breaker with approval gates |
-| Little daily accountability | Produces audit-ready daily reports and system logs |
+| Market adaptation | Switches strategy packs based on market regime |
+| Operating loop | Keeps execution, halts, and reporting on one decision rail |
+| Risk control | 4-tier circuit breaker with approval gates |
+| Operational record | Produces audit-ready daily reports and system logs |
 
 ---
 
-## OKX Agent Trade Kit Proof Layer
+## OKX Agent Trade Kit Integration
 
-DARWIN does not merely “connect an exchange API.” It turns **OKX Agent Trade Kit** into the operating layer for trading capability:
+DARWIN uses **OKX Agent Trade Kit** as its trading capability layer for market reads, account constraints, live execution, and algorithmic order orchestration:
 
 | ATK capability | Where it appears in DARWIN |
 |---|---|
@@ -79,17 +79,15 @@ Without ATK, DARWIN cannot combine market sensing, account constraints, executio
 
 ## What is DARWIN?
 
-DARWIN is **not** a trading bot.
+DARWIN is a **local-first, risk-first AI trading governance system** that reads the market, classifies its regime, dispatches the right strategy at the right time, executes through OKX, and keeps execution, halts, and reporting on the same decision rail.
 
-It is a **local-first, risk-first AI trading governance system** -- a self-governing, multi-agent system that reads the market, classifies its regime, dispatches the right strategy at the right time, executes through OKX, and keeps execution, halts, and reporting on the same decision rail.
+Core operating characteristics:
 
-Most trading bots do one thing: execute a fixed strategy. DARWIN does something fundamentally different:
-
-- **It decides which strategy should run**, based on real-time market conditions
-- **It lets strategies prove themselves** in shadow mode before risking real capital
-- **It eliminates underperformers** and allocates more capital to winners
-- **It governs itself** through a 5-agent organizational hierarchy with human approval gates
-- **It never sleeps** -- heartbeat-driven agents monitor markets, risk, and performance 24/7
+- **State-aware strategy selection**, based on live market conditions
+- **Shadow-first lifecycle management** before larger capital exposure
+- **Continuous capital governance** with promotion, demotion, and elimination logic
+- **Human approval gates** around the higher breaker tiers
+- **Heartbeat-driven monitoring** across market, risk, and reporting loops
 
 Two foundations make this possible:
 
@@ -101,9 +99,9 @@ Two foundations make this possible:
 **You set the risk profile and coin whitelist. DARWIN handles everything else.**
 
 Project docs:
-- [Claw Intent Handoff](docs/CLAW_INTENT_HANDOFF_EN.md)
+- [Intent Pipeline](docs/INTENT_PIPELINE_EN.md)
 - [Product Positioning](docs/PRODUCT_POSITIONING.md)
-- [Product Walkthrough](docs/PRODUCT_WALKTHROUGH_EN.md)
+- [System Navigation](docs/SYSTEM_NAVIGATION_EN.md)
 - [Project Architecture](docs/PROJECT_ARCHITECTURE.md)
 - [Full System Architecture](docs/ARCHITECTURE.md)
 - [Strategy Specification](docs/STRATEGY_SPEC.md)
@@ -116,7 +114,7 @@ Project docs:
 
 ---
 
-## Product Preview
+## Interface Preview
 
 English overview:
 
@@ -128,11 +126,11 @@ English about page:
 
 ---
 
-## Why DARWIN Matters
+## Design Highlights
 
 - **It upgrades trading from execution to governance**: DARWIN does not just place orders; it selects strategy posture, limits exposure, enforces halts, and leaves an audit trail.
 - **It keeps the full loop on one rail**: market interpretation, capital allocation, real execution, risk enforcement, and reporting stay connected instead of living in separate tools.
-- **It turns OKX Agent Trade Kit into an operating system layer**: Claw interprets intent and orchestrates decisions, while OKX ATK provides real market data, account state, and execution capability.
+- **It brings OKX Agent Trade Kit into one operating loop**: market data, account state, execution capability, and bot orchestration stay inside the same governance model.
 
 ![DARWIN Product Value Map](docs/images/darwin-value-map-en.svg)
 
@@ -449,9 +447,9 @@ pnpm start
 ### 5. Demo Scenarios
 
 ```bash
-pnpm run proof                      # Zero-key deterministic product proof
+pnpm run overview                   # Repository-local system overview
 pnpm run verify                     # Live OKX demo validation (credentials required)
-pnpm run demo:guided:deterministic  # Fixture-backed walkthrough
+pnpm run demo:walkthrough:deterministic  # Fixture-backed runtime walkthrough
 
 pnpm run demo:a    # Scenario A: Normal full-system operation
 pnpm run demo:b    # Scenario B: Market regime transition (oscillation -> trend)
@@ -512,16 +510,16 @@ DARWIN integrates **8 distinct execution tools** through the OKX Agent Trade Kit
 
 ## Validation
 
-For the shortest proof path, run:
+Recommended local view path:
 
 ```bash
-pnpm run proof
+pnpm run overview
 pnpm run bridge
 ```
 
 Current verified status as of 2026-03-20:
 
-- `pnpm run proof` passes
+- `pnpm run overview` passes
 - `pnpm build` passes
 - `pnpm test:strategies` passes with `6 passed / 0 failed / 0 skipped`
 

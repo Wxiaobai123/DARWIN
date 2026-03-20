@@ -502,9 +502,9 @@ Auditor:
 
 ### Layer 7: Platform Layer — Community Strategy Hub
 
-**Submission pipeline:**
+**Strategy onboarding flow:**
 ```
-1. User submits strategy YAML
+1. User provides strategy YAML
 2. Static validator checks:
    ✓ Only whitelist tools referenced
    ✓ All required fields present
