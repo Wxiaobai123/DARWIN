@@ -11,6 +11,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)](https://www.typescriptlang.org/)
 [![Demo Mode](https://img.shields.io/badge/OKX-Demo%20Mode-green)](https://www.okx.com/zh-hans/demo-trading)
 
+项目链接：[`Demo`](https://darwin-dashboard.onrender.com/) · [`GitHub`](https://github.com/Wxiaobai123/DARWIN) · [`X`](https://x.com/HHZ008)
+
 ---
 
 ## 系统摘要

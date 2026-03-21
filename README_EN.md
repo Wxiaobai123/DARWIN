@@ -18,6 +18,10 @@
   <a href="README.md">中文</a> | <strong>English</strong>
 </p>
 
+<p align="center">
+  <a href="https://darwin-dashboard.onrender.com/">Demo</a> · <a href="https://github.com/Wxiaobai123/DARWIN">GitHub</a> · <a href="https://x.com/HHZ008">X</a>
+</p>
+
 ---
 
 ## System Summary
