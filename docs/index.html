@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DARWIN Public Demo</title>
+  <meta name="description" content="DARWIN public demo: a local-first, risk-first AI trading governance system built on OKX Agent Trade Kit and Paperclip AI.">
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0b1730;
+      --card: rgba(12, 23, 46, 0.82);
+      --card-strong: rgba(15, 28, 56, 0.92);
+      --border: rgba(120, 149, 187, 0.18);
+      --text: #e7eefb;
+      --muted: #99acc7;
+      --accent: #1cc8e5;
+      --accent-2: #2dd4bf;
+      --gold: #f6c453;
+      --green: #4ade80;
+      --red: #fb7185;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.32);
+      --radius: 22px;
+      --font-ui: "Space Grotesk", "IBM Plex Sans", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --font-mono: "SF Mono", "IBM Plex Mono", "JetBrains Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background:
+      radial-gradient(circle at top left, rgba(28, 200, 229, 0.10), transparent 28%),
+      radial-gradient(circle at top right, rgba(246, 196, 83, 0.07), transparent 22%),
+      linear-gradient(180deg, #07111f 0%, #091326 100%);
+      color: var(--text);
+      font-family: var(--font-ui);
+    }
+    body { min-height: 100vh; }
+    a { color: inherit; text-decoration: none; }
+    .page { max-width: 1200px; margin: 0 auto; padding: 28px 20px 64px; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(28, 200, 229, 0.10), rgba(45, 212, 191, 0.04) 40%, rgba(246, 196, 83, 0.05)),
+        var(--card-strong);
+      border: 1px solid rgba(28, 200, 229, 0.16);
+      border-radius: 28px;
+      padding: 34px 34px 28px;
+      box-shadow: var(--shadow);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 18px 18px;
+      opacity: 0.22;
+      pointer-events: none;
+    }
+    .hero-top, .hero-bottom { position: relative; z-index: 1; }
+    .hero-top { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; align-items: flex-start; }
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 760px;
+    }
+    .brand-mark {
+      font-size: 48px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--accent);
+    }
+    .brand-sub {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+    }
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 52px);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.75;
+      max-width: 760px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      color: #07111f;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    }
+    .btn-secondary {
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.08);
+    }
+    .hero-side {
+      display: grid;
+      gap: 12px;
+      min-width: 260px;
+    }
+    .mini-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 16px 18px;
+      backdrop-filter: blur(10px);
+    }
+    .mini-title {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    .mini-value {
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+    .mini-sub {
+      margin-top: 8px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .section {
+      margin-top: 22px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+    .section h2 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+    }
+    .section .lead {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+    .grid-4, .grid-3, .grid-2 {
+      display: grid;
+      gap: 14px;
+    }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .metric-card, .info-card, .list-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 18px;
+    }
+    .metric-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .metric-value {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .metric-sub {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .k-green { color: var(--green); }
+    .k-accent { color: var(--accent); }
+    .k-gold { color: var(--gold); }
+    .k-red { color: var(--red); }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .b-green { color: var(--green); background: rgba(74, 222, 128, 0.10); }
+    .b-gold { color: var(--gold); background: rgba(246, 196, 83, 0.10); }
+    .b-accent { color: var(--accent); background: rgba(28, 200, 229, 0.10); }
+    .b-red { color: var(--red); background: rgba(251, 113, 133, 0.10); }
+    .state-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+    .state-card {
+      padding: 16px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+    }
+    .state-name { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .state-meta { font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .state-osc { box-shadow: inset 0 0 0 1px rgba(246, 196, 83, 0.18); }
+    .state-trend { box-shadow: inset 0 0 0 1px rgba(74, 222, 128, 0.18); }
+    .state-extreme { box-shadow: inset 0 0 0 1px rgba(251, 113, 133, 0.18); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      text-align: left;
+      padding: 12px 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 14px;
+    }
+    th {
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    td strong { font-weight: 700; }
+    .mono { font-family: var(--font-mono); }
+    .timeline {
+      display: grid;
+      gap: 12px;
+    }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .timeline-item:last-child { border-bottom: 0; }
+    .timeline-time {
+      font-size: 13px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+    .timeline-body {
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--text);
+    }
+    .timeline-body small {
+      display: block;
+      color: var(--muted);
+      margin-top: 4px;
+      font-size: 13px;
+    }
+    .screens {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .shot {
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+    }
+    .shot img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .shot figcaption {
+      padding: 12px 14px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+    .footer {
+      margin-top: 22px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+      padding-bottom: 18px;
+    }
+    @media (max-width: 1024px) {
+      .grid-4, .grid-3, .screens { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .state-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 720px) {
+      .page { padding: 18px 14px 48px; }
+      .hero { padding: 24px 20px; }
+      .grid-4, .grid-3, .grid-2, .screens, .state-grid { grid-template-columns: 1fr; }
+      .hero-top { flex-direction: column; }
+      .hero-side { width: 100%; }
+      .timeline-item { grid-template-columns: 1fr; gap: 6px; }
+      th, td { font-size: 13px; padding: 10px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <div class="hero-top">
+        <div class="brand">
+          <div class="brand-mark">DARWIN</div>
+          <div class="brand-sub">
+            <span class="pill">Local-first</span>
+            <span class="pill">Risk-first</span>
+            <span class="pill">Read-only public demo</span>
+          </div>
+          <h1>一个基于 OKX Agent Trade Kit 的 AI 交易治理系统</h1>
+          <p>
+            这不是一个只会给买卖建议的信号页面，而是一个公开只读的产品演示。
+            DARWIN 将市场识别、策略治理、真实执行、风险熔断和审计报告组织在同一条责任链上，
+            用稳定快照向评委展示完整系统能力。
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://github.com/Wxiaobai123/DARWIN" target="_blank" rel="noopener">查看 GitHub 仓库</a>
+            <a class="btn btn-secondary" href="https://x.com/HHZ008" target="_blank" rel="noopener">查看作者 X</a>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="mini-card">
+            <div class="mini-title">Stable Snapshot</div>
+            <div class="mini-value">$52,480.35</div>
+            <div class="mini-sub">今日 +$132.47，风险等级 Balanced，熔断状态 All Clear</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-title">Why this public demo</div>
+            <div class="mini-sub">公开页面只保留只读展示，不依赖本地凭证，不暴露交易密钥，也不触发真实下单。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>系统摘要</h2>
+      <p class="lead">
+        DARWIN 不是交易信号机器人，而是一个把市场识别、策略切换、真实执行、风险熔断和审计报告
+        放在同一条责任链上的 AI 交易系统。这个公开 Demo 使用固定快照，专门用于稳定展示产品结构与真实运行形态。
+      </p>
+      <div class="grid-4">
+        <div class="metric-card">
+          <div class="metric-label">组合权益</div>
+          <div class="metric-value k-accent">$52,480.35</div>
+          <div class="metric-sub">Local demo snapshot</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">今日盈亏</div>
+          <div class="metric-value k-green">+$132.47</div>
+          <div class="metric-sub">14 executions today</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">策略运行</div>
+          <div class="metric-value k-gold">8</div>
+          <div class="metric-sub">3 live · 4 shadow · 1 paused</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">持仓与风险</div>
+          <div class="metric-value k-accent">3</div>
+          <div class="metric-sub">3 open positions · 0 active breaker tiers</div>
+        </div>
+      </div>
+      <div class="badge-row">
+        <span class="badge b-green">OKX Agent Trade Kit: market / account / execution / bot / algo</span>
+        <span class="badge b-accent">Paperclip AI: governance / approvals / audit</span>
+        <span class="badge b-gold">Public demo: read-only</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>市场状态与策略治理</h2>
+      <p class="lead">
+        DARWIN 不假设所有市场都适合同一种策略。它先识别市场状态，再决定哪类策略优先运行，并保持足够储备金应对状态切换。
+      </p>
+      <div class="state-grid">
+        <div class="state-card state-osc">
+          <div class="state-name">BTC</div>
+          <div class="state-meta">震荡 Oscillation<br>置信度 82%<br>ATR 0.94 · 费率 0.011%</div>
+        </div>
+        <div class="state-card state-extreme">
+          <div class="state-name">ETH</div>
+          <div class="state-meta">极端 Extreme<br>置信度 74%<br>ATR 1.88 · 成交量扩张 2.11x</div>
+        </div>
+        <div class="state-card state-trend">
+          <div class="state-name">SOL</div>
+          <div class="state-meta">趋势 Trend<br>置信度 78%<br>ATR 1.26 · 成交量扩张 1.63x</div>
+        </div>
+        <div class="state-card state-osc">
+          <div class="state-name">XRP</div>
+          <div class="state-meta">震荡 Oscillation<br>置信度 71%<br>ATR 0.86 · 费率 0.004%</div>
+        </div>
+        <div class="state-card state-osc">
+          <div class="state-name">DOGE</div>
+          <div class="state-meta">震荡 Oscillation<br>置信度 68%<br>ATR 1.04 · 噪声较高</div>
+        </div>
+        <div class="state-card state-trend">
+          <div class="state-name">TRX</div>
+          <div class="state-meta">趋势 Trend<br>置信度 63%<br>ATR 1.18 · 方向明确</div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top: 14px;">
+        <div class="info-card">
+          <div class="metric-label">当前分配 / Allocation</div>
+          <div class="metric-value k-gold">$12,840</div>
+          <div class="metric-sub">24.5% deployed · $39,640 reserve capital</div>
+        </div>
+        <div class="info-card">
+          <div class="metric-label">策略主链路 / Strategy rail</div>
+          <div class="metric-sub">
+            Spot Grid · BTC<br>
+            Contract Grid · ETH<br>
+            Trend Trailing · SOL<br>
+            Funding Arb · BTC
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>实时执行快照</h2>
+      <p class="lead">
+        这一部分展示 DARWIN 如何把策略治理落到真实执行层。公开 Demo 不发起交易请求，但完整保留了
+        市场、账户、执行、持仓和日志之间的关系。
+      </p>
+      <div class="grid-2">
+        <div class="list-card">
+          <div class="metric-label">当前持仓 / Live positions</div>
+          <table>
+            <thead>
+              <tr>
+                <th>Pair</th>
+                <th>Side</th>
+                <th>Lev</th>
+                <th>PnL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mono">BTC-USDT-SWAP</td>
+                <td><strong class="k-green">Long</strong></td>
+                <td class="mono">3x</td>
+                <td class="mono k-green">+$145.20</td>
+              </tr>
+              <tr>
+                <td class="mono">ETH-USDT-SWAP</td>
+                <td><strong class="k-red">Short</strong></td>
+                <td class="mono">3x</td>
+                <td class="mono k-green">+$82.40</td>
+              </tr>
+              <tr>
+                <td class="mono">SOL-USDT-SWAP</td>
+                <td><strong class="k-green">Long</strong></td>
+                <td class="mono">2x</td>
+                <td class="mono k-green">+$40.80</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="list-card">
+          <div class="metric-label">交易执行摘要 / Execution summary</div>
+          <table>
+            <thead>
+              <tr>
+                <th>Strategy</th>
+                <th>Trades</th>
+                <th>PnL</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>现货网格 · BTC</td>
+                <td class="mono">23</td>
+                <td class="mono k-green">+$182.45</td>
+                <td>live</td>
+              </tr>
+              <tr>
+                <td>合约网格 · ETH</td>
+                <td class="mono">14</td>
+                <td class="mono k-green">+$121.20</td>
+                <td>live</td>
+              </tr>
+              <tr>
+                <td>趋势追踪 · SOL</td>
+                <td class="mono">12</td>
+                <td class="mono k-green">+$96.34</td>
+                <td>live</td>
+              </tr>
+              <tr>
+                <td>资金费率套利 · BTC</td>
+                <td class="mono">10</td>
+                <td class="mono k-green">+$43.12</td>
+                <td>shadow</td>
+              </tr>
+              <tr>
+                <td>合约马丁格尔 · DOGE</td>
+                <td class="mono">11</td>
+                <td class="mono k-red">-$56.80</td>
+                <td>paused</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>风险控制与审计</h2>
+      <p class="lead">
+        对交易系统来说，最关键的不是“会不会下单”，而是“什么时候不该下单”。DARWIN 把风险熔断和审计报告
+        放在主链路里，而不是附属模块。
+      </p>
+      <div class="grid-2">
+        <div class="list-card">
+          <div class="metric-label">最近风险事件 / Breaker history</div>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-time">2026-03-18 11:42</div>
+              <div class="timeline-body">T1 Strategy breaker triggered on 合约马丁格尔 · DOGE
+                <small>Drawdown reached 6.7%, strategy paused and later downgraded to watch state.</small>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">2026-03-17 20:25</div>
+              <div class="timeline-body">T2 Asset breaker triggered on ETH exposure
+                <small>Extreme volatility pushed ETH above the configured asset-level threshold.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="list-card">
+          <div class="metric-label">最新每日报告 / Latest daily report</div>
+          <div class="timeline-body">
+            BTC 维持震荡区间，SOL 延续趋势结构，ETH 仍处于极端波动监控状态。<br><br>
+            现货网格 · BTC 与合约网格 · ETH 继续贡献区间收益；趋势追踪 · SOL 保持正向浮盈；
+            资金费率套利 · BTC 维持低风险正收益；合约马丁格尔 · DOGE 处于暂停观察。<br><br>
+            四层熔断器保持清空，系统仍在均衡风险等级内运行。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>界面预览</h2>
+      <p class="lead">
+        下面是 DARWIN 本地产品界面的真实截图。评委可以通过这个公开 Demo 快速理解系统结构，
+        再进入 GitHub 查看实现细节。
+      </p>
+      <div class="screens">
+        <figure class="shot">
+          <img src="images/dashboard-overview-cn.png" alt="DARWIN dashboard overview CN">
+          <figcaption>总览仪表盘：组合状态、策略运行、风控状态与系统健康。</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="images/dashboard-overview-en.png" alt="DARWIN dashboard overview EN">
+          <figcaption>英文视图：方便快速理解主模块与系统链路。</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="images/dashboard-about-en.png" alt="DARWIN dashboard about EN">
+          <figcaption>产品与架构页：展示 DARWIN 的角色定义、主链路和核心价值。</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>系统架构与产品价值</h2>
+      <div class="grid-2">
+        <figure class="shot">
+          <img src="images/darwin-system-flow-cn.svg" alt="DARWIN system flow CN">
+          <figcaption>系统主链路：从意图、治理、执行，到风控与审计。</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="images/darwin-value-map-cn.svg" alt="DARWIN value map CN">
+          <figcaption>产品价值地图：DARWIN 的重点不是喊单，而是可运行、可约束、可复盘。</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <div class="footer">
+      Public Demo · Read-only snapshot · DARWIN<br>
+      GitHub: <a href="https://github.com/Wxiaobai123/DARWIN" target="_blank" rel="noopener">Wxiaobai123/DARWIN</a> ·
+      X: <a href="https://x.com/HHZ008" target="_blank" rel="noopener">@HHZ008</a>
+    </div>
+  </div>
+</body>
+</html>
