@@ -1,0 +1,1412 @@
+{
+  "status": {
+    "timestamp": "2026-03-20T16:20:00.000Z",
+    "mode": "demo",
+    "riskTier": "balanced",
+    "equity": "52480.35",
+    "heartbeats": 312,
+    "strategies": {
+      "total": 8,
+      "shadow": 4,
+      "live": 3
+    },
+    "circuitBreaker": {
+      "halted": false,
+      "activeTiers": []
+    },
+    "paperclipUrl": "http://127.0.0.1:3100"
+  },
+  "market": [
+    {
+      "asset": "BTC-USDT",
+      "state": "oscillation",
+      "confidence": 0.82,
+      "indicators": {
+        "atrRatio": 0.94,
+        "fundingRate": 0.00011,
+        "volumeRatio": 1.07,
+        "longShortRatio": 1.2
+      },
+      "recorded_at": "2026-03-20 16:15:00"
+    },
+    {
+      "asset": "ETH-USDT",
+      "state": "extreme",
+      "confidence": 0.74,
+      "indicators": {
+        "atrRatio": 1.88,
+        "fundingRate": 0.0027,
+        "volumeRatio": 2.11,
+        "longShortRatio": 1.43
+      },
+      "recorded_at": "2026-03-20 16:15:00"
+    },
+    {
+      "asset": "SOL-USDT",
+      "state": "trend",
+      "confidence": 0.78,
+      "indicators": {
+        "atrRatio": 1.26,
+        "fundingRate": 0.0008,
+        "volumeRatio": 1.63,
+        "longShortRatio": 1.31
+      },
+      "recorded_at": "2026-03-20 16:15:00"
+    },
+    {
+      "asset": "XRP-USDT",
+      "state": "oscillation",
+      "confidence": 0.71,
+      "indicators": {
+        "atrRatio": 0.86,
+        "fundingRate": 0.00004,
+        "volumeRatio": 0.98,
+        "longShortRatio": 1.06
+      },
+      "recorded_at": "2026-03-20 16:15:00"
+    },
+    {
+      "asset": "DOGE-USDT",
+      "state": "oscillation",
+      "confidence": 0.68,
+      "indicators": {
+        "atrRatio": 1.04,
+        "fundingRate": 0.00052,
+        "volumeRatio": 1.22,
+        "longShortRatio": 0.94
+      },
+      "recorded_at": "2026-03-20 16:15:00"
+    },
+    {
+      "asset": "TRX-USDT",
+      "state": "trend",
+      "confidence": 0.63,
+      "indicators": {
+        "atrRatio": 1.18,
+        "fundingRate": 0.00018,
+        "volumeRatio": 1.42,
+        "longShortRatio": 1.16
+      },
+      "recorded_at": "2026-03-20 16:15:00"
+    }
+  ],
+  "strategies": [
+    {
+      "id": "demo_spot_grid_btc",
+      "name": "现货网格 · BTC",
+      "author": "darwin_official",
+      "status": "live",
+      "tool": "okx_grid_bot",
+      "assets": [
+        "BTC-USDT"
+      ],
+      "marketStates": [
+        "oscillation"
+      ],
+      "trades": 23,
+      "winRate": 57,
+      "totalReturn": 0.07300000000000001,
+      "maxDrawdown": 3,
+      "botType": "GRID",
+      "active": true,
+      "createdAt": "2026-03-12 09:30:00",
+      "params": {
+        "gridCount": 10,
+        "orderSizeUSDT": 250,
+        "lowerPrice": 80300,
+        "upperPrice": 86800
+      },
+      "risk": {
+        "maxLossPct": 5,
+        "maxExposurePct": 12,
+        "takeProfitPct": 7
+      },
+      "promotion": {
+        "minShadowDays": 3,
+        "minTrades": 8,
+        "minWinRate": 55
+      },
+      "demotion": {
+        "maxDrawdownPct": 10,
+        "maxConsecutiveLosses": 3
+      },
+      "totalTrades": 23,
+      "performances": [
+        {
+          "market_state": "oscillation",
+          "trades": 18,
+          "winning_trades": 11,
+          "total_return": 0.084,
+          "max_drawdown": 0.032
+        },
+        {
+          "market_state": "trend",
+          "trades": 5,
+          "winning_trades": 2,
+          "total_return": -0.011,
+          "max_drawdown": 0.018
+        }
+      ],
+      "reportPnl": 182.45,
+      "reportPnlPct": 1.42,
+      "score": 0.91
+    },
+    {
+      "id": "demo_contract_grid_eth",
+      "name": "合约网格 · ETH",
+      "author": "darwin_official",
+      "status": "live",
+      "tool": "okx_contract_grid",
+      "assets": [
+        "ETH-USDT"
+      ],
+      "marketStates": [
+        "oscillation"
+      ],
+      "trades": 14,
+      "winRate": 57,
+      "totalReturn": 0.052,
+      "maxDrawdown": 4,
+      "botType": "C-GRID",
+      "active": true,
+      "createdAt": "2026-03-12 09:32:00",
+      "params": {
+        "leverage": 3,
+        "gridCount": 15,
+        "orderSizeUSDT": 180,
+        "rangeWidthPct": 4.5
+      },
+      "risk": {
+        "maxLossPct": 6,
+        "maxExposurePct": 10,
+        "stopLossPct": 8
+      },
+      "promotion": {
+        "minShadowDays": 4,
+        "minTrades": 10,
+        "minWinRate": 52
+      },
+      "demotion": {
+        "maxDrawdownPct": 12,
+        "maxConsecutiveLosses": 3
+      },
+      "totalTrades": 14,
+      "performances": [
+        {
+          "market_state": "oscillation",
+          "trades": 12,
+          "winning_trades": 7,
+          "total_return": 0.061,
+          "max_drawdown": 0.041
+        },
+        {
+          "market_state": "extreme",
+          "trades": 2,
+          "winning_trades": 1,
+          "total_return": -0.009,
+          "max_drawdown": 0.013
+        }
+      ],
+      "reportPnl": 121.2,
+      "reportPnlPct": 0.94,
+      "score": 0.84
+    },
+    {
+      "id": "demo_trend_trailing_sol",
+      "name": "趋势追踪 · SOL",
+      "author": "darwin_official",
+      "status": "live",
+      "tool": "okx_swap_trailing_stop",
+      "assets": [
+        "SOL-USDT"
+      ],
+      "marketStates": [
+        "trend"
+      ],
+      "trades": 12,
+      "winRate": 58,
+      "totalReturn": 0.047,
+      "maxDrawdown": 3,
+      "botType": "SWAP-TS",
+      "active": true,
+      "createdAt": "2026-03-13 11:10:00",
+      "params": {
+        "entrySignal": "macd_cross",
+        "trailingStopPct": 3,
+        "leverage": 2,
+        "takeProfitPct": 12
+      },
+      "risk": {
+        "maxLossPct": 4,
+        "maxExposurePct": 8,
+        "holdHours": 24
+      },
+      "promotion": {
+        "minShadowDays": 5,
+        "minTrades": 6,
+        "minWinRate": 58
+      },
+      "demotion": {
+        "maxDrawdownPct": 9,
+        "maxConsecutiveLosses": 2
+      },
+      "totalTrades": 12,
+      "performances": [
+        {
+          "market_state": "trend",
+          "trades": 9,
+          "winning_trades": 6,
+          "total_return": 0.053,
+          "max_drawdown": 0.027
+        },
+        {
+          "market_state": "oscillation",
+          "trades": 3,
+          "winning_trades": 1,
+          "total_return": -0.006,
+          "max_drawdown": 0.011
+        }
+      ],
+      "reportPnl": 96.34,
+      "reportPnlPct": 0.73,
+      "score": 0.82
+    },
+    {
+      "id": "demo_funding_arb_btc",
+      "name": "资金费率套利 · BTC",
+      "author": "darwin_official",
+      "status": "shadow",
+      "tool": "okx_funding_arb",
+      "assets": [
+        "BTC-USDT"
+      ],
+      "marketStates": [
+        "oscillation",
+        "trend"
+      ],
+      "trades": 10,
+      "winRate": 60,
+      "totalReturn": 0.031,
+      "maxDrawdown": 1,
+      "botType": "FUND-ARB",
+      "active": true,
+      "createdAt": "2026-03-13 16:20:00",
+      "params": {
+        "hedgeMode": true,
+        "entryAprPct": 18,
+        "exitAprPct": 6,
+        "sizeUSDT": 1600
+      },
+      "risk": {
+        "maxLossPct": 2.5,
+        "maxExposurePct": 6,
+        "rebalanceHours": 8
+      },
+      "promotion": {
+        "minShadowDays": 6,
+        "minTrades": 5,
+        "minWinRate": 50
+      },
+      "demotion": {
+        "maxDrawdownPct": 5,
+        "maxConsecutiveLosses": 2
+      },
+      "totalTrades": 10,
+      "performances": [
+        {
+          "market_state": "oscillation",
+          "trades": 6,
+          "winning_trades": 4,
+          "total_return": 0.022,
+          "max_drawdown": 0.008
+        },
+        {
+          "market_state": "trend",
+          "trades": 4,
+          "winning_trades": 2,
+          "total_return": 0.009,
+          "max_drawdown": 0.012
+        }
+      ],
+      "reportPnl": 43.12,
+      "reportPnlPct": 0.28,
+      "score": 0.76
+    },
+    {
+      "id": "demo_defense_eth",
+      "name": "极端行情防守哨兵 · ETH",
+      "author": "darwin_official",
+      "status": "shadow",
+      "tool": "okx_spot_order",
+      "assets": [
+        "ETH-USDT"
+      ],
+      "marketStates": [
+        "extreme"
+      ],
+      "trades": 4,
+      "winRate": 100,
+      "totalReturn": 0.013,
+      "maxDrawdown": 0,
+      "botType": null,
+      "active": false,
+      "createdAt": "2026-03-14 09:10:00",
+      "params": {
+        "defensePct": 5,
+        "trimMode": "staged",
+        "coolOffMinutes": 60
+      },
+      "risk": {
+        "maxLossPct": 1.5,
+        "maxExposurePct": 5,
+        "reentryBars": 3
+      },
+      "promotion": {
+        "minShadowDays": 4,
+        "minTrades": 4,
+        "minWinRate": 60
+      },
+      "demotion": {
+        "maxDrawdownPct": 4,
+        "maxConsecutiveLosses": 1
+      },
+      "totalTrades": 4,
+      "performances": [
+        {
+          "market_state": "extreme",
+          "trades": 4,
+          "winning_trades": 4,
+          "total_return": 0.013,
+          "max_drawdown": 0.004
+        }
+      ],
+      "reportPnl": 18.9,
+      "reportPnlPct": 0.11,
+      "score": 0.72
+    },
+    {
+      "id": "demo_martingale_doge",
+      "name": "合约马丁格尔 · DOGE",
+      "author": "darwin_official",
+      "status": "paused",
+      "tool": "okx_dca_bot",
+      "assets": [
+        "DOGE-USDT"
+      ],
+      "marketStates": [
+        "oscillation"
+      ],
+      "trades": 11,
+      "winRate": 45,
+      "totalReturn": -0.014,
+      "maxDrawdown": 7,
+      "botType": null,
+      "active": false,
+      "createdAt": "2026-03-14 13:20:00",
+      "params": {
+        "baseOrderUSDT": 120,
+        "safetyOrders": 5,
+        "stepScale": 1.2,
+        "volumeScale": 1.3
+      },
+      "risk": {
+        "maxLossPct": 7,
+        "maxExposurePct": 9,
+        "autoPauseLossPct": 4
+      },
+      "promotion": {
+        "minShadowDays": 5,
+        "minTrades": 10,
+        "minWinRate": 54
+      },
+      "demotion": {
+        "maxDrawdownPct": 12,
+        "maxConsecutiveLosses": 3
+      },
+      "totalTrades": 11,
+      "performances": [
+        {
+          "market_state": "oscillation",
+          "trades": 11,
+          "winning_trades": 5,
+          "total_return": -0.014,
+          "max_drawdown": 0.067
+        }
+      ],
+      "reportPnl": -56.8,
+      "reportPnlPct": -0.62,
+      "score": 0.44
+    },
+    {
+      "id": "demo_spot_grid_xrp",
+      "name": "现货网格 · XRP",
+      "author": "darwin_official",
+      "status": "shadow",
+      "tool": "okx_grid_bot",
+      "assets": [
+        "XRP-USDT"
+      ],
+      "marketStates": [
+        "oscillation"
+      ],
+      "trades": 7,
+      "winRate": 57,
+      "totalReturn": 0.018,
+      "maxDrawdown": 2,
+      "botType": null,
+      "active": false,
+      "createdAt": "2026-03-14 15:45:00",
+      "params": {
+        "gridCount": 12,
+        "orderSizeUSDT": 140,
+        "lowerPrice": 0.51,
+        "upperPrice": 0.64
+      },
+      "risk": {
+        "maxLossPct": 5,
+        "maxExposurePct": 7,
+        "takeProfitPct": 6
+      },
+      "promotion": {
+        "minShadowDays": 3,
+        "minTrades": 6,
+        "minWinRate": 55
+      },
+      "demotion": {
+        "maxDrawdownPct": 10,
+        "maxConsecutiveLosses": 3
+      },
+      "totalTrades": 7,
+      "performances": [
+        {
+          "market_state": "oscillation",
+          "trades": 7,
+          "winning_trades": 4,
+          "total_return": 0.018,
+          "max_drawdown": 0.021
+        }
+      ],
+      "reportPnl": 22.45,
+      "reportPnlPct": 0.19,
+      "score": 0.63
+    },
+    {
+      "id": "demo_trend_trailing_trx",
+      "name": "趋势追踪 · TRX",
+      "author": "darwin_official",
+      "status": "shadow",
+      "tool": "okx_swap_trailing_stop",
+      "assets": [
+        "TRX-USDT"
+      ],
+      "marketStates": [
+        "trend"
+      ],
+      "trades": 5,
+      "winRate": 60,
+      "totalReturn": 0.017,
+      "maxDrawdown": 2,
+      "botType": null,
+      "active": false,
+      "createdAt": "2026-03-15 09:05:00",
+      "params": {
+        "entrySignal": "breakout",
+        "trailingStopPct": 2.5,
+        "leverage": 2
+      },
+      "risk": {
+        "maxLossPct": 3.5,
+        "maxExposurePct": 6,
+        "holdHours": 18
+      },
+      "promotion": {
+        "minShadowDays": 4,
+        "minTrades": 5,
+        "minWinRate": 56
+      },
+      "demotion": {
+        "maxDrawdownPct": 8,
+        "maxConsecutiveLosses": 2
+      },
+      "totalTrades": 5,
+      "performances": [
+        {
+          "market_state": "trend",
+          "trades": 5,
+          "winning_trades": 3,
+          "total_return": 0.017,
+          "max_drawdown": 0.019
+        }
+      ],
+      "reportPnl": 14.63,
+      "reportPnlPct": 0.13,
+      "score": 0.6
+    }
+  ],
+  "cb": {
+    "state": {
+      "currentTier": 0,
+      "activeTiers": [],
+      "affectedAssets": [],
+      "affectedStrategies": [],
+      "systemHalted": false
+    },
+    "events": [
+      {
+        "tier": 1,
+        "trigger_reason": "Strategy \"合约马丁格尔 · DOGE\" drawdown reached 6.7%",
+        "affected": "{\"strategies\":[\"demo_martingale_doge\"]}",
+        "triggered_at": "2026-03-18 11:42:00",
+        "resolved_at": "2026-03-18 12:10:00",
+        "resolved_by": "risk_agent"
+      },
+      {
+        "tier": 2,
+        "trigger_reason": "ETH exposure volatility exceeded asset threshold",
+        "affected": "{\"assets\":[\"ETH-USDT\"]}",
+        "triggered_at": "2026-03-17 20:25:00",
+        "resolved_at": "2026-03-17 21:05:00",
+        "resolved_by": "risk_agent"
+      }
+    ]
+  },
+  "alloc": {
+    "totalEquity": 52480.35,
+    "deployedUSDT": 12840,
+    "deployedPct": 0.2447,
+    "reserveUSDT": 39640.35,
+    "marketState": "oscillation",
+    "riskTier": "balanced",
+    "volatilityMap": {
+      "BTC-USDT": 0.81,
+      "ETH-USDT": 1.34,
+      "SOL-USDT": 1.02,
+      "XRP-USDT": 0.74
+    },
+    "allocations": [
+      {
+        "name": "现货网格 · BTC",
+        "strategyId": "demo_spot_grid_btc",
+        "allocUSDT": 4200,
+        "marketState": "oscillation"
+      },
+      {
+        "name": "合约网格 · ETH",
+        "strategyId": "demo_contract_grid_eth",
+        "allocUSDT": 3600,
+        "marketState": "oscillation"
+      },
+      {
+        "name": "趋势追踪 · SOL",
+        "strategyId": "demo_trend_trailing_sol",
+        "allocUSDT": 2550,
+        "marketState": "trend"
+      },
+      {
+        "name": "资金费率套利 · BTC",
+        "strategyId": "demo_funding_arb_btc",
+        "allocUSDT": 1600,
+        "marketState": "trend"
+      },
+      {
+        "name": "极端行情防守哨兵 · ETH",
+        "strategyId": "demo_defense_eth",
+        "allocUSDT": 890,
+        "marketState": "extreme"
+      }
+    ]
+  },
+  "bots": {
+    "total": 4,
+    "bots": [
+      {
+        "strategyId": "demo_spot_grid_btc",
+        "botType": "GRID",
+        "instId": "BTC-USDT"
+      },
+      {
+        "strategyId": "demo_contract_grid_eth",
+        "botType": "C-GRID",
+        "instId": "ETH-USDT"
+      },
+      {
+        "strategyId": "demo_trend_trailing_sol",
+        "botType": "SWAP-TS",
+        "instId": "SOL-USDT"
+      },
+      {
+        "strategyId": "demo_funding_arb_btc",
+        "botType": "FUND-ARB",
+        "instId": "BTC-USDT"
+      }
+    ]
+  },
+  "events": [
+    {
+      "type": "market_state",
+      "detail": "BTC-USDT → oscillation",
+      "message": "confidence 82.0%",
+      "timestamp": "2026-03-20 16:15:00"
+    },
+    {
+      "type": "market_state",
+      "detail": "SOL-USDT → trend",
+      "message": "confidence 78.0%",
+      "timestamp": "2026-03-20 16:15:00"
+    },
+    {
+      "type": "allocation",
+      "detail": "Balanced allocation refreshed",
+      "message": "24.5% deployed, reserve capital preserved",
+      "timestamp": "2026-03-20 16:05:00"
+    },
+    {
+      "type": "strategy",
+      "detail": "趋势追踪 · SOL promoted to live monitoring",
+      "message": "Trend conditions remain constructive",
+      "timestamp": "2026-03-20 15:50:00"
+    },
+    {
+      "type": "risk_review",
+      "detail": "ETH defense watch remains shadow-only",
+      "message": "Extreme volatility still above re-entry threshold",
+      "timestamp": "2026-03-20 15:30:00"
+    },
+    {
+      "type": "report",
+      "detail": "Daily audit report published",
+      "message": "Summary and timeline updated",
+      "timestamp": "2026-03-20 15:00:00"
+    }
+  ],
+  "account": {
+    "equity": 52480.35,
+    "dailyPnl": 132.47,
+    "peakEquity": 52731.18,
+    "balances": [
+      {
+        "currency": "USDT",
+        "equity": 39640.35,
+        "available": 38890.35,
+        "frozen": 750
+      },
+      {
+        "currency": "BTC",
+        "equity": 0.182,
+        "available": 0.142,
+        "frozen": 0.04
+      },
+      {
+        "currency": "ETH",
+        "equity": 2.94,
+        "available": 2.44,
+        "frozen": 0.5
+      },
+      {
+        "currency": "SOL",
+        "equity": 38.2,
+        "available": 21.2,
+        "frozen": 17
+      },
+      {
+        "currency": "XRP",
+        "equity": 5200,
+        "available": 5200,
+        "frozen": 0
+      }
+    ],
+    "positions": []
+  },
+  "leaderboard": [
+    {
+      "rank": 1,
+      "id": "demo_spot_grid_btc",
+      "name": "现货网格 · BTC",
+      "status": "live",
+      "score": 0.91,
+      "trades": 23,
+      "winRate": 0.57,
+      "marketState": "oscillation"
+    },
+    {
+      "rank": 2,
+      "id": "demo_contract_grid_eth",
+      "name": "合约网格 · ETH",
+      "status": "live",
+      "score": 0.84,
+      "trades": 14,
+      "winRate": 0.57,
+      "marketState": "oscillation"
+    },
+    {
+      "rank": 3,
+      "id": "demo_trend_trailing_sol",
+      "name": "趋势追踪 · SOL",
+      "status": "live",
+      "score": 0.82,
+      "trades": 12,
+      "winRate": 0.58,
+      "marketState": "trend"
+    },
+    {
+      "rank": 4,
+      "id": "demo_funding_arb_btc",
+      "name": "资金费率套利 · BTC",
+      "status": "shadow",
+      "score": 0.76,
+      "trades": 10,
+      "winRate": 0.6,
+      "marketState": "oscillation"
+    },
+    {
+      "rank": 5,
+      "id": "demo_defense_eth",
+      "name": "极端行情防守哨兵 · ETH",
+      "status": "shadow",
+      "score": 0.72,
+      "trades": 4,
+      "winRate": 1,
+      "marketState": "extreme"
+    },
+    {
+      "rank": 6,
+      "id": "demo_spot_grid_xrp",
+      "name": "现货网格 · XRP",
+      "status": "shadow",
+      "score": 0.63,
+      "trades": 7,
+      "winRate": 0.57,
+      "marketState": "oscillation"
+    },
+    {
+      "rank": 7,
+      "id": "demo_trend_trailing_trx",
+      "name": "趋势追踪 · TRX",
+      "status": "shadow",
+      "score": 0.6,
+      "trades": 5,
+      "winRate": 0.6,
+      "marketState": "trend"
+    },
+    {
+      "rank": 8,
+      "id": "demo_martingale_doge",
+      "name": "合约马丁格尔 · DOGE",
+      "status": "paused",
+      "score": 0.44,
+      "trades": 11,
+      "winRate": 0.45,
+      "marketState": "oscillation"
+    }
+  ],
+  "trades": {
+    "dailyPnl": [
+      {
+        "date": "2026-03-20",
+        "pnl": 132.47,
+        "trades": 14
+      },
+      {
+        "date": "2026-03-19",
+        "pnl": 186.14,
+        "trades": 17
+      },
+      {
+        "date": "2026-03-18",
+        "pnl": -58.36,
+        "trades": 11
+      },
+      {
+        "date": "2026-03-17",
+        "pnl": 74.82,
+        "trades": 13
+      },
+      {
+        "date": "2026-03-16",
+        "pnl": 96.55,
+        "trades": 15
+      }
+    ],
+    "totalPnl": 431.62,
+    "totalTrades": 70,
+    "stratBreakdown": [
+      {
+        "strategy_id": "demo_spot_grid_btc",
+        "name": "现货网格 · BTC",
+        "status": "live",
+        "trades": 23,
+        "wins": 13,
+        "pnl": 182.45,
+        "maxDD": 0.032
+      },
+      {
+        "strategy_id": "demo_contract_grid_eth",
+        "name": "合约网格 · ETH",
+        "status": "live",
+        "trades": 14,
+        "wins": 8,
+        "pnl": 121.2,
+        "maxDD": 0.041
+      },
+      {
+        "strategy_id": "demo_trend_trailing_sol",
+        "name": "趋势追踪 · SOL",
+        "status": "live",
+        "trades": 12,
+        "wins": 7,
+        "pnl": 96.34,
+        "maxDD": 0.027
+      },
+      {
+        "strategy_id": "demo_funding_arb_btc",
+        "name": "资金费率套利 · BTC",
+        "status": "shadow",
+        "trades": 10,
+        "wins": 6,
+        "pnl": 43.12,
+        "maxDD": 0.012
+      },
+      {
+        "strategy_id": "demo_martingale_doge",
+        "name": "合约马丁格尔 · DOGE",
+        "status": "paused",
+        "trades": 11,
+        "wins": 5,
+        "pnl": -56.8,
+        "maxDD": 0.067
+      }
+    ],
+    "tradeLog": [
+      {
+        "strategy_id": "demo_trend_trailing_sol",
+        "action": "take_profit",
+        "detail": "P&L 6.1% >= target 5.5%",
+        "created_at": "2026-03-20 15:48:00"
+      },
+      {
+        "strategy_id": "demo_spot_grid_btc",
+        "action": "ok",
+        "detail": "Grid rebalance cycle completed",
+        "created_at": "2026-03-20 15:10:00"
+      },
+      {
+        "strategy_id": "demo_funding_arb_btc",
+        "action": "ok",
+        "detail": "Funding spread remained above exit threshold",
+        "created_at": "2026-03-20 14:45:00"
+      },
+      {
+        "strategy_id": "demo_contract_grid_eth",
+        "action": "max_hold",
+        "detail": "Position recycled after session timeout",
+        "created_at": "2026-03-19 22:05:00"
+      },
+      {
+        "strategy_id": "demo_martingale_doge",
+        "action": "loss_pause",
+        "detail": "Paused after three adverse fills in one session",
+        "created_at": "2026-03-18 11:42:00"
+      }
+    ]
+  },
+  "reportLatest": {
+    "date": "2026-03-20",
+    "content": "【DARWIN 每日报告 2026-03-20】\n\n今日市场：BTC 维持震荡区间，SOL 延续趋势结构，ETH 仍处于极端波动监控状态。\n\n策略表现：现货网格 · BTC 与合约网格 · ETH 继续贡献区间收益；趋势追踪 · SOL 保持正向浮盈；资金费率套利 · BTC 维持低风险正收益；合约马丁格尔 · DOGE 处于暂停观察。\n\n风控状态：四层熔断器保持清空，系统仍在均衡风险等级内运行。\n\n明日展望：若 BTC 继续横盘，网格策略仍为主力；若 SOL 趋势延续，趋势追踪仓位将继续跟随；ETH 仅保留防守型观察。 ",
+    "data": {
+      "date": "2026-03-20",
+      "totalPnl": 442.29,
+      "marketStates": {
+        "BTC-USDT": "oscillation",
+        "ETH-USDT": "extreme",
+        "SOL-USDT": "trend",
+        "XRP-USDT": "oscillation",
+        "DOGE-USDT": "oscillation",
+        "TRX-USDT": "trend"
+      },
+      "circuitBreakers": [],
+      "promotions": [
+        "现货网格 · BTC",
+        "趋势追踪 · SOL"
+      ],
+      "demotions": [],
+      "strategies": [
+        {
+          "name": "现货网格 · BTC",
+          "status": "live",
+          "pnl": 182.45,
+          "pnlPct": 1.42,
+          "trades": 23,
+          "state": "oscillation"
+        },
+        {
+          "name": "合约网格 · ETH",
+          "status": "live",
+          "pnl": 121.2,
+          "pnlPct": 0.94,
+          "trades": 14,
+          "state": "oscillation"
+        },
+        {
+          "name": "趋势追踪 · SOL",
+          "status": "live",
+          "pnl": 96.34,
+          "pnlPct": 0.73,
+          "trades": 12,
+          "state": "trend"
+        },
+        {
+          "name": "资金费率套利 · BTC",
+          "status": "shadow",
+          "pnl": 43.12,
+          "pnlPct": 0.28,
+          "trades": 10,
+          "state": "oscillation/trend"
+        },
+        {
+          "name": "极端行情防守哨兵 · ETH",
+          "status": "shadow",
+          "pnl": 18.9,
+          "pnlPct": 0.11,
+          "trades": 4,
+          "state": "extreme"
+        },
+        {
+          "name": "合约马丁格尔 · DOGE",
+          "status": "paused",
+          "pnl": -56.8,
+          "pnlPct": -0.62,
+          "trades": 11,
+          "state": "oscillation"
+        },
+        {
+          "name": "现货网格 · XRP",
+          "status": "shadow",
+          "pnl": 22.45,
+          "pnlPct": 0.19,
+          "trades": 7,
+          "state": "oscillation"
+        },
+        {
+          "name": "趋势追踪 · TRX",
+          "status": "shadow",
+          "pnl": 14.63,
+          "pnlPct": 0.13,
+          "trades": 5,
+          "state": "trend"
+        }
+      ]
+    }
+  },
+  "reports": [
+    {
+      "date": "2026-03-20",
+      "content": "【DARWIN 每日报告 2026-03-20】\n\n今日市场：BTC 维持震荡区间，SOL 延续趋势结构，ETH 仍处于极端波动监控状态。\n\n策略表现：现货网格 · BTC 与合约网格 · ETH 继续贡献区间收益；趋势追踪 · SOL 保持正向浮盈；资金费率套利 · BTC 维持低风险正收益；合约马丁格尔 · DOGE 处于暂停观察。\n\n风控状态：四层熔断器保持清空，系统仍在均衡风险等级内运行。\n\n明日展望：若 BTC 继续横盘，网格策略仍为主力；若 SOL 趋势延续，趋势追踪仓位将继续跟随；ETH 仅保留防守型观察。 ",
+      "data": {
+        "date": "2026-03-20",
+        "totalPnl": 442.29,
+        "marketStates": {
+          "BTC-USDT": "oscillation",
+          "ETH-USDT": "extreme",
+          "SOL-USDT": "trend",
+          "XRP-USDT": "oscillation",
+          "DOGE-USDT": "oscillation",
+          "TRX-USDT": "trend"
+        },
+        "circuitBreakers": [],
+        "promotions": [
+          "现货网格 · BTC",
+          "趋势追踪 · SOL"
+        ],
+        "demotions": [],
+        "strategies": [
+          {
+            "name": "现货网格 · BTC",
+            "status": "live",
+            "pnl": 182.45,
+            "pnlPct": 1.42,
+            "trades": 23,
+            "state": "oscillation"
+          },
+          {
+            "name": "合约网格 · ETH",
+            "status": "live",
+            "pnl": 121.2,
+            "pnlPct": 0.94,
+            "trades": 14,
+            "state": "oscillation"
+          },
+          {
+            "name": "趋势追踪 · SOL",
+            "status": "live",
+            "pnl": 96.34,
+            "pnlPct": 0.73,
+            "trades": 12,
+            "state": "trend"
+          },
+          {
+            "name": "资金费率套利 · BTC",
+            "status": "shadow",
+            "pnl": 43.12,
+            "pnlPct": 0.28,
+            "trades": 10,
+            "state": "oscillation/trend"
+          },
+          {
+            "name": "极端行情防守哨兵 · ETH",
+            "status": "shadow",
+            "pnl": 18.9,
+            "pnlPct": 0.11,
+            "trades": 4,
+            "state": "extreme"
+          },
+          {
+            "name": "合约马丁格尔 · DOGE",
+            "status": "paused",
+            "pnl": -56.8,
+            "pnlPct": -0.62,
+            "trades": 11,
+            "state": "oscillation"
+          },
+          {
+            "name": "现货网格 · XRP",
+            "status": "shadow",
+            "pnl": 22.45,
+            "pnlPct": 0.19,
+            "trades": 7,
+            "state": "oscillation"
+          },
+          {
+            "name": "趋势追踪 · TRX",
+            "status": "shadow",
+            "pnl": 14.63,
+            "pnlPct": 0.13,
+            "trades": 5,
+            "state": "trend"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-03-19",
+      "content": "【DARWIN 每日报告 2026-03-19】\n\n今日市场：主要资产以震荡和温和趋势为主，系统保持网格优先、趋势补充的配置。\n\n策略表现：网格类策略稳步提供现金流，趋势追踪在 SOL 上继续跟随，整体收益小幅增长。\n\n风控状态：无熔断事件，组合回撤处于目标区间内。\n\n明日展望：继续维持均衡部署，保留充足储备金应对状态切换。",
+      "data": {
+        "date": "2026-03-19",
+        "totalPnl": 186.14,
+        "marketStates": {
+          "BTC-USDT": "oscillation",
+          "ETH-USDT": "oscillation",
+          "SOL-USDT": "trend",
+          "XRP-USDT": "oscillation"
+        },
+        "circuitBreakers": [],
+        "promotions": [],
+        "demotions": [],
+        "strategies": [
+          {
+            "name": "现货网格 · BTC",
+            "status": "live",
+            "pnl": 131.36399999999998,
+            "pnlPct": 1.42,
+            "trades": 21,
+            "state": "oscillation"
+          },
+          {
+            "name": "合约网格 · ETH",
+            "status": "live",
+            "pnl": 87.264,
+            "pnlPct": 0.94,
+            "trades": 12,
+            "state": "oscillation"
+          },
+          {
+            "name": "趋势追踪 · SOL",
+            "status": "live",
+            "pnl": 69.3648,
+            "pnlPct": 0.73,
+            "trades": 10,
+            "state": "trend"
+          },
+          {
+            "name": "资金费率套利 · BTC",
+            "status": "shadow",
+            "pnl": 31.0464,
+            "pnlPct": 0.28,
+            "trades": 8,
+            "state": "oscillation/trend"
+          },
+          {
+            "name": "极端行情防守哨兵 · ETH",
+            "status": "shadow",
+            "pnl": 13.607999999999999,
+            "pnlPct": 0.11,
+            "trades": 2,
+            "state": "extreme"
+          },
+          {
+            "name": "合约马丁格尔 · DOGE",
+            "status": "paused",
+            "pnl": -40.895999999999994,
+            "pnlPct": -0.62,
+            "trades": 9,
+            "state": "oscillation"
+          },
+          {
+            "name": "现货网格 · XRP",
+            "status": "shadow",
+            "pnl": 16.163999999999998,
+            "pnlPct": 0.19,
+            "trades": 5,
+            "state": "oscillation"
+          },
+          {
+            "name": "趋势追踪 · TRX",
+            "status": "shadow",
+            "pnl": 10.5336,
+            "pnlPct": 0.13,
+            "trades": 3,
+            "state": "trend"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-03-18",
+      "content": "【DARWIN 每日报告 2026-03-18】\n\n今日市场：ETH 波动加剧，DOGE 进入高噪声震荡阶段，BTC 与 SOL 保持结构分化。\n\n策略表现：趋势与网格策略整体持平偏正，合约马丁格尔 · DOGE 触发暂停观察。\n\n风控状态：触发一次策略级熔断，系统已自动压缩相关风险敞口。\n\n明日展望：等待波动收敛后再恢复高弹性策略，优先保留网格与趋势主链路。",
+      "data": {
+        "date": "2026-03-18",
+        "totalPnl": -58.36,
+        "marketStates": {
+          "BTC-USDT": "trend",
+          "ETH-USDT": "extreme",
+          "SOL-USDT": "trend",
+          "DOGE-USDT": "oscillation"
+        },
+        "circuitBreakers": [
+          {
+            "tier": 1,
+            "reason": "Trend trailing drawdown exceeded threshold"
+          }
+        ],
+        "promotions": [],
+        "demotions": [
+          "合约马丁格尔 · DOGE"
+        ],
+        "strategies": [
+          {
+            "name": "现货网格 · BTC",
+            "status": "live",
+            "pnl": 69.331,
+            "pnlPct": 1.42,
+            "trades": 20,
+            "state": "oscillation"
+          },
+          {
+            "name": "合约网格 · ETH",
+            "status": "live",
+            "pnl": 46.056000000000004,
+            "pnlPct": 0.94,
+            "trades": 11,
+            "state": "oscillation"
+          },
+          {
+            "name": "趋势追踪 · SOL",
+            "status": "live",
+            "pnl": 36.6092,
+            "pnlPct": 0.73,
+            "trades": 9,
+            "state": "trend"
+          },
+          {
+            "name": "资金费率套利 · BTC",
+            "status": "shadow",
+            "pnl": 16.3856,
+            "pnlPct": 0.28,
+            "trades": 7,
+            "state": "oscillation/trend"
+          },
+          {
+            "name": "极端行情防守哨兵 · ETH",
+            "status": "shadow",
+            "pnl": 7.1819999999999995,
+            "pnlPct": 0.11,
+            "trades": 1,
+            "state": "extreme"
+          },
+          {
+            "name": "合约马丁格尔 · DOGE",
+            "status": "paused",
+            "pnl": -42.1,
+            "pnlPct": -0.62,
+            "trades": 8,
+            "state": "oscillation"
+          },
+          {
+            "name": "现货网格 · XRP",
+            "status": "shadow",
+            "pnl": 8.531,
+            "pnlPct": 0.19,
+            "trades": 4,
+            "state": "oscillation"
+          },
+          {
+            "name": "趋势追踪 · TRX",
+            "status": "shadow",
+            "pnl": 5.5594,
+            "pnlPct": 0.13,
+            "trades": 2,
+            "state": "trend"
+          }
+        ]
+      }
+    }
+  ],
+  "sysConfig": {
+    "mode": "demo",
+    "riskTier": "balanced",
+    "assets": [
+      "BTC-USDT",
+      "ETH-USDT",
+      "SOL-USDT",
+      "XRP-USDT",
+      "DOGE-USDT",
+      "TRX-USDT",
+      "HYPE-USDT",
+      "OKB-USDT",
+      "XAUT-USDT"
+    ],
+    "heartbeatMinutes": 15,
+    "apiConnected": true,
+    "telegramEnabled": false,
+    "bridgePort": 3200,
+    "paperclipUrl": "http://127.0.0.1:3100"
+  },
+  "ctoDecisions": [
+    {
+      "decidedAt": "2026-03-20 16:05:00",
+      "prevState": "oscillation",
+      "currentState": "oscillation",
+      "stateChanged": false,
+      "actions": [
+        {
+          "type": "activate",
+          "strategyId": "demo_spot_grid_btc",
+          "strategy": "现货网格 · BTC"
+        },
+        {
+          "type": "watchlist",
+          "strategyId": "demo_funding_arb_btc",
+          "strategy": "资金费率套利 · BTC"
+        },
+        {
+          "type": "adjust",
+          "strategyId": "demo_defense_eth",
+          "strategy": "极端行情防守哨兵 · ETH",
+          "action": "keep shadow only"
+        }
+      ],
+      "rationale": "Oscillation remains the dominant regime, so DARWIN keeps grid allocation as the primary posture while preserving defense coverage on ETH.",
+      "llmInsight": {
+        "summary": "Reserve capital stays high because ETH still prints elevated volatility while BTC remains range-bound."
+      }
+    },
+    {
+      "decidedAt": "2026-03-20 15:10:00",
+      "prevState": "trend",
+      "currentState": "oscillation",
+      "stateChanged": true,
+      "actions": [
+        {
+          "type": "deactivate",
+          "strategyId": "demo_trend_trailing_trx",
+          "strategy": "趋势追踪 · TRX"
+        },
+        {
+          "type": "activate",
+          "strategyId": "demo_contract_grid_eth",
+          "strategy": "合约网格 · ETH"
+        }
+      ],
+      "rationale": "Directional breadth narrowed, so the system rotated from broad trend exposure back to oscillation-biased execution.",
+      "llmInsight": {
+        "rationale": "The regime transition was confirmed after two lower-momentum intervals and falling volume expansion."
+      }
+    },
+    {
+      "decidedAt": "2026-03-19 10:20:00",
+      "prevState": "oscillation",
+      "currentState": "trend",
+      "stateChanged": true,
+      "actions": [
+        {
+          "type": "activate",
+          "strategyId": "demo_trend_trailing_sol",
+          "strategy": "趋势追踪 · SOL"
+        },
+        {
+          "type": "watchlist",
+          "strategyId": "demo_spot_grid_xrp",
+          "strategy": "现货网格 · XRP"
+        }
+      ],
+      "rationale": "SOL and TRX started printing sustained directional structure, so DARWIN promoted the strongest trailing template into live monitoring.",
+      "llmInsight": {
+        "summary": "Trend-following allocation increased cautiously while keeping BTC grid rails online."
+      }
+    }
+  ],
+  "positions": {
+    "equity": 52480.35,
+    "positionCount": 3,
+    "totalUpl": 268.4,
+    "totalNotional": 38640,
+    "totalMargin": 12840,
+    "deployedPct": 0.2447,
+    "positions": [
+      {
+        "asset": "BTC-USDT-SWAP",
+        "instId": "BTC-USDT-SWAP",
+        "posSide": "long",
+        "side": "long",
+        "pos": "0.050",
+        "size": "0.050",
+        "avgPx": 84215,
+        "markPx": 84620,
+        "lever": 3,
+        "margin": 4200,
+        "upl": 145.2,
+        "uplPct": 2.16,
+        "openTime": "2026-03-20 12:30:00"
+      },
+      {
+        "asset": "ETH-USDT-SWAP",
+        "instId": "ETH-USDT-SWAP",
+        "posSide": "short",
+        "side": "short",
+        "pos": "1.80",
+        "size": "1.80",
+        "avgPx": 3142,
+        "markPx": 3097,
+        "lever": 3,
+        "margin": 3950,
+        "upl": 82.4,
+        "uplPct": 1.08,
+        "openTime": "2026-03-20 11:40:00"
+      },
+      {
+        "asset": "SOL-USDT-SWAP",
+        "instId": "SOL-USDT-SWAP",
+        "posSide": "long",
+        "side": "long",
+        "pos": "32",
+        "size": "32",
+        "avgPx": 188.4,
+        "markPx": 189.6,
+        "lever": 2,
+        "margin": 4690,
+        "upl": 40.8,
+        "uplPct": 0.94,
+        "openTime": "2026-03-20 10:55:00"
+      }
+    ]
+  }
+}
